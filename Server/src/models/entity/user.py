@@ -1,4 +1,4 @@
-from ....app import db
+from ...app import db
 
 
 class UserModel(db.Model):
@@ -25,3 +25,4 @@ class UserModel(db.Model):
         self.zipcode = zipcode
         self.avatar = avatar
         self.activate = activate
+
