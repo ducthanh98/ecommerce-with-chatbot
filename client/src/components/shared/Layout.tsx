@@ -1,10 +1,10 @@
-import styles from "../../styles/Home.module.css";
+import styles from "../../../styles/Home.module.css";
 import {Header} from "./Header";
 import {Footer} from "./Footer";
 import {Loading} from "./Loading";
 import {useContext, useEffect} from "react";
-import {StoreContext} from "../utils/store/Store";
-import {SET_LOADING} from "../utils/store/reducers/loading";
+import {StoreContext} from "../../utils/store/Store";
+import {SET_LOADING} from "../../utils/store/reducers/loading";
 
 export const Layout = ({children}) => {
 
