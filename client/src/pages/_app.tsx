@@ -1,4 +1,5 @@
 import '../../styles/globals.css'
+
 import {Layout} from "../components/shared/Layout";
 import StoreProvider from "../utils/store/Store"
 

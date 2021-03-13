@@ -1,11 +1,11 @@
 import {storage} from '../storage';
-import {Notifications} from './notification';
+import {Messages} from './notification';
 import {IResponse} from "../../utils/models/Response";
 
 function fetchWithTimeOut(promise: Promise<Response>, ms = 5000) {
     return new Promise<Response>((resolve, reject) => {
         setTimeout(() => {
-            reject(new Error(Notifications.Cant_connect_internet));
+            reject(new Error(Messages.Cant_connect_internet));
         }, ms);
         promise.then(resolve, reject);
     });
@@ -21,10 +21,9 @@ const commonCall = async <T>(
     const result: IResponse<T> = {data: null, error: true}
 
     try {
-
         const endpoint = url.includes('http')
             ? url
-            : `${process.env.API_BASE_URL}${url}`;
+            : `${process.env.NEXT_PUBLIC_API_BASE_URL}/${url}`;
 
         const options: RequestInit = {
             method: method,
@@ -46,7 +45,7 @@ const commonCall = async <T>(
 
         if (response.status === 401) {
             storage.clear();
-            result.data = Notifications.error_401
+            result.data = Messages.error_401
             setTimeout(() => {
                 window.location.reload();
             }, 3000);
@@ -55,26 +54,37 @@ const commonCall = async <T>(
         }
 
         if (response.status === 502) {
-            result.data = Notifications.error_500
+            result.data = Messages.error_500
             return result;
         }
 
         let payload;
 
         if (type === 'blob') {
-            payload = await response.blob();
-        } else {
-            payload = await response.json();
-        }
 
-        result.error = false
-        result.data = payload
+            payload = await response.blob();
+            result.error = false
+            result.data = payload
+
+        } else {
+
+            payload = await response.json();
+
+            if (!payload.error) {
+                result.error = false
+                result.data = payload
+            } else {
+                result.error = true
+                result.data = payload.error
+            }
+
+        }
 
         return result
     } catch (error) {
         console.error(error)
 
-        result.data = Notifications.error_500
+        result.data = Messages.error_500
         return result;
     }
 };

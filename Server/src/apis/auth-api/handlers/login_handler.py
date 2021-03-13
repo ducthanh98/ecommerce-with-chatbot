@@ -5,7 +5,7 @@ from flask import jsonify, request
 
 from ..pkg.manager import user_manager
 from ....toolkits import transhttp
-from ..pkg.dto.login_form import UserDTO,login_form_schema
+from ..pkg.dto.login_form import UserDTO, login_form_schema
 from ....toolkits.app import generate_auth_token
 from ....toolkits.constant import MESSAGE
 
@@ -21,6 +21,9 @@ def login_handler():
         }
 
         user_model = user_manager.get_user(opts)
+        if user_model is None:
+            return transhttp.response_error(HTTPStatus.BAD_REQUEST, "Email or Password are incorrect")
+
         user_dto = UserDTO()
         user = user_dto.dump(user_model)
 

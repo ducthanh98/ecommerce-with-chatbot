@@ -14,9 +14,9 @@ login_form_schema = {
             "type": "string",
             "minLength": 6,
             "maxLength": 50,
-            "message": "Fullname required"
+            "message": "Password is invalid"
         }
     },
-    "required": ["email", "password", "fullname"]
+    "required": ["email", "password"]
 
 }

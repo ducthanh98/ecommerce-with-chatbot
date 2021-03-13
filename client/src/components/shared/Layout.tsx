@@ -5,6 +5,7 @@ import {Loading} from "./Loading";
 import {useContext, useEffect} from "react";
 import {StoreContext} from "../../utils/store/Store";
 import {SET_LOADING} from "../../utils/store/reducers/loading";
+import {Menu} from "./Menu";
 
 export const Layout = ({children}) => {
 
@@ -24,6 +25,7 @@ export const Layout = ({children}) => {
         <>
             {state.loading ? <Loading/> : ''}
             <Header/>
+            <Menu/>
             {children}
             <Footer/>
         </>

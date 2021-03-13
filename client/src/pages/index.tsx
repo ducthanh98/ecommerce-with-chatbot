@@ -16,31 +16,31 @@ export default function Home() {
                     <button type="submit" className="submit-btn"><i className="fa fa-search"/></button>
                 </form>
             </div>
-            <div className="promotion-popup" id="promotion-popup">
-                <div className="container">
-                    <div className="row modal-custom-margin">
-                        <div className="col-lg-6 px-0">
-                            <div className="modal-image"/>
-                        </div>
-                        <div className="col-lg-6 px-0">
-                            <div className="modal-right text-center">
-                                <span className="cross-icon"><i className="lnr lnr-cross"/></span>
-                                <h2>Be the First <br/>to know</h2>
-                                <p className="mt-4 mb-5">Sign up for emails to get our latest style <br/>news before
-                                    everybody else</p>
-                                <form action="#">
-                                    <input type="email" placeholder="Enter Email Address Here"/>
-                                    <button type="submit"><span>⇀</span></button>
-                                </form>
-                                <label>Prevent This Pop-up
-                                    <input type="checkbox"/>
-                                    <span className="checkmark"/>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/*<div className="promotion-popup" id="promotion-popup">*/}
+            {/*    <div className="container">*/}
+            {/*        <div className="row modal-custom-margin">*/}
+            {/*            <div className="col-lg-6 px-0">*/}
+            {/*                <div className="modal-image"/>*/}
+            {/*            </div>*/}
+            {/*            <div className="col-lg-6 px-0">*/}
+            {/*                <div className="modal-right text-center">*/}
+            {/*                    <span className="cross-icon"><i className="lnr lnr-cross"/></span>*/}
+            {/*                    <h2>Be the First <br/>to know</h2>*/}
+            {/*                    <p className="mt-4 mb-5">Sign up for emails to get our latest style <br/>news before*/}
+            {/*                        everybody else</p>*/}
+            {/*                    <form action="#">*/}
+            {/*                        <input type="email" placeholder="Enter Email Address Here"/>*/}
+            {/*                        <button type="submit"><span>⇀</span></button>*/}
+            {/*                    </form>*/}
+            {/*                    <label>Prevent This Pop-up*/}
+            {/*                        <input type="checkbox"/>*/}
+            {/*                        <span className="checkmark"/>*/}
+            {/*                    </label>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
             <div className="cart-popup" id="cart-popup">
                 <div className="cart-content">
                     <span className="cross-icon"><i className="lnr lnr-cross"/></span>
@@ -197,95 +197,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <nav className="navbar navbar-area navbar-expand-lg nav-style-02 nav-absolute">
-                <div className="container-fluid nav-container">
-                    <div className="responsive-mobile-menu">
-                        <div className="logo-wrapper">
-                            <span className="logo">
-                                <img src="/img/logo/logo.png" alt="logo"/>
-                                <h4>robarto <br/>ferracini</h4>
-                            </span>
-                        </div>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#bizcoxx_main_menu" aria-expanded="false"
-                                aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"/>
-                        </button>
-                    </div>
-                    <div className="collapse navbar-collapse" id="bizcoxx_main_menu">
-                        <ul className="navbar-nav">
-                            <li className="menu-item-has-children current-menu-item">
-                                <a href="#">Home</a>
-                                <ul className="sub-menu">
-                                    <li><a href="index-2.html">Home 01</a></li>
-                                    <li><a href="index-3.html">Home 02</a></li>
-                                    <li><a href="index-4.html">Home 03</a></li>
-                                </ul>
-                            </li>
-                            <li className="menu-item-has-children">
-                                <a href="#">New Arrivals</a>
-                                <ul className="sub-menu">
-                                    <li><a href="shop-page.html">Shop</a>
-                                        <ul className="sub-menu">
-                                            <li><a href="shop-page-1.html">Shop 01</a></li>
-                                            <li><a href="shop-page-2.html">Shop 02</a></li>
-                                            <li><a href="shop-page-3.html">Shop 03</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="menu-item-has-children mega-menu-list">
-                                <a href="#">Pages</a>
-                                <div className="mega-menu">
-                                    <ul className="mega-menu-inner">
-                                        <li><a href="about-page.html">About us</a></li>
-                                        <li><a href="cart-page.html">Cart page</a></li>
-                                        <li><a href="cart-tab-page.html">Cart Tab</a></li>
-                                        <li><a href="blog-page-02.html">Blog page 01</a></li>
-                                    </ul>
-                                    <ul className="mega-menu-inner">
-                                        <li><a href="blog-page.html">Blog page 02</a></li>
-                                        <li><a href="blog-single-page-02.html">Blog Single 01</a></li>
-                                        <li><a href="blog-single-page.html">Blog Single 02</a></li>
-                                        <li><a href="faq-page.html">FAQ page</a></li>
-                                    </ul>
-                                    <ul className="mega-menu-inner">
-                                        <li><a href="profile-page.html">Profile page</a></li>
-                                        <li><a href="returns-page.html">Return page</a></li>
-                                        <li><a href="404.html">404 page</a></li>
-                                        <li><a href="coming-soon-page.html">Comming Soon</a></li>
-                                    </ul>
-                                    <ul className="mega-menu-inner">
-                                        <li>
-                                            <img src="/img/header-page/mega-menu.jpg" alt=""/>
-                                            <h5>Extra 10% off</h5>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="contact-us-page.html">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="nav-right-content">
-                        <ul>
-                            <li className="search" id="search">
-                                <span className="lnr lnr-magnifier"/>
-                            </li>
-                            <li className="ml-3 floating-icon-3 user">
-                                <span className="lnr lnr-user"/>
-                            </li>
-                            <li className="cart floating-icon-1 ml-4">
-                                <div className="cart-sec">
-                                    <a href="#"><span className="lnr lnr-cart"/></a>
-                                    <span className="cart-count">2</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
             <section className="banner-area">
                 <div className="slider-area owl-carousel">
                     <div className="single-slide">
