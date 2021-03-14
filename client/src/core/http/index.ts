@@ -27,7 +27,8 @@ const commonCall = async <T>(
 
         const options: RequestInit = {
             method: method,
-            mode: 'cors',
+            mode:'cors',
+            credentials: 'include',
             headers: Object.assign({Accept: 'application/json', 'Content-Type': 'application/json'}, headers || {}),
         };
 

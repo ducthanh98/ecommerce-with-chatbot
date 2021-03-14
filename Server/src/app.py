@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 schema = JsonSchema(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
@@ -24,5 +24,3 @@ server.register(app)
 @app.route('/', methods=['GET'])
 def init():
     return jsonify({'msg': 'hello'})
-
-

@@ -1,7 +1,8 @@
+import os
 from http import HTTPStatus
 
 import jsonschema
-from flask import jsonify, request
+from flask import jsonify, request, after_this_request
 
 from ..pkg.manager import user_manager
 from ....toolkits import transhttp
@@ -14,7 +15,8 @@ def login_handler():
     try:
         data = request.get_json()
         jsonschema.validate(data, schema=login_form_schema, format_checker=jsonschema.FormatChecker())
-
+        username = request.cookies.get('token')
+        print('token', username)
         opts = {
             'email': data['email'],
             'password': data['password']
@@ -29,7 +31,14 @@ def login_handler():
 
         token = generate_auth_token(user["id"])
 
-        return jsonify({"token": token, "user": user})
+        out = jsonify({"user": user})
+        days = os.getenv('TOKEN_DAY_EXPIRED')
+        days = int(days)
+        out.set_cookie('token', token, max_age=days * 24 * 60 * 60, httponly=True, samesite='Lax')
+        out.set_cookie('user_id', user["id"], max_age=days * 24 * 60 * 60, httponly=True, samesite='Lax')
+
+
+        return out
     except jsonschema.exceptions.ValidationError as e:
         return transhttp.response_error(HTTPStatus.BAD_REQUEST, str(e.message))
     except Exception as e:
