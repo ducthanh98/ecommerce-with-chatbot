@@ -6,24 +6,37 @@ import {useContext, useEffect} from "react";
 import {StoreContext} from "../../utils/store/Store";
 import {SET_LOADING} from "../../utils/store/reducers/loading";
 import {Menu} from "./Menu";
+import {http} from "../../core/http";
+import {SET_AUTHENTICATE} from "../../utils/store/reducers/user";
 
 export const Layout = ({children}) => {
 
-    const {loading} = useContext(StoreContext)
-    const [state, dispatch] = loading
+    const {loading, user} = useContext(StoreContext)
+    const [loadingState, dispatchLoading] = loading
+    const [userState, dispatchUser] = user
 
     useEffect(() => {
 
         setTimeout(() => {
             const payload = {type: SET_LOADING, payload: false}
-            dispatch(payload)
+            dispatchLoading(payload)
         }, 1000)
 
     }, [])
 
+    useEffect(() => {
+        checkAuth()
+    }, [])
+
+    const checkAuth = async () => {
+        const result = await http.get('http://localhost:3000/api/authenticate')
+        const body = {type: SET_AUTHENTICATE, payload: result.data}
+        dispatchUser(body)
+    }
+
     return (
         <>
-            {state.loading ? <Loading/> : ''}
+            {loadingState.loading ? <Loading/> : ''}
             <Header/>
             <Menu/>
             {children}

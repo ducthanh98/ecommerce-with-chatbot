@@ -1,13 +1,23 @@
 import {StoreContext} from "../utils/store/Store";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {SET_LOADING} from "../utils/store/reducers/loading";
 import {AuthForm} from "../components/auth/Form";
+import {initEvent} from "../utils/script/main";
 
 export default function Home() {
+    useEffect(() => {
+        initEvent();
+    }, [])
+
+    const removePopup = () => {
+        $('.cart-popup').removeClass('active');
+        $('.body-overlay').removeClass('active');
+        $('.floating-icon').removeClass('active');
+    }
 
     return (
         <>
-            <div className="body-overlay" id="body-overlay"/>
+            <div className="body-overlay" id="body-overlay" onClick={removePopup}/>
             <div className="search-popup" id="search-popup">
                 <form action="https://codingeek.net/html/roberto-ferracini/index.html" className="search-form">
                     <div className="form-group">

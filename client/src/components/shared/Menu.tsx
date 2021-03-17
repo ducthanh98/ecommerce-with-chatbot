@@ -1,6 +1,23 @@
 import {ActiveLink} from "./ActiveRouter";
+import {useContext} from "react";
+import {StoreContext} from "../../utils/store/Store";
 
 export const Menu = () => {
+    const {user} = useContext(StoreContext)
+    const [userState, dispatchUser] = user
+
+    const handleShowUser = () => {
+
+        if (userState.logged_in) {
+            console.log('IMPLEMENT ME')
+        } else {
+            $('.login-popup').addClass('active');
+            $('.body-overlay').addClass('active');
+            $('.floating-icon').addClass('active');
+            $('.live-chat-popup').removeClass('active');
+        }
+
+    }
 
     return (
         <nav className="navbar navbar-area navbar-expand-lg nav-style-02 nav-absolute">
@@ -36,7 +53,7 @@ export const Menu = () => {
                         <li className="search" id="search">
           <span className="lnr lnr-magnifier">
           </span></li>
-                        <li className="ml-3 floating-icon-3 user">
+                        <li className="ml-3 floating-icon-3 user" onClick={handleShowUser}>
           <span className="lnr lnr-user">
           </span></li>
                         <li className="cart floating-icon-1 ml-4">

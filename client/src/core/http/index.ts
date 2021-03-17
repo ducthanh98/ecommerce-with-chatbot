@@ -27,7 +27,7 @@ const commonCall = async <T>(
 
         const options: RequestInit = {
             method: method,
-            mode:'cors',
+            mode: 'cors',
             credentials: 'include',
             headers: Object.assign({Accept: 'application/json', 'Content-Type': 'application/json'}, headers || {}),
         };
@@ -45,12 +45,7 @@ const commonCall = async <T>(
         let response = await fetchWithTimeOut(fetch(endpoint, options));
 
         if (response.status === 401) {
-            storage.clear();
-            result.data = Messages.error_401
-            setTimeout(() => {
-                window.location.reload();
-            }, 3000);
-
+            window.location.href = '/api/logout'
             return result
         }
 

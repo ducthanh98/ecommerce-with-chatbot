@@ -26,6 +26,9 @@ def register_handler():
         return jsonify({"success": True})
 
     except jsonschema.exceptions.ValidationError as e:
-        return transhttp.response_error(HTTPStatus.BAD_REQUEST, str(e.message))
+        if 'message' not in e.schema:
+            return transhttp.response_error(HTTPStatus.BAD_REQUEST, e.message)
+
+        return transhttp.response_error(HTTPStatus.BAD_REQUEST, e.schema['message'])
     except Exception:
         return jsonify({"error": MESSAGE['MESSAGE_SERVER_INTERNAL']})

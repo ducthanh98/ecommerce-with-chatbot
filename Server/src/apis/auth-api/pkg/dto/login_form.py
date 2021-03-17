@@ -9,13 +9,17 @@ class UserDTO(ma.SQLAlchemyAutoSchema):
 login_form_schema = {
     "type": "object",
     "properties": {
-        "email": {"type": "string", "format": "email"},
+        "email": {
+            "type": "string",
+            "format": "email",
+            "messages": "email is invalid",
+        },
         "password": {
             "type": "string",
             "minLength": 6,
-            "maxLength": 50,
-            "message": "Password is invalid"
-        }
+            "maxLength": 255,
+            "message": "password must be at least 6 character"
+        },
     },
     "required": ["email", "password"]
 

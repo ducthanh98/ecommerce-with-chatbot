@@ -25,5 +25,10 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "paths": {
+    "@/utils/*": [
+      "src/utils/*"
+    ]
+  }
 }

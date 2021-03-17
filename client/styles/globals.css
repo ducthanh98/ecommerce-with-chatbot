@@ -19,4 +19,19 @@
     color: rgb(185, 194, 203);
 }
 
+.login-popup .login-content form,
+.login-popup .login-content .login-bottom {
+    margin-top: 50px;
+}
+.login-popup .signup-content .login-bottom{
+        margin-top: 30px;
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767.98px) {
+    .login-popup .login-content .login-bottom {
+        margin-top: 80px;
+    }
+}
+
+
 

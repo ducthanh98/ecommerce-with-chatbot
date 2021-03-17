@@ -2,7 +2,7 @@ import os
 from http import HTTPStatus
 
 import jsonschema
-from flask import jsonify, request, after_this_request
+from flask import jsonify, request
 
 from ..pkg.manager import user_manager
 from ....toolkits import transhttp
@@ -31,15 +31,16 @@ def login_handler():
 
         token = generate_auth_token(user["id"])
 
-        out = jsonify({"user": user})
+        out = jsonify({"user_info": user, "logged_in": True})
         days = os.getenv('TOKEN_DAY_EXPIRED')
         days = int(days)
         out.set_cookie('token', token, max_age=days * 24 * 60 * 60, httponly=True, samesite='Lax')
-        out.set_cookie('user_id', user["id"], max_age=days * 24 * 60 * 60, httponly=True, samesite='Lax')
-
 
         return out
     except jsonschema.exceptions.ValidationError as e:
-        return transhttp.response_error(HTTPStatus.BAD_REQUEST, str(e.message))
+        if 'message' not in e.schema:
+            return transhttp.response_error(HTTPStatus.BAD_REQUEST, e.message)
+
+        return transhttp.response_error(HTTPStatus.BAD_REQUEST, e.schema['message'])
     except Exception as e:
         return jsonify({"error": MESSAGE['MESSAGE_SERVER_INTERNAL']})
