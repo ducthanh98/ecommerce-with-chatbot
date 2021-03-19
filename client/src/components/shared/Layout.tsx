@@ -9,13 +9,15 @@ import {Menu} from "./Menu";
 import {http} from "../../core/http";
 import {SET_AUTHENTICATE} from "../../utils/store/reducers/user";
 
-export const Layout = ({children}) => {
+export const Layout = ({children, logged_in, user_info}) => {
 
     const {loading, user} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [userState, dispatchUser] = user
 
     useEffect(() => {
+        const body = {type: SET_AUTHENTICATE, payload: {logged_in, user_info}}
+        dispatchUser(body)
 
         setTimeout(() => {
             const payload = {type: SET_LOADING, payload: false}
@@ -24,15 +26,6 @@ export const Layout = ({children}) => {
 
     }, [])
 
-    useEffect(() => {
-        checkAuth()
-    }, [])
-
-    const checkAuth = async () => {
-        const result = await http.get('http://localhost:3000/api/authenticate')
-        const body = {type: SET_AUTHENTICATE, payload: result.data}
-        dispatchUser(body)
-    }
 
     return (
         <>
@@ -44,4 +37,13 @@ export const Layout = ({children}) => {
         </>
 
     )
+}
+
+Layout.getInitialProps = async ({req}) => {
+    const {token} = req.cookies
+    if (!token) {
+        return {logged_in: false, user_info: {}}
+    }
+
+    return {logged_in: true, user_info: {}}
 }

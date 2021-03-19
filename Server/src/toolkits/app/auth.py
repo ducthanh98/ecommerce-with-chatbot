@@ -17,3 +17,5 @@ def generate_auth_token(user_id):
         os.getenv('SECRET_KEY'),
         algorithm='HS256'
     )
+
+
