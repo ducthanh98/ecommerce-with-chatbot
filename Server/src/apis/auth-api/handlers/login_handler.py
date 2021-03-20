@@ -25,23 +25,17 @@ def login_handler():
         if user_model is None:
             return transhttp.response_error(HTTPStatus.BAD_REQUEST, "Email or Password are incorrect")
 
-        user_dto = UserDTO()
-        user = user_dto.dump(user_model)
-
         opts = {
-            'user_id': user['id']
+            'user_id': user_model.id
         }
 
         permissions_model = user_manager.get_permissions(opts)
         if permissions_model is None:
             return transhttp.response_error(HTTPStatus.BAD_REQUEST, "Email or Password are incorrect")
 
-        permission_dto = PermissionDTO()
-        permission = permission_dto.dump(permissions_model)
+        token = generate_auth_token({"user_id": user_model.id})
 
-        token = generate_auth_token(user["id"])
-
-        out = jsonify({"user_info": user, "logged_in": True})
+        out = jsonify({"user_info": user_model, "logged_in": True})
         days = os.getenv('TOKEN_DAY_EXPIRED')
         days = int(days)
         out.set_cookie('token', token, max_age=days * 24 * 60 * 60, httponly=True, samesite='Lax')

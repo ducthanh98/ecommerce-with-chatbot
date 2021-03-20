@@ -1,6 +1,8 @@
 from .....models.entity import UserModel, PermissionModel, RolePermissionModel, RoleModel, UserRoleModel
 from .....app import db
 
+from dataclasses import is_dataclass
+
 
 class UserManager:
 
@@ -29,7 +31,6 @@ class UserManager:
                 filter(PermissionModel.activate == True)
 
         return query
-
 
     def get_user(self, opts):
         query = self.build_user_query(opts)

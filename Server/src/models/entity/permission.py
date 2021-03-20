@@ -1,12 +1,17 @@
 import time
 
 from sqlalchemy import func
-
+from dataclasses import dataclass
 from ...app import db
 
 
+@dataclass
 class PermissionModel(db.Model):
     __tablename__ = 'permissions'
+    id: int
+    code: str
+    description: str
+    activate: bool
 
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.VARCHAR(50))

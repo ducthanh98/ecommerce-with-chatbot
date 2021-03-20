@@ -6,6 +6,11 @@ class UserDTO(ma.SQLAlchemyAutoSchema):
         fields = ("id", "email", "fullname")
 
 
+class PermissionDTO(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        fields = ("id", "code")
+
+
 login_form_schema = {
     "type": "object",
     "properties": {

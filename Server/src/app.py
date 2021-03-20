@@ -9,6 +9,7 @@ import os
 
 
 app = Flask(__name__)
+
 CORS(app, supports_credentials=True)
 schema = JsonSchema(app)
 
