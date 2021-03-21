@@ -1,7 +1,7 @@
 import {Header as CustomerHeader} from "./customer/Header";
 import {Footer} from "./customer/Footer";
 import {Loading} from "./customer/Loading";
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {StoreContext} from "../../utils/store/Store";
 import {SET_LOADING} from "../../utils/store/reducers/loading";
 import {Menu} from "./customer/Menu";
@@ -16,7 +16,7 @@ export const PageLayout = ({children, logged_in, user_info}) => {
     const {loading, user} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [userState, dispatchUser] = user
-    const [isAdmin, setIsAdmin] = userState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
     const router = useRouter();
 
 
@@ -33,7 +33,7 @@ export const PageLayout = ({children, logged_in, user_info}) => {
 
 
     useEffect(() => {
-        if (router.asPath) {
+        if (router.asPath.includes('admin')) {
             setIsAdmin(true)
         }
     }, [router.asPath]);
@@ -53,12 +53,13 @@ export const PageLayout = ({children, logged_in, user_info}) => {
     const renderAdminTemplate = () => {
         return (
             <>
+                <CustomerHeader/>
                 {loadingState.loading ? <Loading/> : ''}
                 <Layout style={{height: "100%"}}>
                     <Navbar/>
                     <Layout>
                         <AdminHeader/>
-                        <Layout.Content style={{margin: "20px"}}>
+                        <Layout.Content style={{margin: "20px", height: "100%"}}>
                             {children}
                         </Layout.Content>
                     </Layout>

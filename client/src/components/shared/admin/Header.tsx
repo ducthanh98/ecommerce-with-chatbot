@@ -1,5 +1,4 @@
-import Layout from "antd/es/layout";
-import {Avatar} from "antd";
+import {Layout, Avatar} from "antd";
 import React from "react";
 
 const {Header} = Layout;

@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.5.0",
     "antd": "^4.13.1",
     "cookie": "^0.4.1",
     "next": "10.0.8",
@@ -16,7 +17,6 @@
     "reapop": "^3.0.3"
   },
   "devDependencies": {
-    "@types/antd": "^1.0.0",
     "@types/cookie": "^0.4.0",
     "@types/node": "^14.14.32",
     "@types/react": "^17.0.3",
