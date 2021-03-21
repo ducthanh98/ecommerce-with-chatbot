@@ -22,7 +22,7 @@ class UserModel(db.Model):
 
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String())
     password = db.Column(db.String())
     fullname = db.Column(db.String())

@@ -1,8 +1,6 @@
 from .....models.entity import UserModel, PermissionModel, RolePermissionModel, RoleModel, UserRoleModel
 from .....app import db
 
-from dataclasses import is_dataclass
-
 
 class UserManager:
 
@@ -15,8 +13,8 @@ class UserManager:
         if 'password' in opts:
             query = query.filter_by(password=opts['password'])
 
-        if 'email' in opts:
-            query = query.filter_by(email=opts['email'])
+        if 'email' in opts and opts['email'] is not None:
+            query = query.filter(UserModel.email.like(f'{opts["email"]}%'))
 
         return query
 
@@ -27,7 +25,8 @@ class UserManager:
             query = query.join(RolePermissionModel).join(RoleModel). \
                 join(UserRoleModel). \
                 filter(UserRoleModel.user_id == opts['user_id']). \
-                filter(RoleModel.activate is True)
+                filter(RoleModel.activate is True). \
+                filter(PermissionModel.activate is True)
 
         return query
 
@@ -37,11 +36,27 @@ class UserManager:
         user = query.first()
         return user
 
+    def fetch_user(self, opts):
+        query = self.build_user_query(opts)
+        if 'page' in opts:
+            offset = (opts['page'] - 1) * opts['limit']
+            query = query.offset(offset)
+
+        if 'limit' in opts:
+            query = query.limit(opts['limit'])
+
+        user = query.all()
+        return user
+
+    def count_user(self, opts):
+        query = self.build_user_query(opts)
+
+        count = query.count()
+        return count
 
     def create_user(self, user):
         db.session.add(user)
         return db.session.commit()
-
 
     def get_permissions(self, opts):
         query = self.build_permission_query(opts)

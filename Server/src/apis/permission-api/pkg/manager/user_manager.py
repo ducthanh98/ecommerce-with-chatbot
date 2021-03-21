@@ -1,8 +1,6 @@
 from .....models.entity import UserModel, PermissionModel, RolePermissionModel, RoleModel, UserRoleModel
 from .....app import db
 
-from dataclasses import is_dataclass
-
 
 class UserManager:
 
@@ -27,7 +25,8 @@ class UserManager:
             query = query.join(RolePermissionModel).join(RoleModel). \
                 join(UserRoleModel). \
                 filter(UserRoleModel.user_id == opts['user_id']). \
-                filter(RoleModel.activate is True)
+                filter(RoleModel.activate == True). \
+                filter(PermissionModel.activate == True)
 
         return query
 
@@ -37,11 +36,9 @@ class UserManager:
         user = query.first()
         return user
 
-
     def create_user(self, user):
         db.session.add(user)
         return db.session.commit()
-
 
     def get_permissions(self, opts):
         query = self.build_permission_query(opts)
