@@ -1,6 +1,6 @@
 import {ActiveLink} from "./ActiveRouter";
 import {useContext} from "react";
-import {StoreContext} from "../../utils/store/Store";
+import {StoreContext} from "../../../utils/store/Store";
 
 export const Menu = () => {
     const {user} = useContext(StoreContext)

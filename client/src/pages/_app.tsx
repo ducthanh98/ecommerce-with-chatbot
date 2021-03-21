@@ -1,14 +1,14 @@
 import '../../styles/globals.css'
 
-import {Layout} from "../components/shared/Layout";
+import {PageLayout} from "../components/shared/PageLayout";
 import StoreProvider from "../utils/store/Store"
 
 function MyApp({Component, pageProps}) {
     return (
         <StoreProvider>
-            <Layout>
+            <PageLayout>
                 <Component {...pageProps} />
-            </Layout>
+            </PageLayout>
         </StoreProvider>
 
     )
