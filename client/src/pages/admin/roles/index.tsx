@@ -39,13 +39,13 @@ const AdminRole = () => {
             key: 'description',
             render: text => <p>{text}</p>,
         },
-        // {
-        //     title:'Ngày đăng ký',
-        //     dataIndex:'createdTime',
-        //     key:'createdTime',
-        //     render: text => <p >{new Date(text).toLocaleDateString()}</p>,
-        //
-        // }
+        {
+            title: 'Created At',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: text => <p>{new Date(text).toLocaleDateString()}</p>,
+
+        }
     ];
 
     useEffect(() => {
@@ -108,7 +108,13 @@ const AdminRole = () => {
                 dataSource={roles}
                 columns={columns}
                 pagination={false}/>
-            <RoleModal visible={visibleModal} setShowModal={setVisibleModal} dataModal={role}/>
+            <RoleModal visible={visibleModal}
+                       setShowModal={setVisibleModal}
+                       dataModal={role}
+                       permissions={permissions}
+                       setLoading={dispatchLoading}
+                       refresh={init}
+            />
         </div>
     );
 }

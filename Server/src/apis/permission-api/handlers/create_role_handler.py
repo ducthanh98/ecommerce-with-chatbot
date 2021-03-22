@@ -26,4 +26,4 @@ def create_role_handler():
 
     except Exception as e:
         print(e)
-        return jsonify({"error": MESSAGE['MESSAGE_SERVER_INTERNAL']})
+        return transhttp.response_error(HTTPStatus.INTERNAL_SERVER_ERROR, MESSAGE['MESSAGE_SERVER_INTERNAL'])

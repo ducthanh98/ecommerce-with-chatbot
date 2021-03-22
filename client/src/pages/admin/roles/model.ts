@@ -15,6 +15,10 @@ export interface Permission {
     id: number;
 }
 
+export interface CreateRoleResponse {
+    success: boolean;
+}
+
 export interface FetchPermissionResponse {
     permissions: Permission[];
 }
