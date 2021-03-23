@@ -4,6 +4,7 @@ import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";
+import {useState} from "react";
 
 const styles = {
     textBold: {
@@ -22,6 +23,7 @@ interface Props {
 
 export const RoleModal = (props: Props) => {
     const {dataModal, visible, setShowModal, permissions, setLoading, refresh} = props
+    const [activate, setActivate] = useState(dataModal.activate)
     let selectIds = []
     const layout = {
         labelCol: {
@@ -62,7 +64,9 @@ export const RoleModal = (props: Props) => {
                     permissions.map(permission => (
                         <>
 
-                            <Checkbox value={permission.id} onChange={handleSelectPermission}>
+                            <Checkbox
+                                defaultChecked={dataModal.role_permissions?.some(x => x.permission_id == permission.id)}
+                                value={permission.id} onChange={handleSelectPermission}>
                                 {permission.code}
                             </Checkbox>
                             <br/>
@@ -75,11 +79,16 @@ export const RoleModal = (props: Props) => {
         )
 
     }
+    const handleActivateUser = (e: CheckboxChangeEvent) => {
+        setActivate(e.target.checked)
+    }
+
 
     const formItems = [
         {
             key: 0,
             label: "Name",
+            initialValue: dataModal.name,
             name: "name",
             rules: [
                 {
@@ -93,31 +102,62 @@ export const RoleModal = (props: Props) => {
             key: 1,
             label: "Description ",
             name: "description",
-            initialValue: '',
+            initialValue: dataModal.description,
             render: <Input.TextArea/>
         },
         {
-            key: 2,
+            key: 3,
+            label: "Activate ",
+            name: "activate",
+            render: <Checkbox value={'true'} onChange={handleActivateUser} defaultChecked={dataModal.activate}/>
+        },
+        {
+            key: 4,
             label: "Permissions ",
             name: "permissions",
             render: renderCheckboxPermissions()
         },
         {
-            key: "4",
+            key: 5,
             className: "btn-wrap",
             layout: tailLayout,
             render: renderBtnSubmit()
         }
     ];
 
+
     const onFinish = async (values) => {
+        debugger
+
         setLoading({type: SET_LOADING, payload: true} as Action)
-
         values.permissions = selectIds
-        const result = await api.createRole(values)
-        if (result.error) {
 
-            notification.error({
+        const payload = {...dataModal, ...values, delete_permissions: [], update_permissions: [], activate}
+
+        for (let i = 0; i < values.permissions.length; i++) {
+            if (!dataModal.role_permissions || !dataModal.role_permissions.includes(values.permissions[i])) {
+                payload.update_permissions.push(values.permissions[i])
+            }
+        }
+
+        for (let i = 0; i < dataModal.role_permissions.length; i++) {
+            if (!values.permissions || !values.permissions.includes(dataModal.role_permissions[i].permission_id)) {
+                payload.delete_permissions.push(dataModal.role_permissions[i].permission_id)
+            }
+        }
+
+
+        let result
+        if (!payload.id) {
+            result = await api.createRole(payload)
+        } else {
+            result = await api.updateRole(payload)
+        }
+
+        if (result.error) {
+            setLoading({type: SET_LOADING, payload: false} as Action)
+
+            return notification.error({
                 message: 'Fashion and Clothing Shop',
                 placement: 'topLeft',
                 className: 'custom-notification-antd',
@@ -131,7 +171,7 @@ export const RoleModal = (props: Props) => {
             message: 'Fashion and Clothing Shop',
             placement: 'topLeft',
             className: 'custom-notification-antd',
-            description: "Create role successfully"
+            description: "Successfully"
         });
         setShowModal(false)
         refresh()

@@ -1,13 +1,14 @@
 import {useContext, useEffect, useState} from "react";
 import {api} from './api'
 import {useRouter} from "next/router";
-import {notification, Table} from "antd";
+import {Button, notification, Table} from "antd";
 import {Action} from "../../../utils/models/reducer.model";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {StoreContext} from "../../../utils/store/Store";
 import {getRouteQuery, handleUpdateRouteQuery} from "../../../core/utils/url";
-import {FetchPermissionResponse, FetchRoleResponse, Role} from "./model";
+import {FetchPermissionResponse, FetchRoleResponse, GetRoleResponse, Role} from "./model";
 import {RoleModal} from "./RoleModal";
+import {CodepenCircleFilled, PlusCircleFilled} from "@ant-design/icons";
 
 
 const AdminRole = () => {
@@ -45,7 +46,20 @@ const AdminRole = () => {
             key: 'created_at',
             render: text => <p>{new Date(text).toLocaleDateString()}</p>,
 
-        }
+        },
+        {
+            title: 'Actions',
+            render: (text, {id}) =>
+                <Button onClick={() => handleUpdateRole(id)}
+                        type="primary"
+                        shape="round"
+                        icon={<CodepenCircleFilled/>}
+                        size={'middle'}>
+                    Edit
+                </Button>
+
+        },
+
     ];
 
     useEffect(() => {
@@ -99,22 +113,54 @@ const AdminRole = () => {
 
     }
 
+    const handleUpdateRole = async (id) => {
+        const result = await api.getRole(id)
+
+        if (result.error) {
+
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+
+        const data = result.data as GetRoleResponse
+        setRole(data.role)
+        setVisibleModal(true)
+    }
+    const handleCreateRole = async (id) => {
+
+        setRole({} as Role)
+        setVisibleModal(true)
+    }
+
     return (
         <div>
-            <p style={{marginBottom: '40px'}} className={'title-page'}>Role Management</p>
-
+            <p className={'title-page'}>Role Management</p>
+            <Button onClick={handleCreateRole} style={{marginBottom: '20px', float: 'right'}}
+                    type="primary"
+                    shape="round"
+                    icon={<PlusCircleFilled/>}
+                    size={'middle'}>
+                Create
+            </Button>
             <Table
                 rowKey="id"
                 dataSource={roles}
                 columns={columns}
                 pagination={false}/>
-            <RoleModal visible={visibleModal}
-                       setShowModal={setVisibleModal}
-                       dataModal={role}
-                       permissions={permissions}
-                       setLoading={dispatchLoading}
-                       refresh={init}
-            />
+            {
+                visibleModal && <RoleModal visible={visibleModal}
+                                           setShowModal={setVisibleModal}
+                                           dataModal={role}
+                                           permissions={permissions}
+                                           setLoading={dispatchLoading}
+                                           refresh={init}
+                />
+            }
         </div>
     );
 }

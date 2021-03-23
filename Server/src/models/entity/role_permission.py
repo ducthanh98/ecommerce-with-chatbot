@@ -1,10 +1,11 @@
 import time
+from dataclasses import dataclass
 
 from sqlalchemy import func, ForeignKey
 
 from ...app import db
 
-
+@dataclass
 class RolePermissionModel(db.Model):
     __tablename__ = 'role_permissions'
 

@@ -6,9 +6,11 @@ from .....models.entity import RoleModel, RolePermissionModel
 class RoleManager:
     def build_role_query(self, opts):
         query = RoleModel.query
+        if 'id' in opts:
+            query = query.filter_by(id=opts['id'])
 
         if 'activate' in opts:
-            query = query.filter(activate=opts['activate'])
+            query = query.filter_by(activate=opts['activate'])
 
         return query
 
@@ -17,6 +19,12 @@ class RoleManager:
 
         roles = query.all()
         return roles
+
+    def get_role(self, opts):
+        query = self.build_role_query(opts)
+
+        role = query.first()
+        return role
 
     def create_role(self, data):
         session = db.session
