@@ -7,12 +7,13 @@ import {SET_LOADING} from "../../utils/store/reducers/loading";
 import {Menu} from "./customer/Menu";
 import {SET_AUTHENTICATE} from "../../utils/store/reducers/user";
 import {useRouter} from "next/router";
-import {Layout} from "antd";
+import {Layout, notification} from "antd";
 import Navbar from "./admin/Navbar";
 import AdminHeader from "./admin/Header"
+import {http} from "../../core/http";
+import {User} from "../../utils/models/User";
 
-export const PageLayout = ({children, logged_in, user_info}) => {
-
+const PageLayout = ({children, token}) => {
     const {loading, user} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [userState, dispatchUser] = user
@@ -21,20 +22,38 @@ export const PageLayout = ({children, logged_in, user_info}) => {
 
 
     useEffect(() => {
-        const body = {type: SET_AUTHENTICATE, payload: {logged_in, user_info}}
-        dispatchUser(body)
+        init()
+
+    }, [])
+
+
+    const init = async () => {
+        const payload = {type: SET_LOADING, payload: true}
+        dispatchLoading(payload)
+
+        const response = await http.get<User>(`user-api/current`)
+        if (response.error) {
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: response.data
+            });
+        }
+        dispatchUser({type: SET_AUTHENTICATE, payload: {logged_in: true, user_info: response.data}})
 
         setTimeout(() => {
             const payload = {type: SET_LOADING, payload: false}
             dispatchLoading(payload)
         }, 1000)
-
-    }, [])
+    }
 
 
     useEffect(() => {
         if (router.asPath.includes('admin')) {
             setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
         }
     }, [router.asPath]);
 
@@ -81,11 +100,11 @@ export const PageLayout = ({children, logged_in, user_info}) => {
     )
 }
 
-PageLayout.getInitialProps = async ({req}) => {
-    const {token} = req.cookies
-    if (!token) {
-        return {logged_in: false, user_info: {}}
-    }
+PageLayout.getInitialProps = ({req}) => {
+    const {cookies} = req ? req : {}
+    const {token} = cookies
 
-    return {logged_in: true, user_info: {}}
+    return {token}
 }
+
+export default PageLayout

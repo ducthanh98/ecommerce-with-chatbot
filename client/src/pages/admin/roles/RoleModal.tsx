@@ -50,6 +50,7 @@ export const RoleModal = (props: Props) => {
     };
 
     const handleSelectPermission = (e: CheckboxChangeEvent) => {
+        debugger
         if (e.target.checked) {
             selectIds.push(e.target.value)
         } else {
@@ -65,8 +66,10 @@ export const RoleModal = (props: Props) => {
                         <>
 
                             <Checkbox
+                                key={permission.code}
                                 defaultChecked={dataModal.role_permissions?.some(x => x.permission_id == permission.id)}
-                                value={permission.id} onChange={handleSelectPermission}>
+                                value={permission.id}
+                                onChange={handleSelectPermission}>
                                 {permission.code}
                             </Checkbox>
                             <br/>
@@ -88,7 +91,7 @@ export const RoleModal = (props: Props) => {
         {
             key: 0,
             label: "Name",
-            initialValue: dataModal.name,
+            initialValue: dataModal.name ? dataModal.name : '',
             name: "name",
             rules: [
                 {
@@ -102,23 +105,23 @@ export const RoleModal = (props: Props) => {
             key: 1,
             label: "Description ",
             name: "description",
-            initialValue: dataModal.description,
+            initialValue: dataModal.description ? dataModal.description : '',
             render: <Input.TextArea/>
         },
         {
-            key: 3,
+            key: 2,
             label: "Activate ",
             name: "activate",
             render: <Checkbox value={'true'} onChange={handleActivateUser} defaultChecked={dataModal.activate}/>
         },
         {
-            key: 4,
+            key: 3,
             label: "Permissions ",
             name: "permissions",
             render: renderCheckboxPermissions()
         },
         {
-            key: 5,
+            key: 4,
             className: "btn-wrap",
             layout: tailLayout,
             render: renderBtnSubmit()
@@ -140,7 +143,7 @@ export const RoleModal = (props: Props) => {
             }
         }
 
-        for (let i = 0; i < dataModal.role_permissions.length; i++) {
+        for (let i = 0; i < dataModal.role_permissions?.length; i++) {
             if (!values.permissions || !values.permissions.includes(dataModal.role_permissions[i].permission_id)) {
                 payload.delete_permissions.push(dataModal.role_permissions[i].permission_id)
             }

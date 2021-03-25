@@ -18,7 +18,7 @@ const AdminRole = () => {
     const [roles, setRoles] = useState([])
     const [role, setRole] = useState({} as Role)
     const [filter, setFilter] = useState({} as any)
-    const [visibleModal, setVisibleModal] = useState(true)
+    const [visibleModal, setVisibleModal] = useState(false)
     const router = useRouter()
 
     const columns = [

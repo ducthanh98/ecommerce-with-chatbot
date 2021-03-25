@@ -23,8 +23,8 @@ class RoleModel(db.Model):
     name = db.Column(db.VARCHAR(50))
     description = db.Column(db.Text)
     activate = db.Column(db.Boolean)
-    created_at = db.Column(db.TIMESTAMP(), server_default=func.now())
-    updated_at = db.Column(db.TIMESTAMP(), onupdate=func.now())
+    created_at = db.Column(db.TIMESTAMP(), default=func.now())
+    updated_at = db.Column(db.TIMESTAMP(), onupdate=func.now(), default=func.now())
     role_permissions = db.relationship('RolePermissionModel', lazy=True)
 
     def __init__(self, name, description, activate=True):

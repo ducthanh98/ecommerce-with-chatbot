@@ -1,4 +1,3 @@
-import {storage} from '../storage';
 import {Messages} from './notification';
 import {IResponse} from "../../utils/models/Response";
 
@@ -31,11 +30,6 @@ const commonCall = async <T>(
             credentials: 'include',
             headers: Object.assign({Accept: 'application/json', 'Content-Type': 'application/json'}, headers || {}),
         };
-
-        const token = await storage.get('token');
-        if (token) {
-            options.headers = Object.assign(options.headers, {Authorization: `Bearer ${token}`});
-        }
 
         if (data instanceof FormData || data instanceof ArrayBuffer) {
             options.body = data;

@@ -25,8 +25,7 @@ class UserManager:
             query = query.join(RolePermissionModel).join(RoleModel). \
                 join(UserRoleModel). \
                 filter(UserRoleModel.user_id == opts['user_id']). \
-                filter(RoleModel.activate is True). \
-                filter(PermissionModel.activate is True)
+                filter(RoleModel.activate == True)
 
         return query
 

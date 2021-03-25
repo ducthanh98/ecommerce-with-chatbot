@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Menu, Layout} from "antd";
 import {ContainerTwoTone} from '@ant-design/icons'
 import {AdminActiveLink} from './Router'
+import {StoreContext} from "../../../utils/store/Store";
 
 const {Sider} = Layout;
 
@@ -26,79 +27,75 @@ const styles = {
 }
 
 const Navbar = () => {
+    const {user} = useContext(StoreContext)
+    const [userState, dispatchUser] = user
+
+    const [force, setForce] = useState(false)
+    useEffect(() => {
+        setForce(false)
+        setTimeout(() => {
+            setForce(true)
+        })
+    }, [userState])
+
+
+    const checkPermission = (codes: string[]) => {
+        const permissions = userState.user_info.permissions ? userState.user_info.permissions : []
+
+        for (let i = 0; i < codes.length; i++) {
+            if (permissions.includes(codes[i])) {
+                return true
+            }
+        }
+        return false
+    }
+
     const logout = () => {
 
     }
 
     return (
+        <>
+            {
+                force && <Sider>
+                    <div style={styles.logo}>
+                        <ContainerTwoTone style={{paddingRight: '10px'}}/>
+                        Shop
+                    </div>
+                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                        {
+                            checkPermission(['GET_USER', 'POST_USER', 'UPDATE_USER']) &&
+                            <Menu.Item key="1">
+                                <AdminActiveLink href={'/admin/users'}>
+                                    <img src='/images/post_add-24px.svg' alt={'User'}/> &nbsp;
+                                    <span>User</span>
+                                </AdminActiveLink>
 
-        <Sider>
-            <div style={styles.logo}>
-                <ContainerTwoTone style={{paddingRight: '10px'}}/>
-                Shop
-            </div>
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-                {/* <SubMenu
-                                    key="1"
-                                    title={
-                                        <Link to={''}>
-                                            <img src={require('../assets/images/business-24px.svg')} alt={'business'}/> &nbsp;
-                                            <span>Quản lý dự án</span>
-                                        </Link>
-                                    }
-                                >
-                                    <Menu.Item key="6">Quản lý tòa nhà</Menu.Item>
-                                    <Menu.Item key="7">Quản lý mặt bằng</Menu.Item>
-                                </SubMenu>
+                            </Menu.Item>
+                        }
+                        {
+                            checkPermission(['GET_ROLE', 'CREATE_ROLE', 'UPDATE_ROLE']) &&
+                            <Menu.Item key="2">
+                                <AdminActiveLink href={'/admin/roles'}>
+                                    <img src='/images/post_add-24px.svg' alt={'Role'}/> &nbsp;
+                                    <span>Role</span>
+                                </AdminActiveLink>
+                            </Menu.Item>
+                        }
+                        <Menu.Item key="5">
+                            {/*<Link to={'/login'} onClick={logout}>*/}
+                            <img src='/images/power_settings_new-24px.svg' alt={'logout'}/> &nbsp;
+                            <span>Đăng xuất</span>
+                            {/*</Link>*/}
+                        </Menu.Item>
+                    </Menu>
+                    <img style={styles.rectangle} src='/images/Rectangle 813.png' alt='rectangle'/>
+                </Sider>
+            }
 
-                        <SubMenu
-                            key="2"
-                            title={
-                                <Link to={''}>
-                                    <img src={require('../assets/images/Icon_quản_lý_căn_hộ.svg')} alt={'business'}/> &nbsp;
-                                    <span>Quản lý căn hộ</span>
-                                </Link>
-                            }
-                        >
-                            <Menu.Item key="3">Tom</Menu.Item>
-                            <Menu.Item key="4">Bill</Menu.Item>
-                            <Menu.Item key="5">Alex</Menu.Item>
-                        </SubMenu> */}
-                {/*<Menu.Item key="1">*/}
-                {/*    <Link to={'/infor-management'}>*/}
-                {/*        <img src={require('../assets/images/business-24px.svg')} alt={'business'}/> &nbsp;*/}
-                {/*        <span>Quản lý thông tin</span>*/}
-                {/*    </Link>*/}
-                {/*</Menu.Item>*/}
+        </>
 
-                {/*<Menu.Item key="3">*/}
-                {/*    <Link to={'/customer-management'}>*/}
-                {/*        <img src={require('../assets/images/contacts-24px.svg')} alt={'contact'}/> &nbsp;*/}
-                {/*        <span>Quản lý người mua</span>*/}
-                {/*    </Link>*/}
-                {/*</Menu.Item>*/}
-                <Menu.Item key="1">
-                    <AdminActiveLink href={'/admin/users'}>
-                        <img src='/images/post_add-24px.svg' alt={'User'}/> &nbsp;
-                        <span>User</span>
-                    </AdminActiveLink>
 
-                </Menu.Item>
-                <Menu.Item key="2">
-                    <AdminActiveLink href={'/admin/roles'}>
-                        <img src='/images/post_add-24px.svg' alt={'Role'}/> &nbsp;
-                        <span>Role</span>
-                    </AdminActiveLink>
-                </Menu.Item>
-                <Menu.Item key="5">
-                    {/*<Link to={'/login'} onClick={logout}>*/}
-                    <img src='/images/power_settings_new-24px.svg' alt={'logout'}/> &nbsp;
-                    <span>Đăng xuất</span>
-                    {/*</Link>*/}
-                </Menu.Item>
-            </Menu>
-            <img style={styles.rectangle} src='/images/Rectangle 813.png' alt='rectangle'/>
-        </Sider>
     );
 
 }
