@@ -40,16 +40,17 @@ export const getRouteQuery = (filter, router: NextRouter) => {
             query[key] = filter[key]
         }
     })
+
+    query.limit = query.limit ? query.limit : 20
+    if (!query.page) {
+        query.page = '1'
+    }
     return Object.assign({}, router.query, query)
 }
 
 export const handleUpdateRouteQuery = (router: NextRouter, filter: any, append = {}) => {
     let params = {...router.query}
     params = Object.assign(params, filter, append)
-
-    if (!params.page) {
-        params.page = '1'
-    }
 
     let query = {}
     for (const key in params) {

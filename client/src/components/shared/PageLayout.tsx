@@ -1,7 +1,7 @@
 import {Header as CustomerHeader} from "./customer/Header";
 import {Footer} from "./customer/Footer";
 import {Loading} from "./customer/Loading";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useMemo, useState} from "react";
 import {StoreContext} from "../../utils/store/Store";
 import {SET_LOADING} from "../../utils/store/reducers/loading";
 import {Menu} from "./customer/Menu";
@@ -47,6 +47,14 @@ const PageLayout = ({children, token}) => {
             dispatchLoading(payload)
         }, 1000)
     }
+
+    useMemo(() => {
+        if (router.asPath.includes('admin')) {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }, [])
 
 
     useEffect(() => {

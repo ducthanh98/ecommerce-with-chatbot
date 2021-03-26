@@ -33,3 +33,22 @@ export interface CreateRoleResponse {
 export interface FetchPermissionResponse {
     permissions: Permission[];
 }
+
+export interface User {
+    activate: boolean;
+    address: string;
+    avatar: string;
+    country: string;
+    created_at: string;
+    email: string;
+    fullname: string;
+    id: number;
+    password: string;
+    updated_at: string;
+    zipcode: string;
+}
+
+export interface FetchUserResponse {
+    count: number;
+    users: User[];
+}

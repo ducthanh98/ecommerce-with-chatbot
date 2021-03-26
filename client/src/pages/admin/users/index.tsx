@@ -6,19 +6,19 @@ import {Action} from "../../../utils/models/reducer.model";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {StoreContext} from "../../../utils/store/Store";
 import {getRouteQuery, handleUpdateRouteQuery} from "../../../core/utils/url";
-import {FetchPermissionResponse, FetchRoleResponse, GetRoleResponse, Role} from "./model";
-import {RoleModal} from "./RoleModal";
-import {CodepenCircleFilled, PlusCircleFilled} from "@ant-design/icons";
+import {FetchRoleResponse, FetchUserResponse, GetRoleResponse, Role, User} from "./model";
 import {UserModal} from "./UserModel";
+import {CodepenCircleFilled, PlusCircleFilled} from "@ant-design/icons";
 
 
 const AdminUser = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
-    const [permissions, setPermissions] = useState([])
-    const [users, setUsers] = useState([])
+    const [roles, setRoles] = useState([])
+    const [users, setUsers] = useState([] as User[])
+    const [count, setCount] = useState(0)
     const [user, setUser] = useState({} as Role)
-    const [filter, setFilter] = useState({} as any)
+    const [filter, setFilter] = useState({})
     const [visibleModal, setVisibleModal] = useState(false)
     const router = useRouter()
 
@@ -31,8 +31,8 @@ const AdminUser = () => {
         },
         {
             title: 'Email',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'email',
+            key: 'email',
             render: text => <p>{text}</p>,
         },
         {
@@ -64,17 +64,21 @@ const AdminUser = () => {
     ];
 
     useEffect(() => {
-        setFilter({...getRouteQuery(filter, router)})
-        init()
+        setFilter(getRouteQuery(filter, router))
     }, [])
+
+    useEffect(() => {
+        if (Object.keys(filter).length < 1) return
+        init()
+    }, [filter])
 
     const init = async () => {
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
+        handleUpdateRouteQuery(router, filter)
         await Promise.all([
-            fetchUsers(filter),
+            fetchUsers(),
             fetchRoles()
         ])
-        handleUpdateRouteQuery(router, filter)
         dispatchLoading({type: SET_LOADING, payload: false} as Action)
     }
 
@@ -95,8 +99,8 @@ const AdminUser = () => {
         setRoles(data.roles)
     }
 
-    const fetchPermissions = async () => {
-        const result = await api.fetchPermissions()
+    const fetchUsers = async () => {
+        const result = await api.fetchUsers(filter)
 
         if (result.error) {
 
@@ -108,39 +112,38 @@ const AdminUser = () => {
             });
 
         }
-
-        const {permissions} = result.data as FetchPermissionResponse
-        setPermissions(permissions)
-
+        const data = result.data as FetchUserResponse
+        setUsers(data.users)
+        setCount(data.count)
     }
 
     const handleUpdateUser = async (id) => {
-        const result = await api.getRole(id)
-
-        if (result.error) {
-
-            return notification.error({
-                message: 'Fashion and Clothing Shop',
-                placement: 'topLeft',
-                className: 'custom-notification-antd',
-                description: result.data
-            });
-
-        }
-
-        const data = result.data as GetRoleResponse
-        setRole(data.role)
-        setVisibleModal(true)
+        // const result = await api.getRole(id)
+        //
+        // if (result.error) {
+        //
+        //     return notification.error({
+        //         message: 'Fashion and Clothing Shop',
+        //         placement: 'topLeft',
+        //         className: 'custom-notification-antd',
+        //         description: result.data
+        //     });
+        //
+        // }
+        //
+        // const data = result.data as GetRoleResponse
+        // setRoles(data.roles)
+        // setVisibleModal(true)
     }
     const handleCreateRole = async (id) => {
 
-        setRole({} as Role)
-        setVisibleModal(true)
+        // setRole({} as Role)
+        // setVisibleModal(true)
     }
 
     return (
         <div>
-            <p className={'title-page'}>Role Management</p>
+            <p className={'title-page'}>User Management</p>
             <Button onClick={handleCreateRole} style={{marginBottom: '20px', float: 'right'}}
                     type="primary"
                     shape="round"
