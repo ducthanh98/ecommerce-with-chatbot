@@ -135,35 +135,25 @@ const AdminUser = () => {
         // setRoles(data.roles)
         // setVisibleModal(true)
     }
-    const handleCreateRole = async (id) => {
 
-        // setRole({} as Role)
-        // setVisibleModal(true)
-    }
 
     return (
         <div>
             <p className={'title-page'}>User Management</p>
-            <Button onClick={handleCreateRole} style={{marginBottom: '20px', float: 'right'}}
-                    type="primary"
-                    shape="round"
-                    icon={<PlusCircleFilled/>}
-                    size={'middle'}>
-                Create
-            </Button>
             <Table
                 rowKey="id"
                 dataSource={users}
                 columns={columns}
-                pagination={false}/>
+                pagination={true}/>
             {
-                visibleModal && <UserModal
-                    // visible={visibleModal}
-                    //                        setShowModal={setVisibleModal}
-                    //                        dataModal={user}
-                    //                        permissions={permissions}
-                    //                        setLoading={dispatchLoading}
-                    //                        refresh={init}
+                visibleModal &&
+                <UserModal
+                    visible={visibleModal}
+                    setShowModal={setVisibleModal}
+                    dataModal={user}
+                    roles={roles}
+                    setLoading={dispatchLoading}
+                    refresh={init}
                 />
             }
         </div>

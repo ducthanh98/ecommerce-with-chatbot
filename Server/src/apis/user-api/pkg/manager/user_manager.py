@@ -62,3 +62,20 @@ class UserManager:
 
         permissions = query.all()
         return permissions
+
+    def update_user_roles(self, data,user_id):
+        session = db.session
+
+        session.query(UserRoleModel). \
+            filter(UserRoleModel.role_id.in_(data['delete_roles'])). \
+            delete(synchronize_session='fetch')
+
+        user_roles = []
+        roles = data['update_roles']
+
+        for role in roles:
+            user_role = RolePermissionModel(user_id=user_id, role_id=role)
+            user_roles.append(user_role)
+
+        session.add_all(user_roles)
+        session.commit()

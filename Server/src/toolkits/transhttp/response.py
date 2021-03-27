@@ -1,7 +1,8 @@
 from flask import jsonify, request
+from http import HTTPStatus
 
 
-def response_json(status_code, body):
+def response_json(body,status_code=HTTPStatus.OK):
     return jsonify(body), status_code
 
 

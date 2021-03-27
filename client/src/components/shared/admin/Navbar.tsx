@@ -82,6 +82,15 @@ const Navbar = () => {
                                 </AdminActiveLink>
                             </Menu.Item>
                         }
+                        {
+                            checkPermission(['CREATE_CATEGORY', 'UPDATE_CATEGORY']) &&
+                            <Menu.Item key="3">
+                                <AdminActiveLink href={'/admin/categories'}>
+                                    <img src='/images/post_add-24px.svg' alt={'Categories'}/> &nbsp;
+                                    <span>Categories</span>
+                                </AdminActiveLink>
+                            </Menu.Item>
+                        }
                         <Menu.Item key="5">
                             {/*<Link to={'/login'} onClick={logout}>*/}
                             <img src='/images/power_settings_new-24px.svg' alt={'logout'}/> &nbsp;
