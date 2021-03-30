@@ -1,5 +1,8 @@
 import datetime
+from typing import List
+
 from sqlalchemy import func
+from .user_role import UserRoleModel
 
 from ...app import db
 
@@ -19,6 +22,7 @@ class UserModel(db.Model):
     activate: bool
     created_at: datetime
     updated_at: datetime
+    user_roles: List[UserRoleModel]
 
     __tablename__ = 'users'
 
@@ -33,6 +37,7 @@ class UserModel(db.Model):
     activate = db.Column(db.Boolean())
     created_at = db.Column(db.TIMESTAMP(), server_default=func.now())
     updated_at = db.Column(db.TIMESTAMP(), onupdate=func.now())
+    user_roles = db.relationship("UserRoleModel", lazy=True)
 
     def __init__(self, email, password, fullname, address='', country='', zipcode='', avatar='', activate=True):
         self.email = email

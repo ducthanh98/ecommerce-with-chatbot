@@ -6,8 +6,8 @@ import {Action} from "../../../utils/models/reducer.model";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {StoreContext} from "../../../utils/store/Store";
 import {getRouteQuery, handleUpdateRouteQuery} from "../../../core/utils/url";
-import {FetchRoleResponse, FetchUserResponse, GetRoleResponse, Role, User} from "./model";
-import {UserModal} from "./UserModel";
+import {FetchRoleResponse, FetchUserResponse, GetRoleResponse, GetUserResponse, Role, User} from "./model";
+import {UserModal} from "./UserModal";
 import {CodepenCircleFilled, PlusCircleFilled} from "@ant-design/icons";
 
 
@@ -17,7 +17,7 @@ const AdminUser = () => {
     const [roles, setRoles] = useState([])
     const [users, setUsers] = useState([] as User[])
     const [count, setCount] = useState(0)
-    const [user, setUser] = useState({} as Role)
+    const [user, setUser] = useState({} as User)
     const [filter, setFilter] = useState({})
     const [visibleModal, setVisibleModal] = useState(false)
     const router = useRouter()
@@ -118,22 +118,22 @@ const AdminUser = () => {
     }
 
     const handleUpdateUser = async (id) => {
-        // const result = await api.getRole(id)
-        //
-        // if (result.error) {
-        //
-        //     return notification.error({
-        //         message: 'Fashion and Clothing Shop',
-        //         placement: 'topLeft',
-        //         className: 'custom-notification-antd',
-        //         description: result.data
-        //     });
-        //
-        // }
-        //
-        // const data = result.data as GetRoleResponse
-        // setRoles(data.roles)
-        // setVisibleModal(true)
+        const result = await api.getUser(id)
+
+        if (result.error) {
+
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+
+        const data = result.data as GetUserResponse
+        setUser(data.user)
+        setVisibleModal(true)
     }
 
 

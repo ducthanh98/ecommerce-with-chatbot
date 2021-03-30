@@ -14,6 +14,7 @@ class CategoryModel(db.Model):
     activate: bool
     created_at: datetime
     updated_at: datetime
+    description: str
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, )
     name = db.Column(db.VARCHAR(50))
@@ -21,7 +22,10 @@ class CategoryModel(db.Model):
     activate = db.Column(db.Boolean())
     created_at = db.Column(db.TIMESTAMP(), default=func.now())
     updated_at = db.Column(db.TIMESTAMP(), onupdate=func.now(), default=func.now())
+    description = db.Column(db.Text)
 
-    def __init__(self, name, image, activate=True):
+    def __init__(self, name, description, image, activate=True):
         self.name = name
         self.image = image
+        self.description = description
+        self.activate = activate

@@ -1,12 +1,11 @@
 from flask_cors import CORS
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_file
 from flask_marshmallow import Marshmallow
 from flask_json_schema import JsonSchema
 
 from .apis import server
 from flask_sqlalchemy import SQLAlchemy
 import os
-
 
 app = Flask(__name__)
 
@@ -26,3 +25,9 @@ server.register(app)
 @app.route('/', methods=['GET'])
 def init():
     return jsonify({'msg': 'hello'})
+
+
+@app.route('/images/<filename>')
+def get_image(filename):
+    path = f'{os.getenv("UPLOAD_FOLDER")}'
+    return send_file(os.path.join('../' + path, filename))

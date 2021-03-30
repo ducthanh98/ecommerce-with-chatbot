@@ -5,5 +5,11 @@ import {CreateRoleResponse, FetchPermissionResponse, FetchRoleResponse, GetRoleR
 export const api = {
     fetchCategories: () => {
         return http.get<FetchPermissionResponse>(`category-api`)
-    }
+    },
+    createCategory: (payload) => {
+        return http.post<FetchPermissionResponse>(`category-api`, payload)
+    },
+    updateCategory: (payload) => {
+        return http.put<FetchPermissionResponse>(`category-api/${payload.id}`, payload)
+    },
 }

@@ -1,5 +1,6 @@
 import {Layout, Avatar} from "antd";
-import React from "react";
+import React, {useContext} from "react";
+import {StoreContext} from "../../../utils/store/Store";
 
 const {Header} = Layout;
 
@@ -47,21 +48,13 @@ const styles = {
 
 }
 const CustomHeader = (props) => {
-
+    const {user} = useContext(StoreContext)
+    const [userState, dispatchUser] = user
     // @ts-ignore
     return (
         <Header style={styles.headerWrap}>
-            {/*<Dropdown overlay={renderMenu}*/}
-            {/*          trigger={['click']}*/}
-            {/*          onVisibleChange={(e)=>{*/}
-            {/*              setTimeout(()=>addEventListener(e))*/}
-            {/*          }}>*/}
-            {/*    <Badge count={1} className="ant-dropdown-link">*/}
-            {/*        <BellTwoTone style={{fontSize:24}}/>*/}
-            {/*    </Badge>*/}
-            {/*</Dropdown>*/}
 
-            <span style={styles.username}>ThanhLD</span>
+            <span style={styles.username}>{userState?.user_info?.user_info?.email}</span>
             <Avatar style={styles.avatar} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
 
         </Header>

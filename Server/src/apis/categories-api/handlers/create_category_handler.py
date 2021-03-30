@@ -1,20 +1,18 @@
 from http import HTTPStatus
-
 import jsonschema
 from flask import jsonify, request
-
 from ....toolkits import transhttp
-from ..pkg.dto.update_role_form import update_role_schema
+from ..pkg.dto.create_category_form import create_category_schema
 from ....toolkits.constant import MESSAGE
-from ..pkg import role_manager
+from ..pkg.manager import category_manager
 
 
-def update_role_handler(role_id):
+def create_category_handler():
     try:
         data = request.get_json()
-        jsonschema.validate(data, schema=update_role_schema, format_checker=jsonschema.FormatChecker())
+        jsonschema.validate(data, schema=create_category_schema, format_checker=jsonschema.FormatChecker())
 
-        role_manager.update_role(data, role_id)
+        category_manager.create_category(data)
 
         return jsonify({"success": True})
 
@@ -26,4 +24,4 @@ def update_role_handler(role_id):
 
     except Exception as e:
         print(e)
-        return jsonify({"error": MESSAGE['MESSAGE_SERVER_INTERNAL']})
+        return transhttp.response_error(HTTPStatus.INTERNAL_SERVER_ERROR, MESSAGE['MESSAGE_SERVER_INTERNAL'])

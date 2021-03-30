@@ -7,8 +7,8 @@ class UserManager:
     def build_user_query(self, opts):
         query = UserModel.query
 
-        if 'id' in opts:
-            query = query.filter_by(id=opts['id'])
+        if 'user_id' in opts:
+            query = query.filter_by(id=opts['user_id'])
 
         if 'password' in opts:
             query = query.filter_by(password=opts['password'])
@@ -65,6 +65,10 @@ class UserManager:
 
     def update_user_roles(self, data,user_id):
         session = db.session
+
+        session.query(UserModel).filter(UserModel.id == user_id).update({
+            RoleModel.activate: data['activate']
+        })
 
         session.query(UserRoleModel). \
             filter(UserRoleModel.role_id.in_(data['delete_roles'])). \

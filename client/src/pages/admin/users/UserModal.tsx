@@ -1,10 +1,10 @@
-import {Permission, Role} from "../roles/model";
+import {Role} from "../roles/model";
 import {useState} from "react";
 import {Button, Checkbox, Form, Input, Modal, notification} from "antd";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {Action} from "../../../utils/models/reducer.model";
-import {api} from "../roles/api";
+import {api} from "./api";
 import {User} from "./model";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
     refresh: Function
 }
 
-export const UserModal = () => {
+export const UserModal = (props: Props) => {
     const {dataModal, visible, setShowModal, roles, setLoading, refresh} = props
     const [activate, setActivate] = useState(dataModal.activate)
     let selectIds = []
@@ -83,10 +83,17 @@ export const UserModal = () => {
 
     const formItems = [
         {
+            key: 0,
+            label: "Email",
+            name: "email",
+            initialValue: dataModal.email,
+            render: <Input disabled={true}/>
+        },
+        {
             key: 1,
             label: "Activate ",
             name: "activate",
-            render:  <Checkbox value={'true'} onChange={handleActivateUser} defaultChecked={dataModal.activate}/>
+            render: <Checkbox value={'true'} onChange={handleActivateUser} defaultChecked={dataModal.activate}/>
         },
         {
             key: 3,
@@ -106,29 +113,23 @@ export const UserModal = () => {
     const onFinish = async (values) => {
 
         setLoading({type: SET_LOADING, payload: true} as Action)
-        values.permissions = selectIds
+        values.roles = selectIds
 
-        const payload = {...dataModal, ...values, delete_permissions: [], update_permissions: [], activate}
+        const payload = {...dataModal, ...values, delete_roles: [], update_roles: [], activate}
 
-        for (let i = 0; i < values.permissions.length; i++) {
-            if (!dataModal.role_permissions || !dataModal.role_permissions.includes(values.permissions[i])) {
-                payload.update_permissions.push(values.permissions[i])
+        for (let i = 0; i < values.roles.length; i++) {
+            if (!dataModal.user_roles || !dataModal.user_roles.includes(values.roles[i])) {
+                payload.update_roles.push(values.roles[i])
             }
         }
 
-        for (let i = 0; i < dataModal.role_permissions?.length; i++) {
-            if (!values.permissions || !values.permissions.includes(dataModal.role_permissions[i].permission_id)) {
-                payload.delete_permissions.push(dataModal.role_permissions[i].permission_id)
+        for (let i = 0; i < dataModal.user_roles?.length; i++) {
+            if (!values.roles || !values.roles.includes(dataModal.user_roles[i].role_id)) {
+                payload.delete_roles.push(dataModal.user_roles[i].role_id)
             }
         }
 
-
-        let result
-        if (!payload.id) {
-            result = await api.createRole(payload)
-        } else {
-            result = await api.updateRole(payload)
-        }
+        const result = await api.updateUser(payload)
 
         if (result.error) {
             setLoading({type: SET_LOADING, payload: false} as Action)
@@ -157,7 +158,7 @@ export const UserModal = () => {
     return (
         <div>
             <Modal
-                title={'Role'}
+                title={'User'}
                 visible={visible}
                 onCancel={() => setShowModal(false)}
                 footer=''

@@ -8,13 +8,14 @@ import {StoreContext} from "../../../utils/store/Store";
 import {Role} from "./model";
 import {CategoryModal} from "./CategoryModal";
 import {CodepenCircleFilled, PlusCircleFilled} from "@ant-design/icons";
+import Search from "antd/es/input/Search";
 
 
 const AdminRole = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [categories, setCategories] = useState([])
-    const [category, setCategory] = useState({} as Role)
+    const [category, setCategory] = useState({} as any)
     const [filter, setFilter] = useState({} as any)
     const [visibleModal, setVisibleModal] = useState(false)
     const router = useRouter()
@@ -42,7 +43,7 @@ const AdminRole = () => {
         {
             title: 'Actions',
             render: (text, {id}) =>
-                <Button onClick={() => handleUpdateRole(id)}
+                <Button onClick={() => handleShowUpdateCategoryModal(id)}
                         type="primary"
                         shape="round"
                         icon={<CodepenCircleFilled/>}
@@ -77,28 +78,15 @@ const AdminRole = () => {
         dispatchLoading({type: SET_LOADING, payload: false} as Action)
     }
 
-    //
-    //
-    // const handleUpdateRole = async (id) => {
-    //     const result = await api.getRole(id)
-    //
-    //     if (result.error) {
-    //
-    //         return notification.error({
-    //             message: 'Fashion and Clothing Shop',
-    //             placement: 'topLeft',
-    //             className: 'custom-notification-antd',
-    //             description: result.data
-    //         });
-    //
-    //     }
-    //
-    //     const data = result.data as GetRoleResponse
-    //     setRole(data.role)
-    //     setVisibleModal(true)
-    // }
-    const handleCreateCategory = async (id) => {
 
+    const handleShowUpdateCategoryModal = (id) => {
+        const category = categories.find(x => x.id === id)
+
+        setCategory(category)
+        setVisibleModal(true)
+    }
+
+    const handleCreateCategory = async (id) => {
         setVisibleModal(true)
     }
 
@@ -112,17 +100,20 @@ const AdminRole = () => {
                     size={'middle'}>
                 Create
             </Button>
+            <Search placeholder="Search ..." className={'custom-search'} onSearch={init} enterButton/>
             <Table
                 rowKey="id"
                 dataSource={categories}
                 columns={columns}
                 pagination={false}/>
             {
-                visibleModal && <CategoryModal visible={visibleModal}
-                                               setShowModal={setVisibleModal}
-                                               dataModal={category}
-                                               setLoading={dispatchLoading}
-                                               refresh={init}
+                visibleModal &&
+                <CategoryModal
+                    visible={visibleModal}
+                    setShowModal={setVisibleModal}
+                    dataModal={category}
+                    setLoading={dispatchLoading}
+                    refresh={init}
                 />
             }
         </div>

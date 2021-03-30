@@ -5,7 +5,7 @@ import {
     FetchPermissionResponse,
     FetchRoleResponse,
     FetchUserResponse,
-    GetRoleResponse,
+    GetRoleResponse, GetUserResponse,
     Role
 } from "./model";
 
@@ -14,7 +14,12 @@ export const api = {
         return http.get<FetchRoleResponse>(`permission-api/roles?${buildQueryString(payload)}`)
     },
     fetchUsers: (payload) => {
-        console.log(buildQueryString(payload),payload)
         return http.get<FetchUserResponse>(`user-api?${buildQueryString(payload)}`)
     },
+    getUser: (id) => {
+        return http.get<GetUserResponse>(`user-api/${id}`)
+    },
+    updateUser: (payload) => {
+        return http.put<CreateRoleResponse>(`user-api/${payload.id}`, payload)
+    }
 }

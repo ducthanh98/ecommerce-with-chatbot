@@ -30,5 +30,20 @@ class CategoryManager:
         return categories
 
     def create_category(self, category):
-        db.session.add(category)
-        return db.session.commit()
+        session = db.session
+        category_model = CategoryModel(name=category['name'], description=category['description'],image=category['image'])
+        session.add(category_model)
+        return session.commit()
+
+    def update_category(self, category,category_id):
+        session = db.session
+
+        session.query(CategoryModel).filter(CategoryModel.id == category_id).update({
+            CategoryModel.name: category['name'],
+            CategoryModel.description: category['description'],
+            CategoryModel.activate: category['activate'],
+            CategoryModel.image : category['image']
+        })
+
+        session.commit()
+

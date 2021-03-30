@@ -30,10 +30,6 @@ export interface CreateRoleResponse {
     success: boolean;
 }
 
-export interface FetchPermissionResponse {
-    permissions: Permission[];
-}
-
 export interface User {
     activate: boolean;
     address: string;
@@ -46,9 +42,21 @@ export interface User {
     password: string;
     updated_at: string;
     zipcode: string;
+    user_roles: UserRole[];
+
 }
 
 export interface FetchUserResponse {
     count: number;
     users: User[];
+}
+
+export interface UserRole {
+    role_id: number;
+    user_id: number;
+}
+
+
+export interface GetUserResponse {
+    user: User;
 }

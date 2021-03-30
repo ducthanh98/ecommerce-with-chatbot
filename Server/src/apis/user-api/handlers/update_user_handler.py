@@ -14,7 +14,7 @@ def update_user_handler(user_id):
         data = request.get_json()
         jsonschema.validate(data, schema=update_user_schema, format_checker=jsonschema.FormatChecker())
 
-        user_manager.update_role(data, user_id)
+        user_manager.update_user_roles(data, user_id)
 
         return jsonify({"success": True})
 
