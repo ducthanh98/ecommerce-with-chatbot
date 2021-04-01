@@ -91,7 +91,25 @@ const Navbar = () => {
                                 </AdminActiveLink>
                             </Menu.Item>
                         }
-                        <Menu.Item key="5">
+                        {
+                            checkPermission(['CREATE_PRODUCT', 'UPDATE_PRODUCT']) &&
+                            <Menu.Item key="4">
+                                <AdminActiveLink href={'/admin/products'}>
+                                    <img src='/images/post_add-24px.svg' alt={'Categories'}/> &nbsp;
+                                    <span>Products</span>
+                                </AdminActiveLink>
+                            </Menu.Item>
+                        }
+                        {
+                            checkPermission(['UPDATE_ORDER','FETCH_ORDER']) &&
+                            <Menu.Item key="5">
+                                <AdminActiveLink href={'/admin/products'}>
+                                    <img src='/images/post_add-24px.svg' alt={'Categories'}/> &nbsp;
+                                    <span>Products</span>
+                                </AdminActiveLink>
+                            </Menu.Item>
+                        }
+                        <Menu.Item key="6">
                             {/*<Link to={'/login'} onClick={logout}>*/}
                             <img src='/images/power_settings_new-24px.svg' alt={'logout'}/> &nbsp;
                             <span>Đăng xuất</span>

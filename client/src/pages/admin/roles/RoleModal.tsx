@@ -50,7 +50,6 @@ export const RoleModal = (props: Props) => {
     };
 
     const handleSelectPermission = (e: CheckboxChangeEvent) => {
-        debugger
         if (e.target.checked) {
             selectIds.push(e.target.value)
         } else {
@@ -130,7 +129,6 @@ export const RoleModal = (props: Props) => {
 
 
     const onFinish = async (values) => {
-        debugger
 
         setLoading({type: SET_LOADING, payload: true} as Action)
         values.permissions = selectIds
