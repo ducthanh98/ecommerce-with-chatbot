@@ -1,4 +1,4 @@
-from .....models.entity import CategoryModel
+from .....models.entity import CategoryModel,ProductVariantModel
 from .....app import db
 
 
@@ -36,12 +36,35 @@ class ProductManager:
         session.add(product_base)
         session.flush()
 
-        attribute_model_map = []
+        attribute_model_map = {}
 
         for attribute_model in attribute_models:
-            # attribute_model_map
+            for attribute_value in attribute_model.product_attributes_values:
+                key = f'{attribute_model.name}-{attribute_value.value}'
+                attribute_model_map[key] = attribute_value.id
 
-        session.rollback()
+        variant_models = []
+        for variant in variants:
+            attribute1_key = f'{variant["attribute1_name"]}-{variant["attribute1_value"]}'
+            attribute2_key = f'{variant["attribute2_name"]}-{variant["attribute2_value"]}'
+            attribute3_key = f'{variant["attribute3_name"]}-{variant["attribute3_value"]}'
+
+            attribute1_id = attribute_model_map[attribute1_key] if attribute1_key in attribute_model_map else None
+            attribute2_id = attribute_model_map[attribute2_key] if attribute2_key in attribute_model_map else None
+            attribute3_id = attribute_model_map[attribute3_key] if attribute3_key in attribute_model_map else None
+
+            variant_model = ProductVariantModel(name=variant["variant_name"],
+                                                price=variant["price"],
+                                                quantity=variant["quantity"],
+                                                attribute1_id=attribute1_id,
+                                                attribute2_id=attribute2_id,
+                                                attribute3_id=attribute3_id,
+                                                product_base_id=product_base.id)
+            variant_models.append(variant_model)
+
+        session.add_all(variant_models)
+        session.commit()
+
     def update_category(self, category, category_id):
         session = db.session
 

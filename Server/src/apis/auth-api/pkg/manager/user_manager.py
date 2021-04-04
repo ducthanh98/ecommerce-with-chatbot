@@ -1,8 +1,6 @@
 from .....models.entity import UserModel, PermissionModel, RolePermissionModel, RoleModel, UserRoleModel
 from .....app import db
 
-from dataclasses import is_dataclass
-
 
 class UserManager:
 

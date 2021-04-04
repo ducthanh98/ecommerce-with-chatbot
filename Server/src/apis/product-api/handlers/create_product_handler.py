@@ -28,7 +28,7 @@ def create_product_handler():
                     attribute_value_model = ProductAttributeValueModel(value=value)
                     attribute_value_models.append(attribute_value_model)
 
-                attribute_model = ProductAttributeModel(name=attribute["name"],
+                attribute_model = ProductAttributeModel(name=attribute["attribute"],
                                                         product_attributes_values=attribute_value_models)
                 attribute_models.append(attribute_model)
 

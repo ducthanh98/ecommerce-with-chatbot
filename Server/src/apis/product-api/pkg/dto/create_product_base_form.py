@@ -31,7 +31,7 @@ create_product_schema = {
             "attribute": {
               "type": "string"
             },
-            "value": {
+            "values": {
               "type": "array",
               "items": [
                 {
@@ -47,7 +47,7 @@ create_product_schema = {
             "key",
             "name",
             "attribute",
-            "value"
+            "values"
           ]
         }
       ]
