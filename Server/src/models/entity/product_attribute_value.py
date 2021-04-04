@@ -8,17 +8,16 @@ from ...app import db
 
 
 @dataclass
-class ProductVariantAttributeModel(db.Model):
+class ProductAttributeValueModel(db.Model):
     __tablename__ = 'product_attribute_values'
 
     id: int
     product_attribute_id: int
-    name: str
+    value: str
 
     id = db.Column(db.Integer(), primary_key=True)
     value = db.Column(db.VARCHAR(50))
     product_attribute_id = db.Column(db.Integer, ForeignKey('product_attributes.id'))
 
-    def __init__(self, user_id, role_id):
-        self.user_id = user_id
-        self.role_id = role_id
+    def __init__(self, value, product_attribute_id=None):
+        self.value = value

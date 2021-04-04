@@ -9,6 +9,7 @@ def get_list_routers(prefix='/'):
         ('src.apis.permission-api', f'{prefix}/permission-api'),
         ('src.apis.categories-api', f'{prefix}/category-api'),
         ('src.apis.upload-api', f'{prefix}/upload-api'),
+        ('src.apis.product-api', f'{prefix}/product-api'),
     ]
 
 

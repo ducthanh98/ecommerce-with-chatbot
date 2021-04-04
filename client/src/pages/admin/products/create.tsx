@@ -106,7 +106,8 @@ const AdminCreateProduct = () => {
         const data = []
         const length = attributes.length;
         const tmp = {};
-        if (!attributes[0].attribute || !attributes[0].value) {
+
+        if (!attributes[0].attribute || !attributes[0].value || !name) {
             return
         }
         let idx = 0;
@@ -136,7 +137,6 @@ const AdminCreateProduct = () => {
                 continue
             }
 
-            debugger
             for (let j = 0; j < attributes[1].value.length; j++) {
                 if (attributes[1].value[j] !== '') {
                     tmp['attribute2_name'] = attributes[1].attribute
@@ -181,14 +181,12 @@ const AdminCreateProduct = () => {
                         variant_name: `${name} ${tmp['attribute1_value']} - ${tmp['attribute2_value']} - ${tmp['attribute3_value']}`
                     })
                     idx++;
-                    continue
 
                 }
 
             }
 
         }
-        console.log('dataaaa', data)
         form.setFieldsValue({variants: data})
     }
 
@@ -283,7 +281,7 @@ const AdminCreateProduct = () => {
                     )}
                 </Form.List>
 
-                <Form.List name="variants" >
+                <Form.List name="variants">
                     {(fields, {add, remove}, {errors}) => (
                         <>
                             {fields.map((field, index) => (
