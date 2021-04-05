@@ -1,9 +1,9 @@
-import datetime
 from dataclasses import dataclass
-from .role_permission import RolePermissionModel
 from typing import List
-from sqlalchemy import func, ForeignKey
 
+from sqlalchemy.orm import relationship
+
+from .product_attribute_value import ProductAttributeValueModel
 from ...app import db
 
 
@@ -13,10 +13,12 @@ class ProductAttributeModel(db.Model):
 
     id: int
     name: str
+    values : List[ProductAttributeValueModel]
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.VARCHAR(50))
-    product_attributes_values = db.relationship('ProductAttributeValueModel', lazy=True)
+    product_base_id = db.Column(db.Integer, db.ForeignKey('product_bases.id'))
+    values = relationship('ProductAttributeValueModel', lazy=True)
 
     def __init__(self, name, product_attributes_values):
         self.name = name

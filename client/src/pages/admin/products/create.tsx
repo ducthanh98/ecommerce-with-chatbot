@@ -1,8 +1,13 @@
-import {Button, Checkbox, Form, Input, message, Select} from "antd";
+import {Button, Checkbox, Form, Input, message, notification, Select} from "antd";
 import {useContext, useState} from "react";
 import {StoreContext} from "../../../utils/store/Store";
-import {useRouter} from "next/router";
 import {MinusCircleOutlined, PlusCircleOutlined, PlusOutlined} from "@ant-design/icons";
+import {UploadFile} from "antd/es/upload/interface";
+import {Upload} from "../../../components/shared/utils/Upload";
+import {SET_LOADING} from "../../../utils/store/reducers/loading";
+import {Action} from "../../../utils/models/reducer.model";
+import {api} from "./api";
+import {useRouter} from "next/router";
 
 const styles = {
     optionName: {
@@ -30,9 +35,9 @@ const AdminCreateProduct = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [form] = Form.useForm()
+    const [fileList, setFileList] = useState([] as UploadFile[]);
     const router = useRouter()
-    const handleUpdateProduct = (id) => {
-    }
+
 
     const layout = {
         labelCol: {
@@ -57,6 +62,7 @@ const AdminCreateProduct = () => {
         }
     };
 
+
     const renderBtnSubmit = () => {
         return (
             <Button type="primary" htmlType="submit" className="login-btn">
@@ -69,6 +75,7 @@ const AdminCreateProduct = () => {
         {
             key: 0,
             label: "Name",
+            initialValue: '',
             name: "name",
             rules: [
                 {
@@ -82,17 +89,23 @@ const AdminCreateProduct = () => {
             key: 1,
             label: "Description ",
             name: "description",
+            initialValue: '',
             render: <Input.TextArea/>
         },
         {
             key: 2,
             label: "Activate ",
             name: "activate",
-            render: <Checkbox
-                // onChange={handleActivateUser}
-                // defaultChecked={dataModal.activate}
-            />
+            render: <Checkbox checked/>
         },
+        {
+            key: 3,
+            label: "Images",
+            render: <Upload fileList={fileList} setFileList={setFileList} multiple={true}/>
+        }
+    ];
+
+    const confirmBtns = [
         {
             key: 4,
             className: "btn-wrap",
@@ -107,17 +120,17 @@ const AdminCreateProduct = () => {
         const length = attributes.length;
         const tmp = {};
 
-        if (!attributes[0].attribute || !attributes[0].value || !name) {
+        if (!attributes[0].attribute || !attributes[0].values || !name) {
             return
         }
         let idx = 0;
 
-        for (let i = 0; i < attributes[0].value.length; i++) {
-            if (attributes[0].value[i] === '') {
+        for (let i = 0; i < attributes[0].values.length; i++) {
+            if (attributes[0].values[i] === '') {
                 return message.error('Attribute name or value can\'t be empty');
             } else {
                 tmp['attribute1_name'] = attributes[0].attribute
-                tmp['attribute1_value'] = attributes[0].value[i]
+                tmp['attribute1_value'] = attributes[0].values[i]
             }
             if (length === 1 || !attributes[1].attribute || !attributes[1]) {
                 data.push({
@@ -137,10 +150,10 @@ const AdminCreateProduct = () => {
                 continue
             }
 
-            for (let j = 0; j < attributes[1].value.length; j++) {
-                if (attributes[1].value[j] !== '') {
+            for (let j = 0; j < attributes[1].values.length; j++) {
+                if (attributes[1].values[j] !== '') {
                     tmp['attribute2_name'] = attributes[1].attribute
-                    tmp['attribute2_value'] = attributes[1].value[j]
+                    tmp['attribute2_value'] = attributes[1].values[j]
                 }
 
                 if (length === 2) {
@@ -161,8 +174,8 @@ const AdminCreateProduct = () => {
                     continue
                 }
 
-                for (let k = 0; k < attributes[2].value.length; k++) {
-                    if (attributes[2].value[k] !== '') {
+                for (let k = 0; k < attributes[2].values.length; k++) {
+                    if (attributes[2].values[k] !== '') {
                         tmp['attribute3_name'] = attributes[2].attribute;
                         tmp['attribute3_value'] = attributes[2].value[k];
                     }
@@ -190,9 +203,36 @@ const AdminCreateProduct = () => {
         form.setFieldsValue({variants: data})
     }
 
+    const onFinish = async (values) => {
+        dispatchLoading({type: SET_LOADING, payload: true} as Action)
+        if (fileList.length < 1) {
+            return message.error("Image is required")
+        }
 
-    const onFinish = (values) => {
-        console.log(values)
+        values.images = [fileList[0].response ? fileList[0].response.filenames[0] : fileList[0].uid]
+
+        const result = await api.createProduct(values)
+
+        if (result.error) {
+            dispatchLoading({type: SET_LOADING, payload: false} as Action)
+
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+
+        dispatchLoading({type: SET_LOADING, payload: false} as Action)
+        notification.success({
+            message: 'Fashion and Clothing Shop',
+            placement: 'topLeft',
+            className: 'custom-notification-antd',
+            description: "Successfully"
+        });
+        router.push('/products')
     }
 
     return (
@@ -215,7 +255,7 @@ const AdminCreateProduct = () => {
                 <Form.List name="attributes" initialValue={[{
                     key: 0,
                     name: '0',
-                    attribute: 'size'
+                    attribute: ''
 
                 }]}>
                     {(fields, {add, remove}, {errors}) => (
@@ -243,7 +283,7 @@ const AdminCreateProduct = () => {
                                                 <Input placeholder="Attribute name" type={"text"}/>
                                             </Form.Item>
                                             <Form.Item
-                                                name={[field.name, 'value']}
+                                                name={[field.name, 'values']}
                                                 style={styles.optionValue}
 
                                             >
@@ -336,7 +376,19 @@ const AdminCreateProduct = () => {
                     )}
                 </Form.List>
 
-
+                {confirmBtns.map(item => (
+                    <Form.Item
+                        label={item.label}
+                        name={item.name}
+                        rules={item.rules}
+                        key={item.key}
+                        className={item.className}
+                        {...item.layout}
+                        initialValue={item.initialValue}
+                    >
+                        {item.render}
+                    </Form.Item>
+                ))}
             </Form>
         </>
     )

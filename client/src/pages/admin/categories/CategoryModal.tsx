@@ -1,12 +1,10 @@
-import {Button, Form, Input, Modal, Checkbox, notification, Upload, message, UploadProps} from 'antd'
-import {Permission, Role} from "./model";
-import {CheckboxChangeEvent} from "antd/es/checkbox";
+import {Button, Form, Input, Modal, Checkbox, notification, message, UploadProps} from 'antd'
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";
 import {useEffect, useState} from "react";
-import {PlusOutlined} from "@ant-design/icons";
 import {UploadFile} from "antd/es/upload/interface";
+import {Upload} from "../../../components/shared/utils/Upload";
 
 const styles = {
     textBold: {
@@ -63,54 +61,6 @@ export const CategoryModal = (props: Props) => {
         );
     };
 
-    const uploadButton = (
-        <div>
-            <PlusOutlined/>
-            <div style={{marginTop: 8}}>Upload</div>
-        </div>
-    );
-
-    const getBase64 = (file): Promise<string> => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = error => reject(error);
-        });
-    }
-
-    // const handleCancel = () => setState({previewVisible: false});
-
-
-    const uploadProps: UploadProps<any> = {
-        name: 'file',
-        action: 'http://localhost:5000/v1/api/upload-api',
-        withCredentials: true,
-        listType: "picture-card",
-        fileList: fileList,
-        onChange({file, fileList, event}) {
-            console.log(file)
-            setFileList(fileList)
-        },
-        async onPreview(file) {
-            if (!file.url && !file.preview) {
-                file.preview = await getBase64(file.originFileObj);
-            }
-        }
-
-    };
-
-    const renderUploadImage = () => {
-
-        return (
-            <Upload
-                {...uploadProps}
-            >
-                {fileList.length >= 1 ? null : uploadButton}
-            </Upload>
-        )
-    }
-
 
     const formItems = [
         {
@@ -144,7 +94,7 @@ export const CategoryModal = (props: Props) => {
         {
             key: 3,
             label: "Image",
-            render: renderUploadImage()
+            render: <Upload fileList={fileList} setFileList={setFileList}/>
         },
         {
             key: 4,

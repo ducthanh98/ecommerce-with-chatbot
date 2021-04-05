@@ -2,6 +2,9 @@ import datetime
 
 from sqlalchemy import func
 from dataclasses import dataclass
+
+from sqlalchemy.orm import relationship
+
 from ...app import db
 
 
@@ -23,6 +26,8 @@ class CategoryModel(db.Model):
     created_at = db.Column(db.TIMESTAMP(), default=func.now())
     updated_at = db.Column(db.TIMESTAMP(), onupdate=func.now(), default=func.now())
     description = db.Column(db.Text)
+    product_bases = relationship("ProductBaseModel", back_populates="category")
+
 
     def __init__(self, name, description, image, activate=True):
         self.name = name

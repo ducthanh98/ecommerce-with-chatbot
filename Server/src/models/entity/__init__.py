@@ -5,6 +5,7 @@ from .role import RoleModel
 from .user_role import UserRoleModel
 from .category import CategoryModel
 from .product_variant import ProductVariantModel
+from .product_base import ProductBaseModel
 
 __all__ = [
     "UserModel",
@@ -13,5 +14,6 @@ __all__ = [
     "RoleModel",
     "UserRoleModel",
     "CategoryModel",
-    "ProductVariantModel"
+    "ProductVariantModel",
+    "ProductBaseModel"
 ]

@@ -1,11 +1,11 @@
-from .....models.entity import CategoryModel,ProductVariantModel
+from .....models.entity import CategoryModel, ProductVariantModel, ProductBaseModel
 from .....app import db
 
 
 class ProductManager:
 
-    def build_category_query(self, args):
-        query = CategoryModel.query
+    def build_product_query(self, args):
+        query = ProductBaseModel.query
 
         if args.get('id') is not None:
             query = query.filter_by(id=args.get('id'))
@@ -18,16 +18,22 @@ class ProductManager:
 
         return query
 
-    def get_category(self, opts):
-        query = self.build_user_query(opts)
+    def fetch_product(self, opts):
+        query = self.build_product_query(opts)
+        count = query.count()
 
-        user = query.first()
-        return user
+        if 'page' in opts:
+            page = int(opts.get('page'))
+            limit = int(opts.get('limit'))
 
-    def fetch_category(self, args):
-        query = self.build_category_query(args)
-        categories = query.all()
-        return categories
+            offset = (page - 1) * limit
+            query = query.offset(offset)
+
+        if 'limit' in opts:
+            query = query.limit(opts['limit'])
+
+        user = query.all()
+        return user, count
 
     def create_product(self, product_base, attribute_models, variants):
         session = db.session
@@ -63,16 +69,4 @@ class ProductManager:
             variant_models.append(variant_model)
 
         session.add_all(variant_models)
-        session.commit()
-
-    def update_category(self, category, category_id):
-        session = db.session
-
-        session.query(CategoryModel).filter(CategoryModel.id == category_id).update({
-            CategoryModel.name: category['name'],
-            CategoryModel.description: category['description'],
-            CategoryModel.activate: category['activate'],
-            CategoryModel.image: category['image']
-        })
-
         session.commit()

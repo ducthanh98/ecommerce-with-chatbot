@@ -82,11 +82,11 @@ const PageLayout = ({children, token}) => {
             <>
                 <CustomerHeader/>
                 {loadingState.loading ? <Loading/> : ''}
-                <Layout style={{height: "100%"}}>
+                <Layout style={{minHeight: "100vh", overflow: "auto"}}>
                     <Navbar/>
                     <Layout>
                         <AdminHeader/>
-                        <Layout.Content style={{margin: "20px", height: "100%"}}>
+                        <Layout.Content style={{margin: "20px", minHeight: "100vh"}}>
                             {children}
                         </Layout.Content>
                     </Layout>

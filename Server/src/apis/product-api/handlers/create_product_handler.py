@@ -1,7 +1,7 @@
 from http import HTTPStatus
 import jsonschema
 from flask import jsonify, request
-
+import logging
 from ....models.entity.product_attribute import ProductAttributeModel
 from ....models.entity.product_attribute_value import ProductAttributeValueModel
 from ....models.entity.product_base import ProductBaseModel
@@ -32,10 +32,13 @@ def create_product_handler():
                                                         product_attributes_values=attribute_value_models)
                 attribute_models.append(attribute_model)
 
-        product_base = ProductBaseModel(name=data["name"], description=data["description"])
+        product_base = ProductBaseModel(name=data["name"],
+                                        description=data["description"],
+                                        images=data["images"],
+                                        category_id=data["category_id"])
         product_manager.create_product(product_base, attribute_models, data["variants"])
 
-        return jsonify({"success": True})
+        return transhttp.response_json({"success": True})
 
     except jsonschema.exceptions.ValidationError as e:
         if 'message' not in e.schema:
@@ -44,5 +47,5 @@ def create_product_handler():
         return transhttp.response_error(HTTPStatus.BAD_REQUEST, e.schema['message'])
 
     except Exception as e:
-        print(e)
+        logging.error(e)
         return transhttp.response_error(HTTPStatus.INTERNAL_SERVER_ERROR, MESSAGE['MESSAGE_SERVER_INTERNAL'])
