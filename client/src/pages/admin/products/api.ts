@@ -1,14 +1,12 @@
 import {http} from "../../../core/http";
-import {CreateRoleResponse, FetchPermissionResponse, FetchRoleResponse, GetRoleResponse, Role} from "./model";
+import {buildQueryString} from "../../../core/utils/url";
+import {FetchCategoriesResponse, FetchProductResponse} from "../products/model";
 
 export const api = {
-    fetchCategories: () => {
-        return http.get<FetchPermissionResponse>(`category-api`)
+    fetchProducts: (payload) => {
+        return http.get<FetchProductResponse>(`product-api?${buildQueryString(payload)}`)
     },
-    createProduct: (payload) => {
-        return http.post<FetchPermissionResponse>(`product-api`, payload)
-    },
-    updateCategory: (payload) => {
-        return http.put<FetchPermissionResponse>(`category-api/${payload.id}`, payload)
-    },
+    fetchCategory: () => {
+        return http.get<FetchCategoriesResponse>(`category-api`)
+    }
 }

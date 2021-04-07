@@ -3,6 +3,7 @@ import {useContext, useEffect} from "react";
 import {SET_LOADING} from "../utils/store/reducers/loading";
 import {AuthForm} from "../components/auth/Form";
 import {initEvent} from "../utils/script/main";
+import {Category} from '../components/home/category'
 
 export default function Home() {
     useEffect(() => {
@@ -474,60 +475,7 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <section className="categories-area">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-lg-12 pr-0">
-                            <div className="section-title text-center">
-                                <h2>Categories</h2>
-                            </div>
-                            <div className="categories-item d-lg-flex justify-content-end">
-                                <div className="single-item active fadeIn mb-5 mb-lg-0" data-wow-duration=".8s"
-                                     data-wow-delay=".2s">
-                                    <div className="item-image cat-1">
-                                    </div>
-                                    <div className="item-content">
-                                        <h5><a href="shop-page.html">Shop for Sweatshirt</a></h5>
-                                        <a href="shop-page.html">Explore Collection </a>
-                                    </div>
-                                </div>
-                                <div className="single-item fadeIn" data-wow-duration=".8s" data-wow-delay=".4s">
-                                    <div className="item-image cat-2">
-                                    </div>
-                                    <div className="item-content">
-                                        <h5><a href="shop-page.html">Shop for Accessories</a></h5>
-                                        <a href="shop-page.html">Live in your pockets</a>
-                                    </div>
-                                </div>
-                                <div className="single-item fadeIn" data-wow-duration=".8s" data-wow-delay=".6s">
-                                    <div className="item-image cat-3">
-                                    </div>
-                                    <div className="item-content">
-                                        <h5><a href="shop-page.html">Shop for Bikini</a></h5>
-                                        <a href="shop-page.html">Must haves for this summer</a>
-                                    </div>
-                                </div>
-                                <div className="single-item fadeIn" data-wow-duration=".8s" data-wow-delay=".8s">
-                                    <div className="item-image cat-4">
-                                    </div>
-                                    <div className="item-content">
-                                        <h5><a href="shop-page.html">Shop for Shoes</a></h5>
-                                        <a href="shop-page.html">Hot line things</a>
-                                    </div>
-                                </div>
-                                <div className="single-item fadeIn" data-wow-duration=".8s" data-wow-delay="1s">
-                                    <div className="item-image cat-5">
-                                    </div>
-                                    <div className="item-content">
-                                        <h5><a href="shop-page.html">Shop for hats</a></h5>
-                                        <a href="shop-page.html">Live in your pockets</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <Category/>
             <section className="discount-area">
                 <div className="container">
                     <div className="row">

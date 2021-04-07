@@ -4,7 +4,7 @@ import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";
 import {useEffect, useState} from "react";
 import {UploadFile} from "antd/es/upload/interface";
-import {Upload} from "../../../components/shared/utils/Upload";
+import {Upload} from "../../../components/shared/admin/Upload";
 
 const styles = {
     textBold: {

@@ -3,7 +3,7 @@ import {useContext, useState} from "react";
 import {StoreContext} from "../../../utils/store/Store";
 import {MinusCircleOutlined, PlusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {UploadFile} from "antd/es/upload/interface";
-import {Upload} from "../../../components/shared/utils/Upload";
+import {Upload} from "../../../components/shared/admin/Upload";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";

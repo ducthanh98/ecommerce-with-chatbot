@@ -616,17 +616,17 @@ export const initEvent = () => {
         bodyOvrelay.addClass('active');
     });
 
-
-    /*-----------------------------
-        Category Initial Active
-    ------------------------------*/
-
-    var singlepricing = $('.categories-area .single-item')
-
-    singlepricing.mouseover(function () {
-        singlepricing.removeClass('active');
-        $(this).addClass('active');
-    });
+    //
+    // /*-----------------------------
+    //     Category Initial Active
+    // ------------------------------*/
+    //
+    // var singlepricing = $('.categories-area .single-item')
+    //
+    // singlepricing.mouseover(function () {
+    //     singlepricing.removeClass('active');
+    //     $(this).addClass('active');
+    // });
 
     /* Single Cart Initial Active */
     var singleCart = $('.single-cart-item')
