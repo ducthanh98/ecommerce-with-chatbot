@@ -17,13 +17,31 @@ const PageLayout = ({children, token}) => {
     const {loading, user} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [userState, dispatchUser] = user
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(true)
     const router = useRouter();
+
+    useMemo(() => {
+        if (router.asPath.includes('admin')) {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }, [])
 
 
     useEffect(() => {
-        init()
+        if (router.asPath.includes('admin')) {
+            setIsAdmin(true)
+        } else {
+            setIsAdmin(false)
+        }
+    }, [router.asPath]);
 
+    useEffect(() => {
+        init()
+        if (typeof $ !== undefined && !isAdmin) {
+            $("body").addClass("shop-page common-typography")
+        }
     }, [])
 
 
@@ -47,23 +65,6 @@ const PageLayout = ({children, token}) => {
             dispatchLoading(payload)
         }, 1000)
     }
-
-    useMemo(() => {
-        if (router.asPath.includes('admin')) {
-            setIsAdmin(true)
-        } else {
-            setIsAdmin(false)
-        }
-    }, [])
-
-
-    useEffect(() => {
-        if (router.asPath.includes('admin')) {
-            setIsAdmin(true)
-        } else {
-            setIsAdmin(false)
-        }
-    }, [router.asPath]);
 
     const renderCustomerTemplate = () => {
         return (

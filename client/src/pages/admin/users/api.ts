@@ -2,11 +2,9 @@ import {http} from "../../../core/http";
 import {buildQueryString} from "../../../core/utils/url";
 import {
     CreateRoleResponse,
-    FetchPermissionResponse,
     FetchRoleResponse,
     FetchUserResponse,
-    GetRoleResponse, GetUserResponse,
-    Role
+    GetUserResponse,
 } from "./model";
 
 export const api = {

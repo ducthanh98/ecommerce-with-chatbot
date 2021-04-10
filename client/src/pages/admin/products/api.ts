@@ -8,5 +8,8 @@ export const api = {
     },
     fetchCategory: () => {
         return http.get<FetchCategoriesResponse>(`category-api`)
-    }
+    },
+    createProduct: (payload) => {
+        return http.post(`product-api`, payload)
+    },
 }

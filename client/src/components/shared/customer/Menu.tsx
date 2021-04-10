@@ -39,7 +39,7 @@ export const Menu = () => {
                         <ActiveLink href='/'>
                             Home
                         </ActiveLink>
-                        <ActiveLink href='/Products'>
+                        <ActiveLink href='/products'>
                             Products
                         </ActiveLink>
                         <ActiveLink href='/contact-us'>

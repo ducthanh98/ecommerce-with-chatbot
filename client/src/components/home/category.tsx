@@ -50,7 +50,7 @@ export const Category = () => {
                                              style={{backgroundImage: `url("http://localhost:5000/images/${category.image}")`}}>
                                         </div>
                                         <div className="item-content">
-                                            <h5><a href="shop-page.html">{category.name}</a></h5>
+                                            <h5><a href="shop-page.html">Shop For {category.name}</a></h5>
                                             <a href="shop-page.html">{category.description}</a>
                                         </div>
                                     </div>

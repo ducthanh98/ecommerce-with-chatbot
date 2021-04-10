@@ -1,5 +1,5 @@
 import {Button, Checkbox, Form, Input, message, notification, Select} from "antd";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {StoreContext} from "../../../utils/store/Store";
 import {MinusCircleOutlined, PlusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {UploadFile} from "antd/es/upload/interface";
@@ -8,6 +8,9 @@ import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";
 import {useRouter} from "next/router";
+import {FetchCategoriesResponse} from "./model";
+
+const {Option} = Select;
 
 const styles = {
     optionName: {
@@ -37,6 +40,7 @@ const AdminCreateProduct = () => {
     const [form] = Form.useForm()
     const [fileList, setFileList] = useState([] as UploadFile[]);
     const router = useRouter()
+    const [categories, setCategories] = useState([])
 
 
     const layout = {
@@ -54,6 +58,45 @@ const AdminCreateProduct = () => {
         },
     };
 
+    useEffect(() => {
+        fetchCategory()
+    }, [])
+
+    const fetchCategory = async () => {
+        const result = await api.fetchCategory()
+
+        if (result.error) {
+
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+        const data = result.data as FetchCategoriesResponse
+        setCategories(data.categories)
+    }
+
+    const renderSelectCategory = () => {
+        return (
+            <Select
+                showSearch
+                style={{width: 200}}
+                placeholder="Select a category"
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                }
+            >
+                {
+                    categories.map(item => (<Option value={item.id}>{item.name}</Option>))
+                }
+
+            </Select>
+        )
+    }
 
     const tailLayout = {
         wrapperCol: {
@@ -91,6 +134,12 @@ const AdminCreateProduct = () => {
             name: "description",
             initialValue: '',
             render: <Input.TextArea/>
+        },
+        {
+            key: 7,
+            label: "Category ",
+            name: "category_id",
+            render: renderSelectCategory()
         },
         {
             key: 2,
@@ -204,13 +253,14 @@ const AdminCreateProduct = () => {
     }
 
     const onFinish = async (values) => {
+        debugger
+
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
         if (fileList.length < 1) {
             return message.error("Image is required")
         }
 
         values.images = [fileList[0].response ? fileList[0].response.filenames[0] : fileList[0].uid]
-
         const result = await api.createProduct(values)
 
         if (result.error) {
