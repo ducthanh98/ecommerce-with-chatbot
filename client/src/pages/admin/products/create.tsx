@@ -1,4 +1,4 @@
-import {Button, Checkbox, Form, Input, message, notification, Select} from "antd";
+import {Button, Checkbox, Form, Input, InputNumber, message, notification, Select} from "antd";
 import {useContext, useEffect, useState} from "react";
 import {StoreContext} from "../../../utils/store/Store";
 import {MinusCircleOutlined, PlusCircleOutlined, PlusOutlined} from "@ant-design/icons";
@@ -139,6 +139,12 @@ const AdminCreateProduct = () => {
             key: 7,
             label: "Category ",
             name: "category_id",
+            rules: [
+                {
+                    required: true,
+                    message: "Category is required"
+                }
+            ],
             render: renderSelectCategory()
         },
         {
@@ -253,8 +259,6 @@ const AdminCreateProduct = () => {
     }
 
     const onFinish = async (values) => {
-        debugger
-
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
         if (fileList.length < 1) {
             return message.error("Image is required")
@@ -406,14 +410,14 @@ const AdminCreateProduct = () => {
                                                         message: "Missing quantity"
                                                     }
                                                 ]}>
-                                                <Input placeholder="Quantity"/>
+                                                <InputNumber placeholder="Quantity" min={1} max={100}/>
                                             </Form.Item>
                                             <Form.Item
                                                 name={[field.name, 'price']}
                                                 style={styles.variantForm}
                                                 rules={[{required: true, message: 'Missing price'}]}
                                             >
-                                                <Input placeholder="Variant price"/>
+                                                <InputNumber placeholder="Variant price" min={0}/>
                                             </Form.Item>
                                         </Input.Group>
 

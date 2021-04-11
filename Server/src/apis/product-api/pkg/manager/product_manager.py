@@ -1,3 +1,5 @@
+from flask import session
+
 from .....models.entity import CategoryModel, ProductVariantModel, ProductBaseModel
 from .....app import db
 
@@ -10,11 +12,34 @@ class ProductManager:
         if args.get('id') is not None:
             query = query.filter_by(id=args.get('id'))
 
+        if args.get('category_id') is not None:
+            query = query.filter_by(category_id=args.get('category_id'))
+
         if args.get('name') is not None:
             query = query.filter_by(name=args.get('name'))
 
         if args.get('activate') is not None:
             query = query.filter_by(activate=args.get('activate'))
+
+        if args.get('price_from') is not None and args.get('price_to') is not None:
+            price_from = args.get('price_from')
+            price_to = args.get('price_to')
+            subquery = db.session.query(ProductVariantModel.product_base_id). \
+                filter(ProductVariantModel.price.between(price_from, price_to)). \
+                subquery()
+            query = query.filter(ProductBaseModel.id.in_(subquery))
+        elif args.get('price_from') is not None:
+            price_from = args.get('price_from')
+            subquery = db.session.query(ProductVariantModel.product_base_id). \
+                filter(ProductVariantModel.price.__gt__(price_from)). \
+                subquery()
+            query = query.filter(ProductBaseModel.id.in_(subquery))
+        elif args.get('price_to') is not None:
+            price_to = args.get('price_to')
+            subquery = db.session.query(ProductVariantModel.product_base_id). \
+                filter(ProductVariantModel.price.__lt__(price_to)). \
+                subquery()
+            query = query.filter(ProductBaseModel.id.in_(subquery))
 
         return query
 
@@ -34,6 +59,11 @@ class ProductManager:
 
         user = query.all()
         return user, count
+
+    def get_product(self, opts):
+        query = self.build_product_query(opts)
+        product = query.first()
+        return product, None
 
     def create_product(self, product_base, attribute_models, variants):
         session = db.session
@@ -61,7 +91,6 @@ class ProductManager:
 
             variant_model = ProductVariantModel(name=variant["variant_name"],
                                                 price=variant["price"],
-                                                quantity=variant["quantity"],
                                                 attribute1_id=attribute1_id,
                                                 attribute2_id=attribute2_id,
                                                 attribute3_id=attribute3_id,

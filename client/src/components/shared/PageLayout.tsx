@@ -39,9 +39,6 @@ const PageLayout = ({children, token}) => {
 
     useEffect(() => {
         init()
-        if (typeof $ !== undefined && !isAdmin) {
-            $("body").addClass("shop-page common-typography")
-        }
     }, [])
 
 

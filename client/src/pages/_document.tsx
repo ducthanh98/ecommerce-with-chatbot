@@ -35,8 +35,6 @@ class MyDocument extends Document {
                 <script src="/js/cookiealert.js"></script>
 
                 <script src="/js/main.js"></script>
-                <script src="codingeek-link.js"></script>
-                <script src="../../codingeek-js/codingeek-2.html"></script>
             </Html>
         )
     }

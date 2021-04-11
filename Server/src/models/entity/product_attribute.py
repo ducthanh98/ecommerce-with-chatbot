@@ -13,13 +13,13 @@ class ProductAttributeModel(db.Model):
 
     id: int
     name: str
-    values : List[ProductAttributeValueModel]
+    values: List[ProductAttributeValueModel]
 
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.VARCHAR(50))
     product_base_id = db.Column(db.Integer, db.ForeignKey('product_bases.id'))
-    values = relationship('ProductAttributeValueModel', lazy=True)
+    values = relationship('ProductAttributeValueModel', lazy=True, back_populates="attribute")
 
     def __init__(self, name, product_attributes_values):
         self.name = name
-        self.product_attributes_values = product_attributes_values
+        self.values = product_attributes_values

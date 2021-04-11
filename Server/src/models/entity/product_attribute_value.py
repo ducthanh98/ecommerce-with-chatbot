@@ -1,8 +1,6 @@
-import datetime
 from dataclasses import dataclass
-from .role_permission import RolePermissionModel
-from typing import List
-from sqlalchemy import func, ForeignKey
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 
 from ...app import db
 
@@ -18,6 +16,7 @@ class ProductAttributeValueModel(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     value = db.Column(db.VARCHAR(50))
     product_attribute_id = db.Column(db.Integer, ForeignKey('product_attributes.id'))
+    attribute = relationship('ProductAttributeModel', lazy=True, back_populates="values")
 
     def __init__(self, value, product_attribute_id=None):
         self.value = value

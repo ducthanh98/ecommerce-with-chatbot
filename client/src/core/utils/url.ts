@@ -64,5 +64,5 @@ export const handleUpdateRouteQuery = (router: NextRouter, filter: any, append =
         }
     }
     router.query = {...query}
-    router.push(router)
+    router.push(router,undefined,{ shallow: true })
 }
