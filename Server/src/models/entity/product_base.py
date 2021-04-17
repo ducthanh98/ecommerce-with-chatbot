@@ -6,8 +6,7 @@ from sqlalchemy.orm import relationship
 from typing import List
 from sqlalchemy import func
 
-from . import CategoryModel
-from .product_attribute import ProductAttributeModel
+from . import CategoryModel, ProductVariantModel, ProductAttributeModel
 from ...app import db
 
 
@@ -23,6 +22,7 @@ class ProductBaseModel(db.Model):
     updated_at: datetime
     images: List[str]
     product_attributes: List[ProductAttributeModel]
+    product_variants: List[ProductVariantModel]
     category: CategoryModel
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -35,6 +35,7 @@ class ProductBaseModel(db.Model):
     updated_at = db.Column(db.TIMESTAMP(), onupdate=func.now(), default=func.now())
     category = relationship("CategoryModel", back_populates="product_bases")
     product_attributes = relationship("ProductAttributeModel", lazy=True)
+    product_variants = relationship("ProductVariantModel", lazy=True)
 
     def __init__(self, name, description, images, category_id, activate=True):
         self.name = name

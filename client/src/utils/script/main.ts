@@ -1,5 +1,4 @@
 export const initEvent = () => {
-    $("body").addClass("shop-page cart-page common-typography")
     /**-----------------------------
      * Promotion Popup
      * ---------------------------*/

@@ -22,6 +22,22 @@ export interface Product {
     images?: any;
     name: string;
     product_attributes: any[];
+    product_variants: ProductVariant[];
+    updated_at: string;
+    min: number;
+    max: number;
+}
+
+export interface ProductVariant {
+    attribute1_id?: number;
+    attribute2_id?: number;
+    attribute3_id?: number;
+    created_at: string;
+    id: number;
+    name: string;
+    price: number;
+    product_base_id: number;
+    quantity: number;
     updated_at: string;
 }
 

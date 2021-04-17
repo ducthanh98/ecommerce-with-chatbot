@@ -12,11 +12,12 @@ class ProductManager:
         if args.get('id') is not None:
             query = query.filter_by(id=args.get('id'))
 
-        if args.get('category_id') is not None:
+        if args.get('category_id') is not None and args.get('category_id') != '':
             query = query.filter_by(category_id=args.get('category_id'))
 
-        if args.get('name') is not None:
-            query = query.filter_by(name=args.get('name'))
+        if args.get('name') is not None and args.get('name') != '':
+            name = "%{}%".format(args.get('name'))
+            query = query.filter(ProductBaseModel.name.ilike(name))
 
         if args.get('activate') is not None:
             query = query.filter_by(activate=args.get('activate'))
@@ -94,7 +95,8 @@ class ProductManager:
                                                 attribute1_id=attribute1_id,
                                                 attribute2_id=attribute2_id,
                                                 attribute3_id=attribute3_id,
-                                                product_base_id=product_base.id)
+                                                product_base_id=product_base.id,
+                                                quantity=variant["quantity"])
             variant_models.append(variant_model)
 
         session.add_all(variant_models)

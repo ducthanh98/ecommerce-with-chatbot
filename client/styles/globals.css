@@ -39,3 +39,7 @@
 .custom-search{
     margin-bottom: 40px;
 }
+
+.ant-table table{
+    background-color: white;
+}

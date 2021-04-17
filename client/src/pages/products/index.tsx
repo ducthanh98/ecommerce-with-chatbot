@@ -2,25 +2,32 @@ import {useContext, useEffect, useState} from "react";
 import {initEvent} from "../../utils/script/main";
 import {SET_LOADING} from "../../utils/store/reducers/loading";
 import {Action} from "../../utils/models/reducer.model";
-import {handleUpdateRouteQuery} from "../../core/utils/url";
+import {getRouteQuery, handleUpdateRouteQuery} from "../../core/utils/url";
 import {api} from "../admin/products/api";
-import {Image, notification} from "antd";
+import {notification} from "antd";
 import {FetchCategoriesResponse, FetchProductResponse} from "../admin/products/model";
 import {StoreContext} from "../../utils/store/Store";
 import {useRouter} from "next/router";
+import debounce from "../../core/utils/debounce";
 
 const Products = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
-    const [filter, setFilter] = useState({})
+    const [filter, setFilter] = useState({} as any)
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState([])
     const [count, setCount] = useState(0)
     const router = useRouter()
 
     useEffect(() => {
+        setFilter(getRouteQuery(filter, router))
         init()
     }, [])
+
+    useEffect(() => {
+        if (Object.keys(filter).length < 1) return
+        init()
+    }, [filter])
 
     const init = async () => {
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
@@ -64,9 +71,53 @@ const Products = () => {
 
         }
         const data = result.data as FetchProductResponse
+        const products = data.products
+        for (let i = 0; i < products.length; i++) {
+            products[i].min = 99999999999
+            products[i].max = 0
+
+            const variants = products[i].product_variants
+
+            for (let j = 0; j < variants.length; j++) {
+
+                if (products[i].min > variants[j].price) {
+                    products[i].min = variants[j].price
+                }
+                if (products[i].max < variants[j].price) {
+                    products[i].max = variants[j].price
+                }
+
+            }
+        }
+
+
         setProducts(data.products)
         setCount(data.count)
     }
+
+    const handleReset = () => {
+        const tmp = {...filter}
+        tmp.page = 1
+        tmp.limit = 20
+        tmp.name = ''
+        tmp.category_id = ''
+        setFilter(tmp)
+    }
+
+    const updateFilter = (value) => {
+        const tmp = {...filter, ...value}
+        setFilter(tmp)
+    }
+
+    const handleShowDetail = (id) => {
+        router.push(`/products/${id}`)
+    }
+
+    const handleChangeSearch = (e) => debounce(() => {
+        e.preventDefault()
+        updateFilter({name: e.target.value})
+    }, 500)()
+
 
     return (
         <>
@@ -77,8 +128,9 @@ const Products = () => {
                     <div className="row">
                         <div className="col-lg-3">
                             <div className="shop-sidebar">
-                                <form action="#">
-                                    <input type="email" className="search-input" placeholder="Search" required/>
+                                <form>
+                                    <input type="text" onChange={handleChangeSearch} className="search-input"
+                                           placeholder="Search" required/>
                                     <button type="submit" className="search-button"><i className="fa fa-search"/>
                                     </button>
                                 </form>
@@ -88,7 +140,9 @@ const Products = () => {
                                     </div>
                                     <ul>
                                         {
-                                            category.map(x => (<li><a href="#">{x.name} </a></li>))
+                                            category.map(x => (<li onClick={() => {
+                                                updateFilter({category_id: x.id})
+                                            }}><a style={filter.category_id === x.id ? {color: '#40a9ff'} : {}} href="#">{x.name} </a></li>))
                                         }
                                     </ul>
                                 </div>
@@ -106,7 +160,7 @@ const Products = () => {
                                     </ul>
                                 </div>
                                 <div className="reset">
-                                    <div className="title">
+                                    <div className="title cursor-pointer" onClick={handleReset}>
                                         <h4>RESET</h4>
                                     </div>
                                 </div>
@@ -127,63 +181,19 @@ const Products = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/*<div className="shop-items">*/}
-                            {/*    <div className="row">*/}
-                            {/*        <div className="col-lg-4 col-md-6">*/}
-                            {/*            <div className="single-cart-item active">*/}
-                            {/*                <div className="single-cart-image">*/}
-                            {/*                    <img className="image-item-01 item-active"*/}
-                            {/*                         src="img/home-1/pick/pick-1.png"/>*/}
-                            {/*                    <img className="image-item-02" src="img/shop-page/item7.png"*/}
-                            {/*                    />*/}
-                            {/*                    <div className="image-dots">*/}
-                            {/*                        <div className="dot-01"/>*/}
-                            {/*                        <div className="dot-02 active"/>*/}
-                            {/*                    </div>*/}
-                            {/*                </div>*/}
-                            {/*                /!*<span className="love-icon"><i className="fa fa-heart"/></span>*!/*/}
-                            {/*                <div className="single-cart-content">*/}
-                            {/*                    <div className="cart-content-left">*/}
-                            {/*                        <ul className="cart-rating">*/}
-                            {/*                            <li><i className="fa fa-star"/></li>*/}
-                            {/*                            <li><i className="fa fa-star"/></li>*/}
-                            {/*                            <li><i className="fa fa-star"/></li>*/}
-                            {/*                            <li><i className="fa fa-star"/></li>*/}
-                            {/*                            <li className="diff-color"><i className="fa fa-star"/></li>*/}
-                            {/*                        </ul>*/}
-                            {/*                        <h5>Belted Chino Trousers</h5>*/}
-                            {/*                        <ul className="cart-size">*/}
-                            {/*                            <li><span>xs</span></li>*/}
-                            {/*                            <li className="active"><span>s</span></li>*/}
-                            {/*                            <li><span>m</span></li>*/}
-                            {/*                            <li><span>l</span></li>*/}
-                            {/*                            <li><span>xl</span></li>*/}
-                            {/*                        </ul>*/}
-                            {/*                    </div>*/}
-                            {/*                    <div className="cart-content-right">*/}
-                            {/*                        <span className="current-price">$45.99</span>*/}
-                            {/*                        <span className="old-price">$99.10</span>*/}
-                            {/*                    </div>*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        </div>*/}
-                            {/*    </div>*/}
-                            {/*</div>*/}
-
-                            {
-                                products.map(product => (
-                                    <div className="shop-items">
-                                        <div className="row">
-                                            <div className="col-lg-4 col-md-6">
+                            <div className="shop-items">
+                                <div className="row">
+                                    {
+                                        products.map(product => (
+                                            <div onClick={() => handleShowDetail(product.id)}
+                                                 className="col-lg-4 col-md-6">
                                                 <div className="single-cart-item active">
                                                     <div className="single-cart-image">
                                                         {
-                                                            product.images.map(image => (<img className="image-item-01 item-active" src={`http://localhost:5000/images/${image}`}/>))
+                                                            product.images.map(image => (
+                                                                <img className="image-item-01 item-active"
+                                                                     src={`http://localhost:5000/images/${image}`}/>))
                                                         }
-                                                        {/*<div className="image-dots">*/}
-                                                        {/*    <div className="dot-01"/>*/}
-                                                        {/*    <div className="dot-02 active"/>*/}
-                                                        {/*</div>*/}
                                                     </div>
                                                     {/*<span className="love-icon"><i className="fa fa-heart"/></span>*/}
                                                     <div className="single-cart-content">
@@ -194,16 +204,22 @@ const Products = () => {
                                                             <h5>{product.name}</h5>
                                                         </div>
                                                         <div className="cart-content-right">
-                                                            <span className="current-price">$45.99</span>
+                                                            {
+                                                                product.min === product.max ?
+                                                                    <span
+                                                                        className="current-price">${product.min}</span> :
+                                                                    <span
+                                                                        className="current-price">${product.min} - ${product.max}</span>
+                                                            }
                                                             {/*<span className="old-price">$99.10</span>*/}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
+                                        ))
+                                    }
+                                </div>
+                            </div>
 
                         </div>
                     </div>

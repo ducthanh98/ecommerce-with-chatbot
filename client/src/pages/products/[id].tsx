@@ -6,18 +6,41 @@ import {StoreContext} from "../../utils/store/Store";
 import {useRouter} from "next/router";
 import {api} from "./api";
 import {notification} from "antd";
-import {GetProductResponse, Product} from "./model";
+import {GetProductResponse, Product, ProductVariant} from "./model";
 
 const ProductDetail = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
     const [product, setProduct] = useState({} as Product)
+    const [variant, setVariant] = useState({} as ProductVariant)
     const router = useRouter()
     const {id} = router.query
+    const [quantity, setQuantity] = useState(1);
+    const [attribute, setAttribute] = useState({attribute1_id: null, attribute2_id: null, attribute3_id: null})
+
+    useEffect(() => {
+        if (!product.id) return
+        const variants = product.product_variants
+        for (let i = 0; i < variants.length; i++) {
+            if (variants[i].attribute1_id == attribute.attribute1_id &&
+                variants[i].attribute2_id == attribute.attribute2_id &&
+                variants[i].attribute3_id == attribute.attribute3_id) {
+                return setVariant(variants[i])
+            }
+        }
+        return setVariant({} as ProductVariant)
+
+    }, [attribute])
+
+    useEffect(() => {
+        console.log(variant)
+
+    }, [variant])
 
     useEffect(() => {
         init()
     }, [])
+
 
     const getProduct = async () => {
         const result = await api.getProduct(id)
@@ -33,14 +56,31 @@ const ProductDetail = () => {
 
         }
         const data = result.data as GetProductResponse
+        data.product.min = 99999999999
+        data.product.max = 0
+        data.product.product_variants.forEach((item) => {
+            if (data.product.min > item.price) {
+                data.product.min = item.price
+            }
+            if (data.product.max < item.price) {
+                data.product.max = item.price
+            }
+        })
+
         setProduct(data.product)
     }
 
     const init = async () => {
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
         await getProduct()
-        setTimeout(initEvent,0)
+        setTimeout(initEvent, 0)
         dispatchLoading({type: SET_LOADING, payload: false} as Action)
+    }
+
+    const handleSelectAttribute = (idx, value) => {
+        const tmp = {...attribute}
+        tmp[`attribute${idx}_id`] = value
+        setAttribute(tmp)
     }
 
     return (
@@ -130,16 +170,21 @@ const ProductDetail = () => {
                                             <h4>{product.name}</h4>
                                         </div>
                                         <div className="price mb-5">
-                                            <h2>$90,00</h2>
+                                            {
+                                                variant.id ?
+                                                    <h2>${variant.price}</h2> :
+                                                    <h2>{product.min === product.max ? `$${product.min}` : `$${product.min} - $${product.max}`}</h2>
+                                            }
                                         </div>
                                         {
-                                            product.product_attributes.map(attribute => (
-                                                <div className="size mb-5" key={attribute.name}>
-                                                    <h4>Select Your {attribute.name}</h4>
+                                            product.product_attributes.map((product_attribute, idx) => (
+                                                <div className="size mb-5" key={product_attribute.name}>
+                                                    <h4>Select Your {product_attribute.name}</h4>
                                                     <ul>
                                                         {
-                                                            attribute.values.map(({value}) => (
-                                                                <li key={value}><span>{value}</span></li>))
+                                                            product_attribute.values.map(({value, id}) => (
+                                                                <li className={id === attribute[`attribute${idx+1}_id`] ? 'active' : ''} onClick={() => handleSelectAttribute(idx + 1, id)}
+                                                                    key={value}><span>{value}</span></li>))
                                                         }
                                                     </ul>
                                                 </div>
@@ -149,43 +194,41 @@ const ProductDetail = () => {
                                         <div className="quantity mb-5">
                                             <h4>Quantity</h4>
                                             <ul>
-                                                <li><span><i className="ti-minus"/></span></li>
-                                                <li><span>4</span></li>
-                                                <li><span><i className="ti-plus"/></span></li>
+                                                <li onClick={() => quantity > 1 && setQuantity(quantity - 1)}><span><i
+                                                    className="ti-minus"/></span></li>
+                                                <li><span>{quantity}</span></li>
+                                                <li onClick={() => setQuantity(quantity + 1)}><span><i
+                                                    className="ti-plus"/></span></li>
                                             </ul>
                                         </div>
                                         <div className="left-image d-flex small-slider">
-                                            <div className="image image-1 mr-4">
-                                                <div className="hover-state">
-                                                    <a href="/img/cart-page/banner-bg.png"><i
-                                                        className="fa fa-search"/></a>
-                                                </div>
-                                            </div>
-                                            <div className="image image-2 mr-4">
-                                                <div className="hover-state">
-                                                    <a href="/img/cart-page/banner-bg2.png"><i
-                                                        className="fa fa-search"/></a>
-                                                </div>
-                                            </div>
-                                            <div className="image image-3">
-                                                <div className="hover-state">
-                                                    <a href="/img/cart-page/banner-bg3.png"><i
-                                                        className="fa fa-search"/></a>
-                                                </div>
-                                            </div>
+                                            {
+                                                product.images.map((image,i) => (
+                                                    <div key={i} className="image mr-4"
+                                                         style={{backgroundImage: `url("http://localhost:5000/images/${image}")`}}>
+                                                        <div className="hover-state">
+                                                            <a href={`http://localhost:5000/images/${image}`}><i
+                                                                className="fa fa-search"/></a>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-4 order-1 order-lg-2">
                                     <div className="banner-image big-slider">
-                                        <div className="cart-page-banner-bg"/>
+                                        <div className="cart-page-banner-bg"
+                                             style={{backgroundImage: `url("http://localhost:5000/images/${product.images[0]}")`}}/>
                                     </div>
                                 </div>
                                 <div className="col-lg-5 align-self-center order-3">
                                     <div className="banner-right mb-5">
                                         <div className="right-top">
                                             <h6>{product.name}</h6>
-                                            <p className="mt-4" dangerouslySetInnerHTML={{__html: product.description}}></p>
+                                            <p className="mt-4"
+                                               dangerouslySetInnerHTML={{__html: product.description}}></p>
                                         </div>
                                         <div className="right-button mt-40">
                                             <a href="#" className="template-btn2 on2">Add To Cart <span>⇀</span></a>

@@ -1,3 +1,4 @@
+from .product_attribute import ProductAttributeModel
 from .user import UserModel
 from .permission import PermissionModel
 from .role_permission import RolePermissionModel
@@ -15,5 +16,6 @@ __all__ = [
     "UserRoleModel",
     "CategoryModel",
     "ProductVariantModel",
-    "ProductBaseModel"
+    "ProductBaseModel",
+    "ProductAttributeModel"
 ]

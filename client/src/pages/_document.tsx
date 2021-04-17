@@ -10,7 +10,7 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head/>
-                <body>
+                <body className={'shop-page cart-page common-typography'}>
                 <Main/>
                 <NextScript/>
                 </body>

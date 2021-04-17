@@ -1,6 +1,6 @@
 from http import HTTPStatus
 import jsonschema
-from flask import jsonify, request
+from flask import request
 import logging
 from ....models.entity.product_attribute import ProductAttributeModel
 from ....models.entity.product_attribute_value import ProductAttributeValueModel

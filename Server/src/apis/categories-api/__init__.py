@@ -13,7 +13,6 @@ routes = [
          view_func=create_category_handler,
          options=dict(methods=['POST'])),
     dict(auth_required=True,
-         # code='GET_PERMISSION',
          path='/<category_id>',
          view_func=update_category_handler,
          options=dict(methods=['PUT'])),
