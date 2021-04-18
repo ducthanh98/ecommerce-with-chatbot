@@ -10,16 +10,9 @@ update_user_schema = {
             "items": {
                 "type": "number"
             },
-            "message": "permission is invalid"
-        },
-        "delete_roles": {
-            "type": "array",
-            "items": {
-                "type": "number"
-            },
-            "message": "permission is invalid"
+            "message": "roles is invalid"
         },
     },
-    "required": ["delete_roles", "update_roles"]
+    "required": ["update_roles"]
 
 }

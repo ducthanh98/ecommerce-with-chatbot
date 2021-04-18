@@ -21,14 +21,7 @@ update_role_schema = {
             },
             "message": "permission is invalid"
         },
-        "delete_permissions": {
-            "type": "array",
-            "items": {
-                "type": "number"
-            },
-            "message": "permission is invalid"
-        },
     },
-    "required": ["name", "delete_permissions", "update_permissions"]
+    "required": ["name", "update_permissions"]
 
 }

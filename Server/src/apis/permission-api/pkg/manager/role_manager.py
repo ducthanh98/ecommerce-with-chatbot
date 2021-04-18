@@ -54,7 +54,7 @@ class RoleManager:
         })
 
         session.query(RolePermissionModel). \
-            filter(RolePermissionModel.permission_id.in_(data['delete_permissions'])). \
+            filter(RolePermissionModel.role_id.__eq__(role_id)). \
             delete(synchronize_session='fetch')
 
         role_permissions = []

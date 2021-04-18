@@ -1,5 +1,5 @@
 import {Role} from "../roles/model";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button, Checkbox, Form, Input, Modal, notification} from "antd";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
@@ -19,7 +19,14 @@ interface Props {
 export const UserModal = (props: Props) => {
     const {dataModal, visible, setShowModal, roles, setLoading, refresh} = props
     const [activate, setActivate] = useState(dataModal.activate)
-    let selectIds = []
+    const [selectIds, setSelectIds] = useState([])
+
+    useEffect(() => {
+        const data = []
+        dataModal.user_roles?.forEach(item => data.push(item.role_id))
+        setSelectIds(data)
+    }, [])
+
     const layout = {
         labelCol: {
             span: 6
@@ -36,6 +43,7 @@ export const UserModal = (props: Props) => {
         }
     };
 
+
     const renderBtnSubmit = () => {
         return (
             <Button type="primary" htmlType="submit" className="login-btn">
@@ -45,11 +53,13 @@ export const UserModal = (props: Props) => {
     };
 
     const handleSelectRole = (e: CheckboxChangeEvent) => {
+        let data = [...selectIds]
         if (e.target.checked) {
-            selectIds.push(e.target.value)
+            data.push(e.target.value)
         } else {
-            selectIds = selectIds.filter(x => x !== e.target.value)
+            data = data.filter(x => x !== e.target.value)
         }
+        setSelectIds(data)
     }
 
     const renderCheckboxRoles = () => {
@@ -111,24 +121,11 @@ export const UserModal = (props: Props) => {
 
 
     const onFinish = async (values) => {
-
+        debugger
         setLoading({type: SET_LOADING, payload: true} as Action)
-        values.roles = selectIds
+        values.update_roles = selectIds
 
-        const payload = {...dataModal, ...values, delete_roles: [], update_roles: [], activate}
-
-        for (let i = 0; i < values.roles.length; i++) {
-            if (!dataModal.user_roles || !dataModal.user_roles.includes(values.roles[i])) {
-                payload.update_roles.push(values.roles[i])
-            }
-        }
-
-        for (let i = 0; i < dataModal.user_roles?.length; i++) {
-            if (!values.roles || !values.roles.includes(dataModal.user_roles[i].role_id)) {
-                payload.delete_roles.push(dataModal.user_roles[i].role_id)
-            }
-        }
-
+        const payload = {...dataModal, ...values, activate}
         const result = await api.updateUser(payload)
 
         if (result.error) {

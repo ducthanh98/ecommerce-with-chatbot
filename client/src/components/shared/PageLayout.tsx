@@ -19,6 +19,7 @@ const PageLayout = ({children, token}) => {
     const [userState, dispatchUser] = user
     const [isAdmin, setIsAdmin] = useState(true)
     const router = useRouter();
+    const [isGetUser, setIsGetUser] = useState(true)
 
     useMemo(() => {
         if (router.asPath.includes('admin')) {
@@ -43,7 +44,14 @@ const PageLayout = ({children, token}) => {
 
 
     const init = async () => {
-        const payload = {type: SET_LOADING, payload: true}
+        if (!token && router.asPath.includes('admin')) {
+            setIsGetUser(false)
+            return router.push('/')
+        } else if (!token) {
+            return setIsGetUser(false)
+        }
+
+        let payload = {type: SET_LOADING, payload: true}
         dispatchLoading(payload)
 
         const response = await http.get<User>(`user-api/current`)
@@ -55,12 +63,17 @@ const PageLayout = ({children, token}) => {
                 description: response.data
             });
         }
+        const data = response.data as User
+
         dispatchUser({type: SET_AUTHENTICATE, payload: {logged_in: true, user_info: response.data}})
 
-        setTimeout(() => {
-            const payload = {type: SET_LOADING, payload: false}
-            dispatchLoading(payload)
-        }, 1000)
+        payload = {type: SET_LOADING, payload: false}
+        dispatchLoading(payload)
+        if (data.permissions.length < 1) {
+            await router.push('/')
+        }
+        setIsGetUser(false)
+
     }
 
     const renderCustomerTemplate = () => {
@@ -96,17 +109,28 @@ const PageLayout = ({children, token}) => {
     return (
         <>
             {
-                !isAdmin && renderCustomerTemplate()
-            }
-            {
-                isAdmin && renderAdminTemplate()
+                !isGetUser &&
+                (
+                    <>
+                        {
+                            !isAdmin && renderCustomerTemplate()
+                        }
+                        {
+                            isAdmin && renderAdminTemplate()
+                        }
+                    </>
+                )
             }
         </>
 
     )
 }
 
-PageLayout.getInitialProps = ({req}) => {
+PageLayout.getInitialProps = (
+    {
+        req
+    }
+) => {
     const {cookies} = req ? req : {}
     const {token} = cookies
 

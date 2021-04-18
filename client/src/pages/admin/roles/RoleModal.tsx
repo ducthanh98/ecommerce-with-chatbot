@@ -4,7 +4,7 @@ import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const styles = {
     textBold: {
@@ -24,7 +24,8 @@ interface Props {
 export const RoleModal = (props: Props) => {
     const {dataModal, visible, setShowModal, permissions, setLoading, refresh} = props
     const [activate, setActivate] = useState(dataModal.activate)
-    let selectIds = []
+    const [selectIds, setSelectIds] = useState([])
+
     const layout = {
         labelCol: {
             span: 6
@@ -33,6 +34,12 @@ export const RoleModal = (props: Props) => {
             span: 18
         }
     };
+
+    useEffect(() => {
+        const data = []
+        dataModal.role_permissions?.forEach(item => data.push(item.permission_id))
+        setSelectIds(data)
+    }, [])
 
     const tailLayout = {
         wrapperCol: {
@@ -50,11 +57,13 @@ export const RoleModal = (props: Props) => {
     };
 
     const handleSelectPermission = (e: CheckboxChangeEvent) => {
+        let data = [...selectIds]
         if (e.target.checked) {
-            selectIds.push(e.target.value)
+            data.push(e.target.value)
         } else {
-            selectIds = selectIds.filter(x => x !== e.target.value)
+            data = data.filter(x => x !== e.target.value)
         }
+        setSelectIds(data)
     }
 
     const renderCheckboxPermissions = () => {
@@ -131,23 +140,9 @@ export const RoleModal = (props: Props) => {
     const onFinish = async (values) => {
 
         setLoading({type: SET_LOADING, payload: true} as Action)
-        values.permissions = selectIds
+        values.update_permissions = selectIds
 
-        const payload = {...dataModal, ...values, delete_permissions: [], update_permissions: [], activate}
-
-        for (let i = 0; i < values.permissions.length; i++) {
-            if (!dataModal.role_permissions || !dataModal.role_permissions.includes(values.permissions[i])) {
-                payload.update_permissions.push(values.permissions[i])
-            }
-        }
-
-        for (let i = 0; i < dataModal.role_permissions?.length; i++) {
-            if (!values.permissions || !values.permissions.includes(dataModal.role_permissions[i].permission_id)) {
-                payload.delete_permissions.push(dataModal.role_permissions[i].permission_id)
-            }
-        }
-
-
+        const payload = {...dataModal, ...values, activate}
         let result
         if (!payload.id) {
             result = await api.createRole(payload)

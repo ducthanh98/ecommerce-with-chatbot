@@ -4,7 +4,7 @@ from .handlers import fetch_category_handler,create_category_handler,update_cate
 api = Blueprint('Category API', __name__)
 
 routes = [
-    dict(auth_required=True,
+    dict(auth_required=False,
          path='',
          view_func=fetch_category_handler,
          options=dict(methods=['GET'])),
