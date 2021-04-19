@@ -1,7 +1,7 @@
 import {useContext, useEffect, useState} from "react";
 import {api} from './api'
 import {useRouter} from "next/router";
-import {Button, notification, Table} from "antd";
+import {Button, notification, Table, Tag} from "antd";
 import {Action} from "../../../utils/models/reducer.model";
 import {SET_LOADING} from "../../../utils/store/reducers/loading";
 import {StoreContext} from "../../../utils/store/Store";
@@ -36,10 +36,10 @@ const AdminUser = () => {
             render: text => <p>{text}</p>,
         },
         {
-            title: 'Activate',
+            title: 'Status',
             dataIndex: 'activate',
             key: 'activate',
-            render: text => <p>{text}</p>,
+            render: text => <p>{text ? <Tag color="geekblue">Activate</Tag> : <Tag color="red">Deactivate</Tag>}</p>,
         },
         {
             title: 'Created At',

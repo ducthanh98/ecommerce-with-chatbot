@@ -78,7 +78,7 @@ export const RoleModal = (props: Props) => {
                                 defaultChecked={dataModal.role_permissions?.some(x => x.permission_id == permission.id)}
                                 value={permission.id}
                                 onChange={handleSelectPermission}>
-                                {permission.code}
+                                {permission.description}
                             </Checkbox>
                             <br/>
 

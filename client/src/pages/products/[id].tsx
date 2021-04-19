@@ -32,13 +32,13 @@ const ProductDetail = () => {
 
     }, [attribute])
 
-    useEffect(() => {
-        console.log(variant)
-
-    }, [variant])
 
     useEffect(() => {
+        $("body").addClass("cart-page common-typography")
         init()
+        return () => {
+            $("body").removeClass("cart-page common-typography")
+        }
     }, [])
 
 
@@ -183,7 +183,8 @@ const ProductDetail = () => {
                                                     <ul>
                                                         {
                                                             product_attribute.values.map(({value, id}) => (
-                                                                <li className={id === attribute[`attribute${idx+1}_id`] ? 'active' : ''} onClick={() => handleSelectAttribute(idx + 1, id)}
+                                                                <li className={id === attribute[`attribute${idx + 1}_id`] ? 'active' : ''}
+                                                                    onClick={() => handleSelectAttribute(idx + 1, id)}
                                                                     key={value}><span>{value}</span></li>))
                                                         }
                                                     </ul>
@@ -203,7 +204,7 @@ const ProductDetail = () => {
                                         </div>
                                         <div className="left-image d-flex small-slider">
                                             {
-                                                product.images.map((image,i) => (
+                                                product.images.map((image, i) => (
                                                     <div key={i} className="image mr-4"
                                                          style={{backgroundImage: `url("http://localhost:5000/images/${image}")`}}>
                                                         <div className="hover-state">

@@ -9,7 +9,7 @@ create_role_schema = {
         "description": {
             "type": "string",
         },
-        "permissions": {
+        "update_permissions": {
             "type": "array",
             "items": {
                 "type": "number"
@@ -17,6 +17,6 @@ create_role_schema = {
             "message": "permission is invalid"
         }
     },
-    "required": ["name", "permissions"]
+    "required": ["name", "update_permissions"]
 
 }

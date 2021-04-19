@@ -34,7 +34,7 @@ class RoleManager:
         session.flush()
 
         role_permissions = []
-        permissions = data['permissions']
+        permissions = data['update_permissions']
 
         for permission in permissions:
             role_permission = RolePermissionModel(role_id=role.id, permission_id=permission)

@@ -20,8 +20,13 @@ const Products = () => {
     const router = useRouter()
 
     useEffect(() => {
+        $("body").addClass("shop-page common-typography")
         setFilter(getRouteQuery(filter, router))
         init()
+
+        return () => {
+            $("body").removeClass("shop-page common-typography")
+        }
     }, [])
 
     useEffect(() => {
@@ -142,7 +147,8 @@ const Products = () => {
                                         {
                                             category.map(x => (<li onClick={() => {
                                                 updateFilter({category_id: x.id})
-                                            }}><a style={filter.category_id === x.id ? {color: '#40a9ff'} : {}} href="#">{x.name} </a></li>))
+                                            }}><a style={filter.category_id === x.id ? {color: '#40a9ff'} : {}}
+                                                  href="#">{x.name} </a></li>))
                                         }
                                     </ul>
                                 </div>

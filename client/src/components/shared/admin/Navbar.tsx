@@ -3,6 +3,7 @@ import {Menu, Layout} from "antd";
 import {ContainerTwoTone} from '@ant-design/icons'
 import {AdminActiveLink} from './Router'
 import {StoreContext} from "../../../utils/store/Store";
+import {useRouter} from "next/router";
 
 const {Sider} = Layout;
 
@@ -29,6 +30,16 @@ const styles = {
 const Navbar = () => {
     const {user} = useContext(StoreContext)
     const [userState, dispatchUser] = user
+    const router = useRouter()
+    const menuMap = {
+        '/admin/users': ['1'],
+        '/admin/roles': ['2'],
+        '/admin/categories': ['3'],
+        '/admin/products': ['4'],
+        '/admin/orders': ['5'],
+    }
+
+    const [defaultMenu, setDefaultMenu] = useState([1])
 
     const [force, setForce] = useState(false)
     useEffect(() => {
@@ -37,6 +48,10 @@ const Navbar = () => {
             setForce(true)
         })
     }, [userState])
+
+    useEffect(() => {
+        setDefaultMenu(menuMap[router.pathname])
+    }, [])
 
 
     const checkPermission = (codes: string[]) => {
@@ -62,12 +77,12 @@ const Navbar = () => {
                         <ContainerTwoTone style={{paddingRight: '10px'}}/>
                         Shop
                     </div>
-                    <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                    <Menu theme="dark" defaultSelectedKeys={defaultMenu} mode="inline">
                         {
                             checkPermission(['GET_USER', 'POST_USER', 'UPDATE_USER']) &&
                             <Menu.Item key="1">
                                 <AdminActiveLink href={'/admin/users'}>
-                                    <img src='/images/post_add-24px.svg' alt={'User'}/> &nbsp;
+                                    <img src='/images/contacts-24px.svg' alt={'User'}/> &nbsp;
                                     <span>User</span>
                                 </AdminActiveLink>
 
@@ -77,7 +92,7 @@ const Navbar = () => {
                             checkPermission(['GET_ROLE', 'CREATE_ROLE', 'UPDATE_ROLE']) &&
                             <Menu.Item key="2">
                                 <AdminActiveLink href={'/admin/roles'}>
-                                    <img src='/images/post_add-24px.svg' alt={'Role'}/> &nbsp;
+                                    <img src='/images/format_list_bulleted-24px.svg' alt={'Role'}/> &nbsp;
                                     <span>Role</span>
                                 </AdminActiveLink>
                             </Menu.Item>
@@ -86,7 +101,7 @@ const Navbar = () => {
                             checkPermission(['CREATE_CATEGORY', 'UPDATE_CATEGORY']) &&
                             <Menu.Item key="3">
                                 <AdminActiveLink href={'/admin/categories'}>
-                                    <img src='/images/post_add-24px.svg' alt={'Categories'}/> &nbsp;
+                                    <img src='/images/format_list_bulleted-24px.svg' alt={'Categories'}/> &nbsp;
                                     <span>Categories</span>
                                 </AdminActiveLink>
                             </Menu.Item>
@@ -95,17 +110,17 @@ const Navbar = () => {
                             checkPermission(['CREATE_PRODUCT', 'UPDATE_PRODUCT']) &&
                             <Menu.Item key="4">
                                 <AdminActiveLink href={'/admin/products'}>
-                                    <img src='/images/post_add-24px.svg' alt={'Categories'}/> &nbsp;
+                                    <img src='/images/format_list_bulleted-24px.svg' alt={'Categories'}/> &nbsp;
                                     <span>Products</span>
                                 </AdminActiveLink>
                             </Menu.Item>
                         }
                         {
-                            checkPermission(['UPDATE_ORDER','FETCH_ORDER']) &&
+                            checkPermission(['UPDATE_ORDER', 'FETCH_ORDER']) &&
                             <Menu.Item key="5">
-                                <AdminActiveLink href={'/admin/products'}>
-                                    <img src='/images/post_add-24px.svg' alt={'Categories'}/> &nbsp;
-                                    <span>Products</span>
+                                <AdminActiveLink href={'/admin/orders'}>
+                                    <img src='/images/format_list_bulleted-24px.svg' alt={'Categories'}/> &nbsp;
+                                    <span>Orders</span>
                                 </AdminActiveLink>
                             </Menu.Item>
                         }
