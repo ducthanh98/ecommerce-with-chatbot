@@ -6,12 +6,13 @@ class CategoryManager:
 
     def build_category_query(self, args):
         query = CategoryModel.query
-
-        if args.get('id') is not None:
+        category_id = args.get('id')
+        name = args.get('name')
+        if category_id:
             query = query.filter_by(id=args.get('id'))
 
-        if args.get('name') is not None:
-            query = query.filter_by(name=args.get('name'))
+        if name:
+            query = query.filter(CategoryModel.name.ilike(f'%{name}%'))
 
         if args.get('activate') is not None:
             query = query.filter_by(activate=args.get('activate'))

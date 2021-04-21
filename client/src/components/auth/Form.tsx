@@ -43,7 +43,13 @@ export const AuthForm = () => {
         } else {
 
             dispatchUser({type: SET_AUTHENTICATE, payload: result.data} as Action)
-
+            notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: "Login successful"
+            });
+            closeAuthPopup()
         }
 
         dispatchLoading({type: SET_LOADING, payload: false} as Action)
@@ -85,7 +91,7 @@ export const AuthForm = () => {
             message: 'Fashion and Clothing Shop',
             placement: 'topLeft',
             className: 'custom-notification-antd',
-            description: "Register successfully. Please check email to activate your account"
+            description: "Register successfully"
         });
         changeSignInPopup();
 

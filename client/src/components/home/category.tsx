@@ -1,9 +1,11 @@
 import {useEffect, useState} from "react";
 import {http} from "../../core/http";
-import {FetchPermissionResponse} from "../../pages/admin/categories/model";
 import {notification} from "antd";
+import {useRouter} from "next/router";
+import {FetchPermissionResponse} from "../../pages/admin/roles/model";
 
 export const Category = () => {
+    const router = useRouter()
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
@@ -32,6 +34,8 @@ export const Category = () => {
         e.target.offsetParent.classList.add('active')
     }
 
+    const handRedirect = (id)=> router.push(`/products?category_id=${id}`)
+
     return (
         <section className="categories-area">
             <div className="container-fluid">
@@ -45,7 +49,7 @@ export const Category = () => {
                             {
                                 categories.map(category => (
                                     <div className="single-item fadeIn" data-wow-duration=".8s" data-wow-delay=".4s"
-                                         key={category.id} onMouseOver={onMouseOver}>
+                                         key={category.id} onMouseOver={onMouseOver} onClick={()=>handRedirect(category.id)}>
                                         <div className="item-image"
                                              style={{backgroundImage: `url("http://localhost:5000/images/${category.image}")`}}>
                                         </div>

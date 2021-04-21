@@ -30,12 +30,6 @@ create_product_schema = {
                 {
                     "type": "object",
                     "properties": {
-                        "key": {
-                            "type": "integer"
-                        },
-                        "name": {
-                            "type": "string"
-                        },
                         "attribute": {
                             "type": "string",
                             "message": "attributes name is invalid"
@@ -45,16 +39,11 @@ create_product_schema = {
                             "items": [
                                 {
                                     "type": "string"
-                                },
-                                {
-                                    "type": "string"
                                 }
                             ]
                         }
                     },
                     "required": [
-                        "key",
-                        "name",
                         "attribute",
                         "values"
                     ]

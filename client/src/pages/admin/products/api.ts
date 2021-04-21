@@ -12,4 +12,7 @@ export const api = {
     createProduct: (payload) => {
         return http.post(`product-api`, payload)
     },
+    getProduct: (id) => {
+        return http.get(`product-api/${id}`)
+    }
 }

@@ -1088,24 +1088,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <section className="newsletter-area section-padding-both">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-6">
-                            <div className="section-title">
-                                <h2>subscribe to our newsletter</h2>
-                            </div>
-                            <p>Receive 10% off on your first order and be among the first to receive our exclusive
-                                emails about discounts and new arrivals.</p>
-                            <form action="#">
-                                <input type="email" className="common-input"
-                                       placeholder="Enter Your Email Address Here" required/>
-                                <button type="submit"><span>⇀</span></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
             <section className="instagram-area section-padding-top3">
                 <div className="container-fluid">
                     <div className="row">

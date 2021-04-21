@@ -45,6 +45,7 @@ export const getRouteQuery = (filter, router: NextRouter) => {
     if (!query.page) {
         query.page = '1'
     }
+    console.log(Object.assign({}, router.query, query))
     return Object.assign({}, router.query, query)
 }
 

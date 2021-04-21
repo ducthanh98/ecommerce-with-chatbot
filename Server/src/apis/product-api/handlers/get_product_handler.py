@@ -8,7 +8,7 @@ from ..pkg.manager import product_manager
 def get_product_handler(product_id):
     try:
         opts = {
-            id:product_id
+            "id": product_id
         }
         product, related_products = product_manager.get_product(opts)
 

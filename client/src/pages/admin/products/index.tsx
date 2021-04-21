@@ -70,12 +70,15 @@ const AdminProduct = () => {
 
     useEffect(() => {
         setFilter(getRouteQuery(filter, router))
+        if (Object.keys(filter).length < 1) return
+        init()
     }, [])
 
     useEffect(() => {
+        setFilter(getRouteQuery(filter, router))
         if (Object.keys(filter).length < 1) return
         init()
-    }, [filter])
+    }, [filter.limit, filter.page])
 
     const init = async () => {
         handleUpdateRouteQuery(router, filter)
@@ -140,9 +143,10 @@ const AdminProduct = () => {
                         size={'middle'}>
                     Create
                 </Button>
-                <Search placeholder="Search ..." value={filter.name} className={'custom-search'} onChange={(e) => {
-                    updateFilter({name: e.target.value})
-                }} enterButton/>
+                <Search placeholder="Search ..." onChange={(e) => updateFilter({name: e.target.value})}
+                        value={filter.name}
+                        className={'custom-search'}
+                        onSearch={init} enterButton/>
                 <Table
                     rowKey="id"
                     dataSource={products}

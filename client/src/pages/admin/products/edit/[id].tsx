@@ -1,14 +1,15 @@
 import {Button, Checkbox, Form, Input, InputNumber, message, notification, Select} from "antd";
 import {useContext, useEffect, useState} from "react";
-import {StoreContext} from "../../../utils/store/Store";
+import {StoreContext} from "../../../../utils/store/Store";
 import {MinusCircleOutlined, PlusCircleOutlined, PlusOutlined} from "@ant-design/icons";
 import {UploadFile} from "antd/es/upload/interface";
-import {Upload} from "../../../components/shared/admin/Upload";
-import {SET_LOADING} from "../../../utils/store/reducers/loading";
-import {Action} from "../../../utils/models/reducer.model";
-import {api} from "./api";
+import {Upload} from "../../../../components/shared/admin/Upload";
+import {SET_LOADING} from "../../../../utils/store/reducers/loading";
+import {Action} from "../../../../utils/models/reducer.model";
+import {api} from "../api";
 import {useRouter} from "next/router";
-import {FetchCategoriesResponse} from "./model";
+import {FetchCategoriesResponse} from "../model";
+import {GetProductResponse, Product} from "../../../products/model";
 
 const {Option} = Select;
 
@@ -39,10 +40,10 @@ const AdminCreateProduct = () => {
     const [loadingState, dispatchLoading] = loading
     const [form] = Form.useForm()
     const [fileList, setFileList] = useState([] as UploadFile[]);
-    const router = useRouter()
     const [categories, setCategories] = useState([])
-
-
+    const router = useRouter()
+    const {id} = router.query
+    const [product, setProduct] = useState({} as Product)
     const layout = {
         labelCol: {
             span: 4
@@ -60,7 +61,48 @@ const AdminCreateProduct = () => {
 
     useEffect(() => {
         fetchCategory()
+        init()
     }, [])
+
+    const init = async () => {
+        const result = await api.getProduct(id)
+
+        if (result.error) {
+
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+        const product = (result.data as GetProductResponse).product
+        let images = product.images.map(x => ({
+            uid: x,
+            url: `http://localhost:5000/images/${x}`,
+            status: "done"
+        }))
+        setFileList(images)
+        setProduct(product)
+
+        const product_attributes = product.product_attributes
+        const attributes = []
+
+        product_attributes.forEach(attribute => {
+
+            const tmp = {
+                attribute: attribute.name,
+                values: []
+            }
+
+            attribute.values.forEach(value => tmp.values.push(value.value))
+            attributes.push(tmp)
+        })
+
+        form.setFieldsValue({attributes})
+
+    }
 
     const fetchCategory = async () => {
         const result = await api.fetchCategory()
@@ -86,12 +128,13 @@ const AdminCreateProduct = () => {
                 style={{width: 200}}
                 placeholder="Select a category"
                 optionFilterProp="children"
+                value={product.category?.id}
                 filterOption={(input, option) =>
                     option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
             >
                 {
-                    categories.map(item => (<Option value={item.id}>{item.name}</Option>))
+                    categories.map(item => (<Option key={item.id} value={item.id}>{item.name}</Option>))
                 }
 
             </Select>
@@ -118,7 +161,7 @@ const AdminCreateProduct = () => {
         {
             key: 0,
             label: "Name",
-            initialValue: '',
+            initialValue: product.name,
             name: "name",
             rules: [
                 {
@@ -132,13 +175,14 @@ const AdminCreateProduct = () => {
             key: 1,
             label: "Description ",
             name: "description",
-            initialValue: '',
+            initialValue: product.description,
             render: <Input.TextArea/>
         },
         {
             key: 7,
             label: "Category ",
             name: "category_id",
+            initialValue: product.category?.id,
             rules: [
                 {
                     required: true,
@@ -159,7 +203,6 @@ const AdminCreateProduct = () => {
             render: <Upload fileList={fileList} setFileList={setFileList} multiple={true}/>
         }
     ];
-
     const confirmBtns = [
         {
             key: 4,
@@ -169,11 +212,13 @@ const AdminCreateProduct = () => {
         }
     ];
 
+
     const handleGenerateVariant = () => {
         const {attributes, name} = form.getFieldsValue()
         const data = []
         const length = attributes.length;
         const tmp = {};
+
         if (!attributes[0].attribute || !attributes[0].values || !name) {
             return
         }
@@ -231,7 +276,7 @@ const AdminCreateProduct = () => {
                 for (let k = 0; k < attributes[2].values.length; k++) {
                     if (attributes[2].values[k] !== '') {
                         tmp['attribute3_name'] = attributes[2].attribute;
-                        tmp['attribute3_value'] = attributes[2].values[k];
+                        tmp['attribute3_value'] = attributes[2].value[k];
                     }
 
                     data.push({
@@ -258,13 +303,14 @@ const AdminCreateProduct = () => {
     }
 
     const onFinish = async (values) => {
-        dispatchLoading({type: SET_LOADING, payload: true} as Action)
         if (fileList.length < 1) {
             return message.error("Image is required")
         }
+        dispatchLoading({type: SET_LOADING, payload: true} as Action)
 
         values.images = [fileList[0].response ? fileList[0].response.filenames[0] : fileList[0].uid]
         values.attributes = values.attributes.map(item => ({attribute: item.attribute, values: item.values}))
+        debugger
         const result = await api.createProduct(values)
 
         if (result.error) {
@@ -291,7 +337,9 @@ const AdminCreateProduct = () => {
 
     return (
         <>
+            {product.id &&
             <Form {...layout} name="basic" onFinish={onFinish} form={form}>
+
                 {formItems.map(item => (
                     <Form.Item
                         label={item.label}
@@ -306,12 +354,7 @@ const AdminCreateProduct = () => {
                     </Form.Item>
                 ))}
 
-                <Form.List name="attributes" initialValue={[{
-                    key: 0,
-                    name: '0',
-                    attribute: ''
-
-                }]}>
+                <Form.List name="attributes">
                     {(fields, {add, remove}, {errors}) => (
                         <>
                             {fields.map((field, index) => (
@@ -444,6 +487,7 @@ const AdminCreateProduct = () => {
                     </Form.Item>
                 ))}
             </Form>
+            }
         </>
     )
 }

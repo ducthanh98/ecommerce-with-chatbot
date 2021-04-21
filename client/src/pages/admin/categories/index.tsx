@@ -68,11 +68,13 @@ const AdminRole = () => {
 
     useEffect(() => {
         init()
-    }, [])
+    }, [filter])
+
+    const handleSearch = (name) => setFilter({...filter, name})
 
     const init = async () => {
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
-        const result = await api.fetchCategories()
+        const result = await api.fetchCategories(filter)
 
         if (result.error) {
 
@@ -112,7 +114,7 @@ const AdminRole = () => {
                     size={'middle'}>
                 Create
             </Button>
-            <Search placeholder="Search ..." className={'custom-search'} onSearch={init} enterButton/>
+            <Search placeholder="Search ..." className={'custom-search'} onSearch={handleSearch} enterButton/>
             <Table
                 rowKey="id"
                 dataSource={categories}

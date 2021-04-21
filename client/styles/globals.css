@@ -43,3 +43,7 @@
 .ant-table table{
     background-color: white;
 }
+
+.price ul li {
+    cursor: pointer;
+}

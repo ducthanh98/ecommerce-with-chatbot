@@ -34,10 +34,10 @@ const ProductDetail = () => {
 
 
     useEffect(() => {
-        $("body").addClass("cart-page common-typography")
+        $("body").addClass("cart-page shop-page common-typography")
         init()
         return () => {
-            $("body").removeClass("cart-page common-typography")
+            $("body").removeClass("cart-page shop-page common-typography")
         }
     }, [])
 
@@ -167,7 +167,7 @@ const ProductDetail = () => {
                                     <div className="cart-banner-left">
                                         <div className="left-title mb-5">
                                             <h3>{product.category.name}</h3>
-                                            <h4>{product.name}</h4>
+                                            <h4>{variant.id ? variant.name : product.name}</h4>
                                         </div>
                                         <div className="price mb-5">
                                             {

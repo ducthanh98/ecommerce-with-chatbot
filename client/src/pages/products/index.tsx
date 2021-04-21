@@ -20,10 +20,8 @@ const Products = () => {
     const router = useRouter()
 
     useEffect(() => {
-        $("body").addClass("shop-page common-typography")
+        $("body").addClass("shop-page shop-page common-typography")
         setFilter(getRouteQuery(filter, router))
-        init()
-
         return () => {
             $("body").removeClass("shop-page common-typography")
         }
@@ -31,10 +29,11 @@ const Products = () => {
 
     useEffect(() => {
         if (Object.keys(filter).length < 1) return
-        init()
+        setTimeout(init, 0)
     }, [filter])
 
     const init = async () => {
+        console.log('a')
         dispatchLoading({type: SET_LOADING, payload: true} as Action)
         handleUpdateRouteQuery(router, filter)
         await Promise.all([
@@ -105,6 +104,8 @@ const Products = () => {
         tmp.page = 1
         tmp.limit = 20
         tmp.name = ''
+        tmp.price_from = ''
+        tmp.price_to = ''
         tmp.category_id = ''
         setFilter(tmp)
     }
@@ -122,6 +123,13 @@ const Products = () => {
         e.preventDefault()
         updateFilter({name: e.target.value})
     }, 500)()
+
+    const removePriceFilter = () => {
+        const data = {...filter}
+        data.price_from = ''
+        data.price_to = ''
+        setFilter(data)
+    }
 
 
     return (
@@ -145,9 +153,9 @@ const Products = () => {
                                     </div>
                                     <ul>
                                         {
-                                            category.map(x => (<li onClick={() => {
+                                            category.map(x => (<li key={x.id} onClick={() => {
                                                 updateFilter({category_id: x.id})
-                                            }}><a style={filter.category_id === x.id ? {color: '#40a9ff'} : {}}
+                                            }}><a style={filter.category_id == x.id ? {color: '#40a9ff'} : {}}
                                                   href="#">{x.name} </a></li>))
                                         }
                                     </ul>
@@ -157,12 +165,24 @@ const Products = () => {
                                         <h4>PRICE</h4>
                                     </div>
                                     <ul>
-                                        <li>All</li>
-                                        <li>$0 - $20</li>
-                                        <li>$20 - $60</li>
-                                        <li>$60 - $100</li>
-                                        <li>$100 - $150</li>
-                                        <li>$150 - $200</li>
+                                        <li onClick={removePriceFilter}
+                                            style={!filter.price_from && !filter.price_to ? {color: '#40a9ff'} : {}}>All
+                                        </li>
+                                        <li style={!filter.price_from && filter.price_to == 20 ? {color: '#40a9ff'} : {}}
+                                            onClick={() => updateFilter({price_from: '', price_to: 20})}>$0 - $20
+                                        </li>
+                                        <li style={filter.price_from == 20 && filter.price_to == 60 ? {color: '#40a9ff'} : {}}
+                                            onClick={() => updateFilter({price_from: 20, price_to: 60})}>$20 - $60
+                                        </li>
+                                        <li style={filter.price_from == 60 && filter.price_to == 100 ? {color: '#40a9ff'} : {}}
+                                            onClick={() => updateFilter({price_from: 60, price_to: 100})}>$60 - $100
+                                        </li>
+                                        <li style={filter.price_from == 100 && filter.price_to == 150 ? {color: '#40a9ff'} : {}}
+                                            onClick={() => updateFilter({price_from: 100, price_to: 150})}>$100 - $150
+                                        </li>
+                                        <li style={filter.price_from == 150 && filter.price_to == 200 ? {color: '#40a9ff'} : {}}
+                                            onClick={() => updateFilter({price_from: 150, price_to: 200})}>$150 - $200
+                                        </li>
                                     </ul>
                                 </div>
                                 <div className="reset">
@@ -191,13 +211,13 @@ const Products = () => {
                                 <div className="row">
                                     {
                                         products.map(product => (
-                                            <div onClick={() => handleShowDetail(product.id)}
+                                            <div key={product.id} onClick={() => handleShowDetail(product.id)}
                                                  className="col-lg-4 col-md-6">
                                                 <div className="single-cart-item active">
                                                     <div className="single-cart-image">
                                                         {
                                                             product.images.map(image => (
-                                                                <img className="image-item-01 item-active"
+                                                                <img key={image} className="image-item-01 item-active"
                                                                      src={`http://localhost:5000/images/${image}`}/>))
                                                         }
                                                     </div>
