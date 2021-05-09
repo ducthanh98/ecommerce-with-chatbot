@@ -1,7 +1,7 @@
 import os
 from http import HTTPStatus
 from uuid import uuid4
-from Server.src.toolkits.constant import MESSAGE
+from ....toolkits.constant import MESSAGE
 from ....toolkits import transhttp
 
 from flask import request

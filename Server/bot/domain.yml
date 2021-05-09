@@ -1,0 +1,61 @@
+version: "2.0"
+
+intents:
+  # Ý đồ khách hàng
+  - greet
+  - thank
+  - bye
+  - ask_func_list
+  - give_name
+  - ask_attribute
+  - ask_price
+  - ask_category
+  - ask_product
+
+slots:
+  cust_sex:
+    auto_fill: true
+    type: text
+  cust_name:
+    auto_fill: true
+    type: text
+  product_attribute:
+    type: unfeaturized
+  product_value:
+    type: unfeaturized
+  product_price:
+    type: unfeaturized
+  product_category:
+    type: unfeaturized
+
+forms:
+  - fetch_product_form
+
+
+responses:
+  utter_greet:
+    - text: "Kính chào Quý khách! Quý khách vui lòng cho biết tên để tiện xưng hô được không ah?"
+  utter_greet_with_name:
+    - text: "Kính chào {cust_sex} {cust_name}. ABC Shop có thể giúp gì được {cust_sex} {cust_name} ạ?"
+  utter_bye:
+    - text: "Kính chào tạm biệt và mong sớm gặp lại quý khách!"
+    - text: "Kính chào tạm biệt và chúc quý khách một ngày tốt lành!"
+  utter_thank:
+    - text: "Cảm ơn quý khách quá khen ah!"
+    - text: "Dạ không có gì, đó là trách nhiệm của em mà!"
+  utter_func_list:
+    - text: "Em có thể làm được rất nhiều thứ: hát, đọc thơ, đọc chuyện...nhưng giờ em chỉ chat và hỗ trợ a mua hàng thôi!"
+  utter_ask_name:
+    - text: "Em họ Bank, tên Bot! Người ta hay gọi em là Bank Bot thông minh xinh đẹp giỏi giang nhất vũ trụ ạ! Quý khách cần trợ giúp gì ạ?"
+    - text: "Dạ thưa. Tên Tiếng Việt của em là Trợ lý ảo nhưng em thích gọi bằng tên Tiếng Anh là Bot cho nó Tây!"
+  utter_ask_product_attribute:
+    - text: "Anh/chị muốn tìm theo tiêu chí nào ạ ?"
+  utter_ask_product_price:
+    - text: "Anh/chị có muốn giới hạn giá không ạ ?"
+    - text: "Tầm giá bao nhiêu ạ ?"
+  utter_unclear:
+    - text: "Thưa quý khách, hiện tại tôi chưa hiểu được yêu cầu của Quý khách. "
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
