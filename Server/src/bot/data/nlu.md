@@ -247,10 +247,19 @@
 ## intent:price_from_entry
 - từ [200]{"entity": "price_entities", "role": "price_from"}$
 - từ [200]{"entity": "price_entities", "role": "price_from"} - [300]{"entity": "price_entities", "role": "price_to"} $
+- từ [30]{"entity": "price_entities", "role": "price_from"} - [90]{"entity": "price_entities", "role": "price_to"} $
+- từ [25]{"entity": "price_entities", "role": "price_from"} - [97]{"entity": "price_entities", "role": "price_to"} $
+- từ [10]{"entity": "price_entities", "role": "price_from"} - [69]{"entity": "price_entities", "role": "price_to"} $
 - từ [290]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"} $
 - từ [180]{"entity": "price_entities", "role": "price_from"} - [259]{"entity": "price_entities", "role": "price_to"} $
-- từ [100]{"entity": "price_entities", "role": "price_from"} - [690]{"entity": "price_entities", "role": "price_to"} $
-- từ [100]{"entity": "price_entities", "role": "price_from"} đến [690]{"entity": "price_entities", "role": "price_to"} $
+- từ [111]{"entity": "price_entities", "role": "price_from"} - [690]{"entity": "price_entities", "role": "price_to"} $
+- từ [149]{"entity": "price_entities", "role": "price_from"} tới [177]{"entity": "price_entities", "role": "price_to"} $
+- từ [21]{"entity": "price_entities", "role": "price_from"} tới [50]{"entity": "price_entities", "role": "price_to"} $
+- từ [39]{"entity": "price_entities", "role": "price_from"} tới [62]{"entity": "price_entities", "role": "price_to"} $
+- từ [49]{"entity": "price_entities", "role": "price_from"} tới [99]{"entity": "price_entities", "role": "price_to"} $
+- [50]{"entity": "price_entities", "role": "price_from"} tới [101]{"entity": "price_entities", "role": "price_to"} $
+- [64]{"entity": "price_entities", "role": "price_from"} tới [246]{"entity": "price_entities", "role": "price_to"} $
+- [11]{"entity": "price_entities", "role": "price_from"} tới [22]{"entity": "price_entities", "role": "price_to"} $
 - à chắc [100]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"} $ à
 - à chắc [111]{"entity": "price_entities", "role": "price_from"} - [218]{"entity": "price_entities", "role": "price_to"} $ nhé
 - à chắc [169]{"entity": "price_entities", "role": "price_from"} - [370]{"entity": "price_entities", "role": "price_to"} $

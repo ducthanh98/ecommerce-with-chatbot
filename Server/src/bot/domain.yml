@@ -62,7 +62,8 @@ responses:
     - text: "Thế còn giá cao nhất ạ ?"
   utter_unclear:
     - text: "Thưa quý khách, hiện tại tôi chưa hiểu được yêu cầu của Quý khách. "
-
+  utter_ask_action:
+    - text: "Bạn còn yêu cầu nào nữa không ạ ?"
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

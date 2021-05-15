@@ -18,13 +18,8 @@
     - utter_greet
 * ask_product
     - product_form
-    - form{"product_name": "product_form"}
-    - slot{"product_name" : "online"}
-    - form{"attribute_value": "product_form"}
-    - form{"product_price": "product_form"}
-    - form{"product_name": null}
-    - form{"attribute_value": null}
-    - form{"product_price": null}
+    - form{"name": "product_form"}
+    - form{"name": null}
 * bye
     - utter_bye
 
@@ -32,14 +27,8 @@
 
 * ask_product
     - product_form
-    - form{"product_name": "product_form"}
-    - slot{"product_name" : "online"}
-    - form{"attribute_value": "product_form"}
-    - form{"product_price": "product_form"}
-    - form{"attribute_value": null}
-    - form{"product_name": null}
-    - form{"product_price": null}
-
+    - form{"name": "product_form"}
+    - form{"name": null}
 * bye
     - utter_bye
 
@@ -51,15 +40,8 @@
     - utter_greet_with_name
 * ask_product
     - product_form
-    - form{"product_name": "product_form"}
-    - slot{"product_name" : "online"}
-    - form{"attribute_value": "product_form"}
-    - form{"price_from": "product_form"}
-    - form{"price_to": "product_form"}
-    - form{"product_name": null}
-    - form{"attribute_value": null}
-    - form{"product_price": null}
-
+    - form{"name": "product_form"}
+    - form{"name": null}
 * bye
     - utter_bye
 
@@ -67,14 +49,8 @@
 
 * ask_product
     - product_form
-    - form{"product_name": "product_form"}
-    - slot{"product_name" : "online"}
-    - form{"attribute_value": "product_form"}
-    - form{"product_price": "product_form"}
-    - form{"product_name": null}
-    - form{"product_value": null}
-    - form{"product_price": null}
-
+    - form{"name": "product_form"}
+    - form{"name": null}
 ## Chào - hỏi chức năng - chào
 
 * greet
