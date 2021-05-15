@@ -1,6 +1,4 @@
-from flask import session
-
-from .....models.entity import CategoryModel, ProductVariantModel, ProductBaseModel
+from .....models.entity import  ProductVariantModel, ProductBaseModel
 from .....app import db
 
 
