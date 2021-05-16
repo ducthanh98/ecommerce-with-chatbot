@@ -195,17 +195,6 @@ const Products = () => {
                         <div className="col-lg-9">
                             <div className="shop-items-top d-flex justify-content-between">
                                 <div className="left"><span>{count} Items</span></div>
-                                <div className="dropdown">
-                                    <button className="drop-btn dropdown-toggle" type="button" id="dropdownMenuButton"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Sort by
-                                    </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a className="dropdown-item" href="#">Title</a>
-                                        <a className="dropdown-item" href="#">Price</a>
-                                        <a className="dropdown-item" href="#">Highest Selling</a>
-                                    </div>
-                                </div>
                             </div>
                             <div className="shop-items">
                                 <div className="row">

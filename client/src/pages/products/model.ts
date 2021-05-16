@@ -52,3 +52,9 @@ export interface ProductVariant {
     quantity: number;
     updated_at: string;
 }
+
+export interface CartItem {
+    product_variant_id:number;
+    price:number;
+    quantity:number;
+}

@@ -12,10 +12,12 @@ import Navbar from "./admin/Navbar";
 import AdminHeader from "./admin/Header"
 import {http} from "../../core/http";
 import {User} from "../../utils/models/User";
+import {SET_CART} from "../../utils/store/reducers/cart";
 
-const PageLayout = ({children, token}) => {
-    const {loading, user} = useContext(StoreContext)
+const PageLayout = ({children, token, initCart}) => {
+    const {loading, user, cart} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
+    const [cartState, dispatchCart] = cart
     const [userState, dispatchUser] = user
     const [isAdmin, setIsAdmin] = useState(true)
     const router = useRouter();
@@ -39,6 +41,7 @@ const PageLayout = ({children, token}) => {
     }, [router.asPath]);
 
     useEffect(() => {
+        dispatchCart({type: SET_CART, payload: {cart: initCart}})
         init()
     }, [])
 
@@ -132,9 +135,14 @@ PageLayout.getInitialProps = (
     }
 ) => {
     const {cookies} = req ? req : {}
-    const {token} = cookies
+    let {token, initCart} = {...cookies}
+    if (!initCart) {
+        initCart = []
+    } else if (typeof initCart == "string"){
+        initCart = JSON.parse(initCart)
+    }
 
-    return {token}
+    return {token, initCart}
 }
 
 export default PageLayout
