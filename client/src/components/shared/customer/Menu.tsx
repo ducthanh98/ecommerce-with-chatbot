@@ -2,11 +2,13 @@ import {ActiveLink} from "./ActiveRouter";
 import {useContext} from "react";
 import {StoreContext} from "../../../utils/store/Store";
 import {SET_CART} from "../../../utils/store/reducers/cart";
+import {useRouter} from "next/router";
 
 export const Menu = () => {
     const {user, cart} = useContext(StoreContext)
     const [userState, dispatchUser] = user
     const [cartState, dispatchCart] = cart
+    const router = useRouter()
 
     const handleShowUser = () => {
 
@@ -19,6 +21,10 @@ export const Menu = () => {
             $('.live-chat-popup').removeClass('active');
         }
 
+    }
+
+    const handleRedirectCheckout = () => {
+        router.push("/checkout")
     }
 
     const handleRemoveCartItem = (id) => {
@@ -83,7 +89,7 @@ export const Menu = () => {
                     <div className="cart-items">
                         {
                             cartState.cart.map(item => (
-                                <div className="single-item-function-1">
+                                <div className="single-item-function-1" key={item.product_variant_id}>
                                     <div className="single-item d-flex justify-content-between mb-4">
                                         <div className="item-left d-flex">
                                             <div className="item-image image-1"
@@ -111,8 +117,7 @@ export const Menu = () => {
                         <h3>$ {cartState.cart.reduce((accumulator, currentValue) => (accumulator + (currentValue.quantity * currentValue.price)), 0)}</h3>
                     </div>
                     <div className="cart-buttons mt-4 mt-xl-5">
-                        <a href="#" className="template-btn2 off2 mb-4">View Cart <span>⇀</span></a>
-                        <a href="#" className="template-btn2 off1">Checkout <span>⇀</span></a>
+                        <a className="template-btn2 off1" onClick={handleRedirectCheckout}>Checkout <span>⇀</span></a>
                     </div>
                 </div>
             </div>

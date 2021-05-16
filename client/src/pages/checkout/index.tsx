@@ -2,8 +2,11 @@ import {useContext, useEffect, useState} from "react";
 import {api} from './api'
 import {useRouter} from "next/router";
 import {StoreContext} from "../../utils/store/Store";
-import {getRouteQuery} from "../../core/utils/url";
 import {initEvent} from "../../utils/script/main";
+import {SET_CART} from "../../utils/store/reducers/cart";
+import {SET_LOADING} from "../../utils/store/reducers/loading";
+import {Action} from "../../utils/models/reducer.model";
+import {notification} from "antd";
 
 
 const Checkout = () => {
@@ -12,6 +15,8 @@ const Checkout = () => {
     const [cartState, dispatchCart] = cart
     const [permissions, setPermissions] = useState([])
     const router = useRouter()
+    const [customerInfo, setCustomerInfo] = useState({} as any)
+    const [showResult, setShowResult] = useState(false)
 
     useEffect(() => {
         $("body").addClass("cart-tab-page common-typography")
@@ -21,6 +26,68 @@ const Checkout = () => {
             $("body").removeClass("cart-tab-page common-typography")
         }
     }, [])
+
+    const handleChangeCustomerForm = (key, value) => {
+        customerInfo[key] = value
+        setCustomerInfo({...customerInfo})
+    }
+
+    const handleRemoveCartItem = (id) => {
+        let cart = [...cartState.cart]
+        cart = cart.filter(item => item.id != id)
+        dispatchCart({type: SET_CART, payload: {cart: cart}})
+    }
+
+    const handleIncreaseQuantity = (item, isIncrease = true) => {
+        if (isIncrease) {
+            item.quantity++;
+        } else if (!isIncrease && item.quantity > 1) {
+            item.quantity--;
+        }
+        dispatchCart({type: SET_CART, payload: {cart: [...cartState.cart]}})
+    }
+
+    const handleCheckout = async () => {
+        if (!customerInfo.fullname || !customerInfo.phone || !customerInfo.address) {
+            $(".tab-second").trigger("click")
+            $("html").animate({
+                "scrollTop": "700"
+            }, 2000);
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: "Customer information is required"
+            });
+        }
+        const payload = {
+            ...customerInfo,
+            order_items: cartState.cart
+        }
+        dispatchLoading({type: SET_LOADING, payload: true} as Action)
+        const result = await api.createOrder(payload)
+        if (result.error) {
+            dispatchLoading({type: SET_LOADING, payload: false} as Action)
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+        dispatchLoading({type: SET_LOADING, payload: false} as Action)
+
+        setShowResult(true)
+        $(".tab-four").trigger("click")
+        $("html").animate({
+            "scrollTop": "0"
+        }, 2000);
+        setTimeout(() => {
+            router.push("/products")
+            dispatchCart({type: SET_CART, payload: {cart: []}})
+        }, 3500)
+    }
 
     return (
         <div>
@@ -36,9 +103,7 @@ const Checkout = () => {
                                 </ul>
                             </div>
                         </div>
-                        <div className="tab-accordion-text text-center mt-70">
-                            <p>The next shipping for<span> 3 Hours 32 Mins</span></p>
-                        </div>
+
                     </div>
                 </div>
             </header>
@@ -61,9 +126,10 @@ const Checkout = () => {
                                         <div className="cart-box">
                                             {
                                                 cartState.cart.map(item => (
-                                                    <div className="single-cart d-flex justify-content-between mb-5">
+                                                    <div className="single-cart d-flex justify-content-between mb-5" key={item.product_variant_id}>
                                                         <div className="cart-left d-flex">
-                                                            <div className="cart-image image1" style={{backgroundImage: `url("http://localhost:5000/images/${item.image}")`}}>
+                                                            <div className="cart-image image1"
+                                                                 style={{backgroundImage: `url("http://localhost:5000/images/${item.image}")`}}>
                                                             </div>
                                                             <div className="cart-text">
                                                                 <p>&nbsp;</p>
@@ -73,18 +139,24 @@ const Checkout = () => {
                                                         <div className="cart-center align-self-center">
                                                             <div className="cart-quantity">
                                                                 <ul>
-                                                                    <li><span><i className="ti-minus"/></span></li>
+                                                                    <li><span><i
+                                                                        onClick={() => handleIncreaseQuantity(item, false)}
+                                                                        className="ti-minus"/></span></li>
                                                                     <li><span>{item.quantity}</span></li>
-                                                                    <li><span><i className="ti-plus"/></span></li>
+                                                                    <li><span><i
+                                                                        onClick={() => handleIncreaseQuantity(item)}
+                                                                        className="ti-plus"/></span></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                         <div className="cart-right d-flex align-self-center">
                                                             <div className="cart-price">
-                                                                <h4>$ {item.price}</h4>
+                                                                <h4>$ {item.price * item.quantity}</h4>
                                                             </div>
-                                                            <div className="cart-icon mr-120">
-                                                                <img src="assets/img/cart-tab-page/icon-1.png" alt=""/>
+                                                            <div className="cart-icon mr-120"
+                                                                 onClick={() => handleRemoveCartItem(item.id)}
+                                                            >
+                                                                <img src="/img/cart-tab-page/icon-1.png" alt=""/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -109,41 +181,22 @@ const Checkout = () => {
                                                 <div className="address-right">
                                                     <form action="#" className="mt-70">
                                                         <div className="common-input2 mb-5">
-                                                            <h6>Full Name*</h6>
-                                                            <input type="text" placeholder="e.i Annastasia Alatore"/>
+                                                            <h6>Full Name *</h6>
+                                                            <input value={customerInfo.fullname}
+                                                                   onChange={e => handleChangeCustomerForm("fullname", e.target.value)}
+                                                                   type="text" placeholder="e.i Annastasia Alatore"/>
                                                         </div>
                                                         <div className="common-input2 mb-5">
-                                                            <h6>Zip / Postal Code*</h6>
-                                                            <input type="text" placeholder="e.i EC1A 1AA"/>
-                                                        </div>
-                                                        <div className="diffrent-input d-md-flex mb-5">
-                                                            <div className="common-input2">
-                                                                <h6>House Number*</h6>
-                                                                <input type="text" className="input-small"
-                                                                       placeholder="e.i 221B"/>
-                                                            </div>
-                                                            <div className="common-input2">
-                                                                <h6>Street*</h6>
-                                                                <input type="text" className="input-large"
-                                                                       placeholder="e.i Dorset"/>
-                                                            </div>
-                                                            <div className="common-input2 input-small2">
-                                                                <h6>Appartment*</h6>
-                                                                <input type="text" className="input-small"
-                                                                       placeholder="e.i 14"/>
-                                                            </div>
+                                                            <h6>Address *</h6>
+                                                            <input value={customerInfo.address}
+                                                                   onChange={e => handleChangeCustomerForm("address", e.target.value)}
+                                                                   type="text" placeholder="e.i Annastasia Alatore"/>
                                                         </div>
                                                         <div className="common-input2 mb-5">
-                                                            <h6>Town / City*</h6>
-                                                            <input type="text" placeholder="e.i London"/>
-                                                        </div>
-                                                        <div className="common-input2 mb-5">
-                                                            <h6>Country*</h6>
-                                                            <input type="text" placeholder="e.i UK"/>
-                                                        </div>
-                                                        <div className="common-input2 mb-5">
-                                                            <h6>Phone Number*</h6>
-                                                            <input type="text" placeholder="e.i +230 544 65768*"/>
+                                                            <h6>Phone Number *</h6>
+                                                            <input value={customerInfo.phone} type="text"
+                                                                   onChange={e => handleChangeCustomerForm("phone", e.target.value)}
+                                                                   placeholder="e.i +230 544 65768*"/>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -152,187 +205,47 @@ const Checkout = () => {
                                     </div>
                                     {/* Shipping Section End */}
                                 </div>
-                                <div className="tab-three-content lost">
-                                    {/* Payment Section Starts */}
-                                    <div className="payment-section">
-                                        <div className="payment-title">
-                                            <h2>Payment</h2>
-                                        </div>
-                                        <div className="payment-box cart-box mt-70">
-                                            <div className="payment-content">
-                                                <div className="prompt-section d-md-flex mb-100">
-                                                    <div className="payment-left">
-                                                        <h4>Prompt Payment</h4>
-                                                    </div>
-                                                    <div className="payment-right">
-                                                        <div className="right-top d-flex">
-                                                            <span><i className="fa fa-dot-circle-o"/></span>
-                                                            <h6>Pay using your PayPal account. You will be redirected to
-                                                                the <br/>System respectively to complete the payment.
-                                                            </h6>
-                                                        </div>
-                                                        <div className="right-image mt-5 ml-100">
-                                                            <img src="assets/img/cart-tab-page/payment/paypal.png"
-                                                                 alt=""/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="credit-section d-md-flex">
-                                                    <div className="payment-left">
-                                                        <h4>Credit / Debit Card Payment</h4>
-                                                    </div>
-                                                    <div className="payment-right">
-                                                        <div className="d-flex">
-                                                            <div className="right-circle">
-                                                                <span><i className="fa fa-circle-o"/></span>
-                                                            </div>
-                                                            <div className="right-image">
-                                                                <img
-                                                                    src="assets/img/cart-tab-page/payment/master-card.png"
-                                                                    className="mr-5" alt=""/>
-                                                                <img src="assets/img/cart-tab-page/payment/visa.png"
-                                                                     alt=""/>
-                                                            </div>
-                                                        </div>
-                                                        <form action="#" className="mt-70">
-                                                            <div className="common-input2 mb-5">
-                                                                <h6 className="mt-5 mt-lg-0">Name On Card</h6>
-                                                                <input type="text"
-                                                                       placeholder="e.i Annastasia Alatore"/>
-                                                            </div>
-                                                            <div className="common-input2 mb-5">
-                                                                <h6>Card Number</h6>
-                                                                <input type="text" placeholder="e.i"/>
-                                                            </div>
-                                                            <div className="diffrent-input d-flex mb-5">
-                                                                <div className="common-input2">
-                                                                    <h6>Expiry Date</h6>
-                                                                    <input type="text" className="input-small"
-                                                                           placeholder="e.i 221B"/>
-                                                                </div>
-                                                                <div className="common-input2">
-                                                                    <h6>Security Code</h6>
-                                                                    <input type="text" className="input-large"
-                                                                           placeholder="e.i Dorset"/>
-                                                                </div>
-                                                            </div>
-                                                            <div className="common-input2 mb-5">
-                                                                <h6>Zip / Postal Code</h6>
-                                                                <input type="text" placeholder="e.i EC1A 1AA"/>
-                                                            </div>
-                                                            <h6>By clicking Pay Now Securely you agree to our <a
-                                                                href="#">Terms and Conditions.</a></h6>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {/* Payment Section End */}
-                                </div>
                                 <div className="tab-four-content lost">
                                     <div className="summary-section">
-                                        <div className="summary-header text-center">
-                                            <img src="assets/img/cart-tab-page/thanks.png" className="mb-3" alt=""/>
-                                            <h3>Thank You, John !</h3>
-                                            <p className="mt-4">Huraaay! You order has been placed successfully. <br/>We
-                                                received your payment and wrapping up your stuff for shipping</p>
-                                        </div>
+                                        {
+                                            showResult &&
+                                            <div className="summary-header text-center">
+                                                <img src="assets/img/cart-tab-page/thanks.png" className="mb-3" alt=""/>
+                                                <h3>Thank You, {customerInfo.fullname} !</h3>
+                                                <p className="mt-4">Huraaay! You order has been placed
+                                                    successfully. <br/>We
+                                                    received your request and wrapping up your stuff for shipping</p>
+                                            </div>
+                                        }
                                         <div className="summary-box cart-box mt-100">
                                             <div className="summary-content">
                                                 <div className="order-part">
-                                                    <div className="row">
-                                                        <div className="col-lg-4">
-                                                            <div className="common-left">
-                                                                <h4>Order Details</h4>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-lg-8">
-                                                            <div
-                                                                className="common-right pt-80 d-flex justify-content-between mb-70">
-                                                                <div className="slub-shirt">
-                                                                    <h5>Slub shirt</h5>
-                                                                    <ul className="mt-4">
-                                                                        <li>#71839734342234</li>
-                                                                        <li>Size:M</li>
-                                                                        <li>Color:Pink</li>
-                                                                        <li>Qty: 1 Item(shipping)</li>
-                                                                    </ul>
+                                                    {
+                                                        cartState.cart.map(item => (
+                                                            <div className="row" key={item.product_variant_id}>
+                                                                <div className="col-lg-4">
+                                                                    <div className="common-left">
+                                                                        <h4>Order Details</h4>
+                                                                    </div>
                                                                 </div>
-                                                                <div className="price">
-                                                                    <h5>$26</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-lg-8 offset-lg-4">
-                                                            <div
-                                                                className="common-right d-flex justify-content-between mb-70">
-                                                                <div className="slub-shirt">
-                                                                    <h5>Denim Jacket</h5>
-                                                                    <ul className="mt-4">
-                                                                        <li>#71839734342234</li>
-                                                                        <li>Size:M</li>
-                                                                        <li>Color:Blue</li>
-                                                                        <li>Qty: 2 Item(shipping)</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div className="price">
-                                                                    <h5>$32</h5>
+                                                                <div className="col-lg-8">
+                                                                    <div
+                                                                        className="common-right pt-80 d-flex justify-content-between mb-70">
+                                                                        <div className="slub-shirt">
+                                                                            <h5>{item.name}</h5>
+                                                                            <ul className="mt-4">
+                                                                                <li># {item.product_variant_id}</li>
+                                                                                <li>Qty: {item.quantity} Item</li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div className="price">
+                                                                            <h5>$ {item.price * item.quantity}</h5>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-lg-8 offset-lg-4">
-                                                            <div
-                                                                className="common-right d-flex justify-content-between">
-                                                                <div className="slub-shirt">
-                                                                    <h5>SweatShirt</h5>
-                                                                    <ul className="mt-4">
-                                                                        <li>#71839734342234</li>
-                                                                        <li>Size:M</li>
-                                                                        <li>Color:Grey</li>
-                                                                        <li>Qty: 4 Item(shipping)</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div className="price">
-                                                                    <h5>$100</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="estimation-part mt-70">
-                                                    <div className="row">
-                                                        <div className="col-lg-3">
-                                                            <div className="common-left">
-                                                                <h4>Estimation</h4>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-lg-8 offset-lg-1">
-                                                            <div
-                                                                className="common-right pt-80 d-flex justify-content-between mb-70">
-                                                                <div>
-                                                                    <ul>
-                                                                        <li>#Order</li>
-                                                                        <li>Bonus / Discount</li>
-                                                                        <li>Taxes</li>
-                                                                        <li className="mt-4">Total</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div className="price">
-                                                                    <ul>
-                                                                        <li>$ 158</li>
-                                                                        <li>$ -10</li>
-                                                                        <li>$ 0</li>
-                                                                        <li className="mt-4">$ 158,00</li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                        ))
+                                                    }
                                                 </div>
                                                 <div className="information-part mt-70">
                                                     <div className="row">
@@ -347,23 +260,9 @@ const Checkout = () => {
                                                                 <div className="address">
                                                                     <h5>Shipping Address</h5>
                                                                     <ul className="mt-4">
-                                                                        <li>Anastasia Alatore</li>
-                                                                        <li>EC1A 1AA</li>
-                                                                        <li>221B Dorset</li>
-                                                                        <li>London</li>
-                                                                        <li>Uk</li>
-                                                                        <li>+230 544 65 768</li>
-                                                                    </ul>
-                                                                </div>
-                                                                <div className="billing">
-                                                                    <h5>Billing Address</h5>
-                                                                    <ul className="mt-4">
-                                                                        <li>Anastasia Alatore</li>
-                                                                        <li>EC1A 1AA</li>
-                                                                        <li>221B Dorset</li>
-                                                                        <li>London</li>
-                                                                        <li>Uk</li>
-                                                                        <li>+230 544 65 768</li>
+                                                                        <li>{customerInfo.fullname}</li>
+                                                                        <li>{customerInfo.address}</li>
+                                                                        <li>{customerInfo.phone}</li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -371,21 +270,6 @@ const Checkout = () => {
                                                     </div>
                                                     <div className="row">
                                                         <div className="col-lg-8 offset-lg-4">
-                                                            {/*<div*/}
-                                                            {/*    className="common-right d-flex justify-content-between mb-70">*/}
-                                                            {/*    <div className="method">*/}
-                                                            {/*        <h5>Shipping Method</h5>*/}
-                                                            {/*        <ul className="mt-4">*/}
-                                                            {/*            <li>Standard 3-5 Business days</li>*/}
-                                                            {/*        </ul>*/}
-                                                            {/*    </div>*/}
-                                                            {/*    <div className="payment">*/}
-                                                            {/*        <h5>Payment Method</h5>*/}
-                                                            {/*        <ul className="mt-4">*/}
-                                                            {/*            <li>Credit Card 123456789101</li>*/}
-                                                            {/*        </ul>*/}
-                                                            {/*    </div>*/}
-                                                            {/*</div>*/}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -410,7 +294,8 @@ const Checkout = () => {
                                 <div className="right-title">
                                     <h4>Total</h4>
                                     <h3>$ {cartState.cart.reduce((accumulator, currentValue) => (accumulator + (currentValue.quantity * currentValue.price)), 0)}</h3>
-                                    <a href="#" className="template-btn2 off1">Checkout <span>⇀</span></a>
+                                    <span className="template-btn2 off1"
+                                          onClick={handleCheckout}>Checkout <span>⇀</span></span>
                                 </div>
                             </div>
                         </div>

@@ -136,7 +136,7 @@ PageLayout.getInitialProps = (
 ) => {
     const {cookies} = req ? req : {}
     let {token, initCart} = {...cookies}
-    if (!initCart) {
+    if (!initCart || initCart == "undefined") {
         initCart = []
     } else if (typeof initCart == "string"){
         initCart = JSON.parse(initCart)

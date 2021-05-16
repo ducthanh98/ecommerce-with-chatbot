@@ -33,15 +33,12 @@ const Products = () => {
     }, [filter])
 
     const init = async () => {
-        console.log('a')
-        dispatchLoading({type: SET_LOADING, payload: true} as Action)
         handleUpdateRouteQuery(router, filter)
         await Promise.all([
             fetchCategory(),
             fetchProducts()
         ])
         initEvent();
-        dispatchLoading({type: SET_LOADING, payload: false} as Action)
     }
 
     const fetchCategory = async () => {

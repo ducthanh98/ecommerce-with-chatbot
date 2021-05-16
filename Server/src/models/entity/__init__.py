@@ -7,6 +7,8 @@ from .user_role import UserRoleModel
 from .category import CategoryModel
 from .product_variant import ProductVariantModel
 from .product_base import ProductBaseModel
+from .order_item import OrderItemModel
+from .order import OrderModel
 
 __all__ = [
     "UserModel",
@@ -17,5 +19,7 @@ __all__ = [
     "CategoryModel",
     "ProductVariantModel",
     "ProductBaseModel",
-    "ProductAttributeModel"
+    "ProductAttributeModel",
+    "OrderItemModel",
+    "OrderModel"
 ]
