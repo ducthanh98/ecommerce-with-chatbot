@@ -4,8 +4,6 @@ import {useContext, useEffect, useState} from "react";
 import {StoreContext} from "../../../utils/store/Store";
 import {useRouter} from "next/router";
 import {getRouteQuery, handleUpdateRouteQuery} from "../../../core/utils/url";
-import {SET_LOADING} from "../../../utils/store/reducers/loading";
-import {Action} from "../../../utils/models/reducer.model";
 import {api} from "./api";
 import {FetchCategoriesResponse, FetchProductResponse} from "./model";
 
@@ -14,7 +12,7 @@ const {Search} = Input;
 const AdminProduct = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
-    const [filter, setFilter] = useState({})
+    const [filter, setFilter] = useState({} as any)
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState([])
     const [count, setCount] = useState(0)

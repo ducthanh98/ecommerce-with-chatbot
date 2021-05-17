@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from typing import List
 from sqlalchemy import func
 
+from . import OrderItemModel
 from ...app import db
 
 
@@ -14,6 +15,14 @@ class OrderModel(db.Model):
     __tablename__ = 'orders'
 
     id: int
+    user_id: int
+    status: int
+    phone: str
+    fullname: str
+    address: str
+    order_items: List[OrderItemModel]
+    created_at: datetime
+    updated_at: datetime
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -31,4 +40,4 @@ class OrderModel(db.Model):
         self.fullname = fullname
         self.address = address
         self.status = 1
-        self.user_id=user_id
+        self.user_id = user_id

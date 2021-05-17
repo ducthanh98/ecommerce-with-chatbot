@@ -41,11 +41,10 @@ export const getRouteQuery = (filter, router: NextRouter) => {
         }
     })
 
-    query.limit = query.limit ? query.limit : 20
+    query.limit = query.limit ? query.limit : 50
     if (!query.page) {
         query.page = '1'
     }
-    console.log(Object.assign({}, router.query, query))
     return Object.assign({}, router.query, query)
 }
 

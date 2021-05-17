@@ -15,7 +15,6 @@ def register_blueprint(app, modules):
                 # no prefix
                 app.register_blueprint(bp)
             else:
-                print(prefix)
                 app.register_blueprint(bp, url_prefix=prefix)
 
 
