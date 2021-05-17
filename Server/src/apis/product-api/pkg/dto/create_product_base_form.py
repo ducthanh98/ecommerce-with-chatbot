@@ -77,9 +77,6 @@ create_product_schema = {
                         "price": {
                             "type": "number"
                         },
-                        "quantity": {
-                            "type": "integer"
-                        },
                         "key": {
                             "type": "integer"
                         },
@@ -98,7 +95,6 @@ create_product_schema = {
                         "attribute3_value",
                         "attribute3_name",
                         "price",
-                        "quantity",
                         "key",
                         "name",
                         "variant_name"

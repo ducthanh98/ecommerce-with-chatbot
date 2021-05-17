@@ -12,6 +12,9 @@ export const api = {
     createProduct: (payload) => {
         return http.post(`product-api`, payload)
     },
+    updateProduct: (payload,id) => {
+        return http.put(`product-api/${id}`, payload)
+    },
     getProduct: (id) => {
         return http.get(`product-api/${id}`)
     }

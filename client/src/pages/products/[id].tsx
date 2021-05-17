@@ -6,7 +6,7 @@ import {StoreContext} from "../../utils/store/Store";
 import {useRouter} from "next/router";
 import {api} from "./api";
 import {notification} from "antd";
-import {CartItem, GetProductResponse, Product, ProductVariant} from "./model";
+import {GetProductResponse, Product, ProductVariant} from "./model";
 import {SET_CART} from "../../utils/store/reducers/cart";
 
 const ProductDetail = () => {

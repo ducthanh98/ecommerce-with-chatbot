@@ -20,10 +20,9 @@ class ProductVariantModel(db.Model):
     attribute2_id: int
     attribute3_id: int
     product_base_id: int
-    quantity: int
     created_at: datetime
     updated_at: datetime
-    product_base:ProductBaseFakeModel
+    product_base: ProductBaseFakeModel
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.VARCHAR(50))
@@ -34,15 +33,12 @@ class ProductVariantModel(db.Model):
     attribute2_id = db.Column(db.Integer, ForeignKey('product_attribute_values.id'))
     attribute3_id = db.Column(db.Integer, ForeignKey('product_attribute_values.id'))
     product_base_id = db.Column(db.Integer, ForeignKey('product_bases.id'))
-    quantity = db.Column(db.Integer)
     product_base = relationship("ProductBaseFakeModel", back_populates="product_variants")
 
-
-    def __init__(self, name, price, attribute1_id, attribute2_id, attribute3_id, quantity, product_base_id=None):
+    def __init__(self, name, price, attribute1_id, attribute2_id, attribute3_id, product_base_id=None):
         self.name = name
         self.price = price
         self.product_base_id = product_base_id
         self.attribute1_id = attribute1_id
         self.attribute2_id = attribute2_id
         self.attribute3_id = attribute3_id
-        self.quantity = quantity

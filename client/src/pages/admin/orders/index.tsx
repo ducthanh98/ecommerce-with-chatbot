@@ -2,9 +2,18 @@ import {useContext, useEffect, useState} from "react";
 import {StoreContext} from "../../../utils/store/Store";
 import {useRouter} from "next/router";
 import {Button, Input, notification, Table, Tag} from "antd";
-import {CodepenCircleFilled, PlusCircleFilled} from "@ant-design/icons";
+import {
+    CheckCircleOutlined,
+    CodepenCircleFilled,
+    CodeSandboxOutlined,
+    DeleteOutlined,
+    PlusCircleFilled,
+    ShoppingCartOutlined
+} from "@ant-design/icons";
 import {getRouteQuery, handleUpdateRouteQuery} from "../../../core/utils/url";
 import {api} from "./api";
+import {OrderItemModal} from "./OrderItemModal";
+
 const {Search} = Input;
 
 const AdminOrder = () => {
@@ -12,7 +21,9 @@ const AdminOrder = () => {
     const [loadingState, dispatchLoading] = loading
     const [filter, setFilter] = useState({} as any)
     const [orders, setOrders] = useState([])
+    const [orderItems, setOrderItems] = useState([])
     const [count, setCount] = useState(0)
+    const [visibleModal, setVisibleModal] = useState(false)
     const router = useRouter()
     const handleUpdateProduct = (id) => {
     }
@@ -44,12 +55,32 @@ const AdminOrder = () => {
         return orderStatus[key]
     }
 
+    const handleUpdateStatus = async (order_id, status) => {
+        const payload = {status}
+        const result = await api.updateOrder(order_id, payload)
+
+        if (result.error) {
+
+            return notification.error({
+                message: 'Fashion and Clothing Shop',
+                placement: 'topLeft',
+                className: 'custom-notification-antd',
+                description: result.data
+            });
+
+        }
+        init()
+    }
+
     const columns = [
         {
             title: 'ID',
             dataIndex: 'id',
             key: 'id',
-            render: text => <p className={'text-bold'}>{text}</p>,
+            render: (text, record) => <p
+                style={{cursor: "pointer", color: '#007bff'}}
+                className={'text-bold'}
+                onClick={() => handleShowOrderDetail(record)}>{text}</p>,
         },
         {
             title: 'Customer Name',
@@ -80,19 +111,60 @@ const AdminOrder = () => {
             dataIndex: 'created_at',
             key: 'created_at',
             render: text => <p>{new Date(text).toLocaleDateString()}</p>,
-
+        },
+        {
+            title: 'Total Pirce',
+            render: (text, record) =>
+                <p>$ {record.order_items.reduce((accumulator, currentValue) => (accumulator + (currentValue.quantity * currentValue.price)), 0)}</p>,
         },
         {
             title: 'Actions',
-            render: (text, {id}) =>
-                <Button
-                    // onClick={() => handleUpdateProduct(id)}
-                    type="primary"
-                    shape="round"
-                    icon={<CodepenCircleFilled/>}
-                    size={'middle'}>
-                    Edit
-                </Button>
+            render: (text, {id, status}) =>
+                <>
+                    {
+                        status == 1 && <Button
+                            onClick={() => handleUpdateStatus(id, 2)}
+                            type="primary"
+                            shape="round"
+                            icon={<CodeSandboxOutlined />}
+                            size={'middle'}>
+                            Packing
+                        </Button>
+                    }
+                    {
+                        status == 2 && <Button
+                            onClick={() => handleUpdateStatus(id, 3)}
+                            type="primary"
+                            shape="round"
+                            icon={<ShoppingCartOutlined />}
+                            size={'middle'}>
+                            Shipping
+                        </Button>
+                    }
+                    {
+                        status == 3 && <Button
+                            onClick={() => handleUpdateStatus(id, 4)}
+                            type="primary"
+                            shape="round"
+                            icon={<CheckCircleOutlined />}
+                            size={'middle'}>
+                            Done
+                        </Button>
+                    }
+                    {
+                        status < 3 && status != 5 && <Button
+                            onClick={() => handleUpdateStatus(id, 5)}
+                            type="primary"
+                            shape="round"
+                            danger={true}
+                            icon={<DeleteOutlined />}
+                            size={'middle'}>
+                            Cancel
+                        </Button>
+                    }
+
+
+                </>
         },
 
     ];
@@ -132,8 +204,9 @@ const AdminOrder = () => {
         setCount(data.count)
     }
 
-    const handleCreateProduct = () => {
-        router.push('products/create')
+    const handleShowOrderDetail = (item) => {
+        setOrderItems(item.order_items)
+        setVisibleModal(true)
     }
 
     const updateFilter = (value) => {
@@ -153,6 +226,15 @@ const AdminOrder = () => {
                     dataSource={orders}
                     columns={columns}
                     pagination={false}/>
+
+                {
+                    visibleModal &&
+                    <OrderItemModal
+                        visible={visibleModal}
+                        setShowModal={setVisibleModal}
+                        dataModal={orderItems}
+                    />
+                }
             </div>
         </>
     )

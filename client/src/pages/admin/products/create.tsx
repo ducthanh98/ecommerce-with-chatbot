@@ -195,7 +195,6 @@ const AdminCreateProduct = () => {
                     attribute3_value: '',
                     attribute3_name: '',
                     price: 0,
-                    quantity: 0,
                     key: idx,
                     name: idx,
                     variant_name: `${name} ${tmp['attribute1_value']}`
@@ -219,7 +218,6 @@ const AdminCreateProduct = () => {
                         attribute3_value: '',
                         attribute3_name: '',
                         price: 0,
-                        quantity: 0,
                         key: idx,
                         name: idx,
                         variant_name: `${name} ${tmp['attribute1_value']} - ${tmp['attribute2_value']}`
@@ -242,7 +240,6 @@ const AdminCreateProduct = () => {
                         attribute3_value: tmp['attribute3_value'],
                         attribute3_name: tmp['attribute3_name'],
                         price: 0,
-                        quantity: 0,
                         key: idx,
                         name: idx,
                         variant_name: `${name} ${tmp['attribute1_value']} - ${tmp['attribute2_value']} - ${tmp['attribute3_value']}`
@@ -400,17 +397,6 @@ const AdminCreateProduct = () => {
                                                     }
                                                 ]}>
                                                 <Input placeholder="Variant name"/>
-                                            </Form.Item>
-                                            <Form.Item
-                                                name={[field.name, 'quantity']}
-                                                style={styles.variantForm}
-                                                rules={[
-                                                    {
-                                                        required: true,
-                                                        message: "Missing quantity"
-                                                    }
-                                                ]}>
-                                                <InputNumber placeholder="Quantity" min={1} max={100}/>
                                             </Form.Item>
                                             <Form.Item
                                                 name={[field.name, 'price']}

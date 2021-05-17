@@ -1,4 +1,4 @@
-from .....models.entity import  ProductVariantModel, ProductBaseModel
+from .....models.entity import ProductVariantModel, ProductBaseModel
 from .....app import db
 
 
@@ -11,6 +11,7 @@ class ProductManager:
         price_to = args.get('price_to')
         category_id = args.get('category_id')
         name = args.get('name')
+        activate = args.get('activate')
 
         if id:
             query = query.filter_by(id=args.get('id'))
@@ -44,6 +45,8 @@ class ProductManager:
                 filter(ProductVariantModel.price.__lt__(price_to)). \
                 subquery()
             query = query.filter(ProductBaseModel.id.in_(subquery))
+        if activate:
+            query = query.filter(ProductBaseModel.activate == True)
 
         return query
 
@@ -102,9 +105,29 @@ class ProductManager:
                                                 attribute1_id=attribute1_id,
                                                 attribute2_id=attribute2_id,
                                                 attribute3_id=attribute3_id,
-                                                product_base_id=product_base.id,
-                                                quantity=variant["quantity"])
+                                                product_base_id=product_base.id)
             variant_models.append(variant_model)
 
         session.add_all(variant_models)
+        session.commit()
+
+    def update_product(self, data, product_id):
+        session = db.session
+        session \
+            .query(ProductBaseModel) \
+            .filter(ProductBaseModel.id == product_id) \
+            .update({ProductBaseModel.name: data["name"],
+                     ProductBaseModel.description: data["description"],
+                     ProductBaseModel.category_id: data["category_id"],
+                     ProductBaseModel.activate: data["activate"],
+                     ProductBaseModel.images: data["images"]}, synchronize_session=False)
+
+        variants = data["variants"]
+        for variant in variants:
+            session \
+                .query(ProductVariantModel) \
+                .filter(ProductVariantModel.id == variant["id"]) \
+                .update({ProductVariantModel.name: variant["name"],
+                         ProductVariantModel.price: variant["price"]}, synchronize_session=False)
+
         session.commit()

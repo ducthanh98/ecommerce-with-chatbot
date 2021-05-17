@@ -13,7 +13,7 @@ import debounce from "../../core/utils/debounce";
 const Products = () => {
     const {loading} = useContext(StoreContext)
     const [loadingState, dispatchLoading] = loading
-    const [filter, setFilter] = useState({} as any)
+    const [filter, setFilter] = useState({activate: true} as any)
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState([])
     const [count, setCount] = useState(0)
