@@ -1,4 +1,5 @@
 ## intent:give_name
+
 - Anh là [Thắng](cust_name)
 - Anh là [Thanh](cust_name)
 - Anh là [Chiến Thắng](cust_name)
@@ -32,6 +33,7 @@
 - [Bảo](cust_name)
 
 ## intent:greet
+
 - xin chào
 - chào bạn
 - hello
@@ -43,20 +45,21 @@
 - anh ơi
 - chị ơi
 - cháu ơi
-- hello 
-- chào 
-- hi 
+- hello
+- chào
+- hi
 - có ai ở đây không?
 
 ## intent:bye
+
 - tạm biệt
 - chào tạm biệt
 - chào tạm biệt em
 - tạm biệt em
 - tạm biệt em nhé
 
-
 ## intent:thank
+
 - chuẩn
 - hay
 - siêu
@@ -69,8 +72,8 @@
 - cảm ơn em nhiều nhé
 - cảm ơn
 
-
 ## intent:ask_product
+
 - tôi muốn mua hàng
 - bạn có thể gợi ý cho tôi vài sản phẩm
 - tôi đang muốn mua vài sản phẩm
@@ -80,37 +83,39 @@
 - cần lắm một vài món đồ để xả tiền
 - mua hàng
 - tao muốn mua hàng
-- tao muốn đốt tiền 
-- bên bạn có những sản phẩm nào 
-- bạn có thể gợi ý cho tôi vài sản phẩm 
+- tao muốn đốt tiền
+- bên bạn có những sản phẩm nào
+- bạn có thể gợi ý cho tôi vài sản phẩm
 - gợi ý đi
-- gợi ý cho tao đi 
-- gợi ý sản phẩm đi 
+- gợi ý cho tao đi
+- gợi ý sản phẩm đi
 - chả biết mua gì
 - bên mày bán gì
-- bên cậu có sản phẩm nào 
+- bên cậu có sản phẩm nào
 - bán gì
-- bán gì thế 
-- tao muốn mua đồ 
-- tớ muốn mua quần áo 
-- tao cần mua giày 
-- mình muốn mua đồ 
-- nói gì đi 
+- bán gì thế
+- tao muốn mua đồ
+- tớ muốn mua quần áo
+- tao cần mua giày
+- mình muốn mua đồ
+- nói gì đi
 - nói gì đi mày
-- nói gì đi bạn 
-- cần tiêu tiền 
-- nói xem có đồ gì ngon 
-- có hàng gì tốt không 
-- mua đồ em ơi 
-- giới thiệu đi 
-- bán cái gì 
-- mày bán gì 
-- cửa hàng có gì 
-- cửa hàng có gì không 
-- cửa hàng còn gì
-- cửa hàng còn gì không 
+- nói gì đi bạn
+- cần tiêu tiền
+- nói xem có đồ gì ngon
+- có hàng gì tốt không
+- mua đồ em ơi
+- giới thiệu đi
+- bán cái gì
+- mày bán gì
+- cửa hàng có gì
+- cửa hàng có gì không
+- cửa hàng bán quần áo ko 
+- cửa hàng còn gì không
+- tôi muốn mua một số mặt hàng
 
 ## intent:ask_func_list
+
 - bạn có thể làm được những gì
 - bạn giúp được gì nào
 - chức năng của bạn là gì
@@ -138,18 +143,18 @@
 - em biết làm gì
 - bạn biết làm gì
 - biết làm gì
-- làm được gì 
-- có làm được gì 
-- có làm được trò gì 
+- làm được gì
+- có làm được gì
+- có làm được trò gì
 - giúp giúp cái gì
 - biết gì mà nói
 - làm được gì
 - giúp được gì
 - mày làm được gì
 - có biết gì
-## regex:product_name
-- ^[a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$
+
 ## intent:product_name_entry
+
 - tôi muốn mua [bikini](product_name)
 - [mũ lưỡi trai](product_name)
 - [quần bò](product_name)
@@ -165,13 +170,13 @@
 - chú lấy vài chiếc [áo sheer](product_name)
 - mua [áo tay dài](product_name)
 - lấy [áo crop top](product_name)
-- chủ quán có [áo blouse](product_name) không 
-- chủ quán có [áo cánh dơi](product_name) không 
-- chủ quán có [áo dạ](product_name) không 
-- chủ quán có [áo hai dây](product_name) không 
-- mua [áo len](product_name) 
+- chủ quán có [áo blouse](product_name) không
+- chủ quán có [áo cánh dơi](product_name) không
+- chủ quán có [áo dạ](product_name) không
+- chủ quán có [áo hai dây](product_name) không
+- mua [áo len](product_name)
 - bán [áo jumpsuit](product_name) không
-- [hoodie](product_name)  
+- [hoodie](product_name)
 - [áo t-shirt](product_name)
 - [váy](product_name) dự tiệc
 - bán [váy princess](product_name) không
@@ -186,6 +191,17 @@
 - bán [Kilt](product_name) không
 - [váy](product_name) sang chảnh
 - [quần âu](product_name)
+- [giày cao gót](product_name)
+- tớ muốn mua [giày cao gót](product_name)
+- bên bạn có [giày cao gót](product_name) không
+- bên mình có [giày cao gót](product_name) không
+- bên shop có [giày cao gót](product_name) không
+- shop có [giày cao gót](product_name) không
+- shop có bán [giày cao gót](product_name) không
+- mình cần một đôi [giày cao gót](product_name)
+- muốn vài đôi [giày cao gót](product_name)
+- à mình cần [giày cao gót](product_name)
+- [quần âu](product_name)
 - [ko biết]{"entity":"product_name","value":""}
 - [không biết]{"entity":"product_name","value":""}
 - [chưa biết tên]{"entity":"product_name","value":""}
@@ -198,35 +214,40 @@
 - [biết sao được]{"entity":"product_name","value":""}
 
 ## intent:attribute_value_entry
+
 - màu [hường](attribute_value) nam tính
 - màu [xanh](attribute_value) nam tính
 - màu [đỏ](attribute_value)
-- màu [tím](attribute_value)  
-- màu [cam](attribute_value)  
-- màu [nâu](attribute_value)  
-- màu [vàng](attribute_value)  
-- màu [lục](attribute_value)  
-- màu [lam](attribute_value)  
-- màu [tràm](attribute_value)  
-- màu [tím](attribute_value)  
-- cỡ  [s](attribute_value) 
-- cỡ [xl](attribute_value) 
-- cỡ [2xl](attribute_value) 
-- cỡ [6xl](attribute_value) 
-- cỡ [m](attribute_value) 
-- cỡ [l](attribute_value) 
-- cỡ [S](attribute_value) 
-- cỡ [L](attribute_value) 
-- cỡ [M](attribute_value) 
-- cỡ [XL](attribute_value) 
-- cỡ [2XL](attribute_value) 
-- cỡ [3XL](attribute_value) 
-- cỡ [4XL](attribute_value) 
-- cỡ [5XL](attribute_value) 
+- e muốn màu [đỏ](attribute_value)
+- màu [đen](attribute_value)
+- có màu [đen](attribute_value) không
+- chắc là [đen](attribute_value)
+- màu [tím](attribute_value)
+- màu [cam](attribute_value)
+- màu [nâu](attribute_value)
+- màu [vàng](attribute_value)
+- màu [lục](attribute_value)
+- màu [lam](attribute_value)
+- màu [tràm](attribute_value)
+- màu [tím](attribute_value)
+- cỡ  [s](attribute_value)
+- cỡ [xl](attribute_value)
+- cỡ [2xl](attribute_value)
+- cỡ [6xl](attribute_value)
+- cỡ [m](attribute_value)
+- cỡ [l](attribute_value)
+- cỡ [S](attribute_value)
+- cỡ [L](attribute_value)
+- cỡ [M](attribute_value)
+- cỡ [XL](attribute_value)
+- cỡ [2XL](attribute_value)
+- cỡ [3XL](attribute_value)
+- cỡ [4XL](attribute_value)
+- cỡ [5XL](attribute_value)
 - Anh thích màu [hường](attribute_value) nam tính
 - Anh mặc cỡ [S](attribute_value)
 - màu [đỏ](attribute_value) cỡ [M](attribute_value)
-- Chọn [bừa]{"entity":"attribute_value","value":""} đi 
+- Chọn [bừa]{"entity":"attribute_value","value":""} đi
 - [ko biết]{"entity":"attribute_value","value":""}
 - [không biết]{"entity":"attribute_value","value":""}
 - [chưa biết tên]{"entity":"attribute_value","value":""}
@@ -239,13 +260,22 @@
 - [biết sao được]{"entity":"attribute_value","value":""}
 - [nào cũng được]{"entity":"attribute_value","value":""}
 - chọn [bừa]{"entity":"attribute_value","value":""} đi
-- [biết có gì]{"entity":"attribute_value","value":""} đâu mà chọn 
-- [biết gì]{"entity":"attribute_value","value":""} đâu mà chọn 
+- [biết có gì]{"entity":"attribute_value","value":""} đâu mà chọn
+- [biết gì]{"entity":"attribute_value","value":""} đâu mà chọn
 - mình [mới vào]{"entity":"attribute_value","value":""} ko rõ.
 - [lần đầu vào]{"entity":"attribute_value","value":""} ko rõ.
 - [lần đầu vào]{"entity":"attribute_value","value":""} biết shop bán gì mà nói.
+
 ## intent:price_from_entry
+
 - từ [200]{"entity": "price_entities", "role": "price_from"}$
+- từ [10]{"entity": "price_entities", "role": "price_from"}$
+- từ [13]{"entity": "price_entities", "role": "price_from"}$
+- từ [15]{"entity": "price_entities", "role": "price_from"}$
+- từ [19]{"entity": "price_entities", "role": "price_from"}$
+- từ [89]{"entity": "price_entities", "role": "price_from"}$
+- từ [57]{"entity": "price_entities", "role": "price_from"}$
+- từ [65]{"entity": "price_entities", "role": "price_from"}$
 - từ [200]{"entity": "price_entities", "role": "price_from"} - [300]{"entity": "price_entities", "role": "price_to"} $
 - từ [30]{"entity": "price_entities", "role": "price_from"} - [90]{"entity": "price_entities", "role": "price_to"} $
 - từ [25]{"entity": "price_entities", "role": "price_from"} - [97]{"entity": "price_entities", "role": "price_to"} $
@@ -260,18 +290,28 @@
 - [50]{"entity": "price_entities", "role": "price_from"} tới [101]{"entity": "price_entities", "role": "price_to"} $
 - [64]{"entity": "price_entities", "role": "price_from"} tới [246]{"entity": "price_entities", "role": "price_to"} $
 - [11]{"entity": "price_entities", "role": "price_from"} tới [22]{"entity": "price_entities", "role": "price_to"} $
-- à chắc [100]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"} $ à
-- à chắc [111]{"entity": "price_entities", "role": "price_from"} - [218]{"entity": "price_entities", "role": "price_to"} $ nhé
-- à chắc [169]{"entity": "price_entities", "role": "price_from"} - [370]{"entity": "price_entities", "role": "price_to"} $
-- à khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "price_to"} $ bot ơi 
-- chắc khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "price_to"} $ bot ơi 
-- chắc khoảng [20]{"entity": "price_entities", "role": "price_from"} - [800]{"entity": "price_entities", "role": "price_to"} $ bot ơi 
-- chắc khoảng [506]{"entity": "price_entities", "role": "price_from"} - [810]{"entity": "price_entities", "role": "price_to"} $ bot ơi 
-- khả năng từ [69]{"entity": "price_entities", "role": "price_from"} - [150]{"entity": "price_entities", "role": "price_to"} $ bạn ơi 
-- mình muốn trong [180]{"entity": "price_entities", "role": "price_from"} - [350]{"entity": "price_entities", "role": "price_to"} 
-- từ  [69]{"entity": "price_entities", "role": "price_from"} đến [6969]{"entity": "price_entities", "role": "price_to"} 
-- muốn  [310]{"entity": "price_entities", "role": "price_from"} đến [800]{"entity": "price_entities", "role": "price_to"} 
-- > [300]{"entity": "price_entities", "role": "price_from"} $
+- à chắc [100]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"}
+  $ à
+- à chắc [111]{"entity": "price_entities", "role": "price_from"} - [218]{"entity": "price_entities", "role": "price_to"}
+  $ nhé
+- à chắc [169]{"entity": "price_entities", "role": "price_from"} - [370]{"entity": "price_entities", "role": "price_to"}
+  $
+- à khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "price_to"}
+  $ bot ơi
+- chắc khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "
+  price_to"} $ bot ơi
+- chắc khoảng [20]{"entity": "price_entities", "role": "price_from"} - [800]{"entity": "price_entities", "role": "
+  price_to"} $ bot ơi
+- chắc khoảng [506]{"entity": "price_entities", "role": "price_from"} - [810]{"entity": "price_entities", "role": "
+  price_to"} $ bot ơi
+- khả năng từ [69]{"entity": "price_entities", "role": "price_from"} - [150]{"entity": "price_entities", "role": "
+  price_to"} $ bạn ơi
+- mình muốn trong [180]{"entity": "price_entities", "role": "price_from"} - [350]{"entity": "price_entities", "role": "
+  price_to"}
+- từ  [69]{"entity": "price_entities", "role": "price_from"} đến [6969]{"entity": "price_entities", "role": "price_to"}
+- muốn  [310]{"entity": "price_entities", "role": "price_from"} đến [800]{"entity": "price_entities", "role": "price_to"
+  }
+- [300]{"entity": "price_entities", "role": "price_from"} $
 - [600]{"entity": "price_entities", "role": "price_from"}$
 - [100]{"entity": "price_entities", "role": "price_from"}$
 - [137]{"entity": "price_entities", "role": "price_from"}$
@@ -279,31 +319,107 @@
 - [800]{"entity": "price_entities", "role": "price_from"}$
 - [249]{"entity": "price_entities", "role": "price_from"}$
 - [1609]{"entity": "price_entities", "role": "price_from"}$
+- [20]{"entity": "price_entities", "role": "price_from"}$
+- [24]{"entity": "price_entities", "role": "price_from"}$
+- [27]{"entity": "price_entities", "role": "price_from"}$
+- [28]"entity": "price_entities", "role": "price_from"}$
+- [35]{"entity": "price_entities", "role": "price_from"}$
+- [46]{"entity": "price_entities", "role": "price_from"}$
+- [69]{"entity": "price_entities", "role": "price_from"}$
+- [87]{"entity": "price_entities", "role": "price_from"}$
+- [78]{"entity": "price_entities", "role": "price_from"}$
+- [97]{"entity": "price_entities", "role": "price_from"}$
+- [79]{"entity": "price_entities", "role": "price_from"}$
+- [12]{"entity": "price_entities", "role": "price_from"}$
+- [7]{"entity": "price_entities", "role": "price_from"}$
+- [1]{"entity": "price_entities", "role": "price_from"}$
+- [2]{"entity": "price_entities", "role": "price_from"}$
+- [3]{"entity": "price_entities", "role": "price_from"}$
+- [4]{"entity": "price_entities", "role": "price_from"}$
+- [5]{"entity": "price_entities", "role": "price_from"}$
+- [6]{"entity": "price_entities", "role": "price_from"}$
+- [7]{"entity": "price_entities", "role": "price_from"}$
+- [8]{"entity": "price_entities", "role": "price_from"}$
+- [9]{"entity": "price_entities", "role": "price_from"}$
+- [9]{"entity": "price_entities", "role": "price_from"}$
 - em muốn sản phẩm nào đắt hơn [1609]{"entity": "price_entities", "role": "price_from"}$ ý
 - ta cần sản phẩm giá cao hơn [500]{"entity": "price_entities", "role": "price_from"}
 - chắc phải cao hơn [500]{"entity": "price_entities", "role": "price_from"}
 - anh không muốn mua sản phẩm nào rẻ hơn [900]{"entity": "price_entities", "role": "price_from"}
 - không dưới [800]$ nhé
+
 ## intent:price_to_entry
-- anh chỉ có [5k]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
-- em chỉ còn [5k]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
+
+- anh chỉ có [500]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
+- em chỉ còn [5000]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
+- em chỉ còn [5k]{"entity": "price_entities", "role": "price_to","value":5000}. mua gì giờ ?
+- em chỉ còn [2k]{"entity": "price_entities", "role": "price_to","value":3000}. mua gì giờ ?
+- em chỉ còn [1k]{"entity": "price_entities", "role": "price_to","value":1000}. mua gì giờ ?
+- em chỉ còn [1k5]{"entity": "price_entities", "role": "price_to","value":1500}. mua gì giờ ?
+- em chỉ còn [1k2]{"entity": "price_entities", "role": "price_to","value":1200}. mua gì giờ ?
+- em chỉ còn [1k1]{"entity": "price_entities", "role": "price_to","value":1100}. mua gì giờ ?
+- em chỉ còn [2k1]{"entity": "price_entities", "role": "price_to","value":2100}. mua gì giờ ?
 - chắc [500]{"entity": "price_entities", "role": "price_to"} thôi ?
 - dư [500]{"entity": "price_entities", "role": "price_to"} đang không biết mua gì ?
 - tư vấn gì khoảng [500]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
 - khoảng [200]{"entity": "price_entities", "role": "price_to"}$
 - khoảng [400]{"entity": "price_entities", "role": "price_to"}$
 - khoảng [500]{"entity": "price_entities", "role": "price_to"}$
-- khoảng [900]{"entity": "price_entities", "role": "price_to"}$ 
+- khoảng [900]{"entity": "price_entities", "role": "price_to"}$
+- khoảng [299]{"entity": "price_entities", "role": "price_to"}$
+- khoảng [199]{"entity": "price_entities", "role": "price_to"}$
+- khoảng [179]{"entity": "price_entities", "role": "price_to"}$
+- khoảng [249]{"entity": "price_entities", "role": "price_to"}$
+- khoảng [678]{"entity": "price_entities", "role": "price_to"}$
 - [1000]{"entity": "price_entities", "role": "price_to"}$
 - [6000]{"entity": "price_entities", "role": "price_to"}$
 - tối đa [500]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [139]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [987]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [576]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [59]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [21]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [96]{"entity": "price_entities", "role": "price_to"}$
+- tối đa [69]{"entity": "price_entities", "role": "price_to"}$
 - chắc dưới [600]{"entity": "price_entities", "role": "price_to"}$
+- chắc dưới [10]{"entity": "price_entities", "role": "price_to"}$
+- chắc dưới [300]{"entity": "price_entities", "role": "price_to"}$
+- chắc dưới [10000]{"entity": "price_entities", "role": "price_to"}$
+- chắc dưới [20]{"entity": "price_entities", "role": "price_to"}$
+- chắc dưới [89]{"entity": "price_entities", "role": "price_to"}$
 - nhỏ hơn [600]{"entity": "price_entities", "role": "price_to"}$
+- nhỏ hơn [10]{"entity": "price_entities", "role": "price_to"}$
+- nhỏ hơn [107]{"entity": "price_entities", "role": "price_to"}$
+- nhỏ hơn [109]{"entity": "price_entities", "role": "price_to"}$
+- nhỏ hơn [606]{"entity": "price_entities", "role": "price_to"}$
+- nhỏ hơn [666]{"entity": "price_entities", "role": "price_to"}$
+- nhỏ hơn [696]{"entity": "price_entities", "role": "price_to"}$
 - bé hơn [600]{"entity": "price_entities", "role": "price_to"}$
-- <[500]{"entity": "price_entities", "role": "price_to"}$
--  [40]{"entity": "price_entities", "role": "price_to"}$
+- bé hơn [189]{"entity": "price_entities", "role": "price_to"}$
+- bé hơn [435]{"entity": "price_entities", "role": "price_to"}$
+- bé hơn [537]{"entity": "price_entities", "role": "price_to"}$
+- bé hơn [767]{"entity": "price_entities", "role": "price_to"}$
+- dưới [500]{"entity": "price_entities", "role": "price_to"}$
+- dưới [870]{"entity": "price_entities", "role": "price_to"}$
+- dưới [780]{"entity": "price_entities", "role": "price_to"}$
+- dưới [350]{"entity": "price_entities", "role": "price_to"}$
+- dưới [9870]{"entity": "price_entities", "role": "price_to"}$
+- [40]{"entity": "price_entities", "role": "price_to"}$
+- [600]{"entity": "price_entities", "role": "price_to"}$
+- [100]{"entity": "price_entities", "role": "price_to"}$
+- [137]{"entity": "price_entities", "role": "price_to"}$
+- [179]{"entity": "price_entities", "role": "price_to"}$
+- [800]{"entity": "price_entities", "role": "price_to"}$
+- [249]{"entity": "price_entities", "role": "price_to"}$
+- [1609]{"entity": "price_entities", "role": "price_to"}$
+- [20]{"entity": "price_entities", "role": "price_to"}$
+- [24]{"entity": "price_entities", "role": "price_to"}$
+- [54]{"entity": "price_entities", "role": "price_to"}$
+- [67]{"entity": "price_entities", "role": "price_to"}$
+- [89]{"entity": "price_entities", "role": "price_to"}$
 
 ## intent:out_of_scope
+
 - that's not what I want to do
 - wait stop
 - you're no help

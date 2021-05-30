@@ -32,9 +32,9 @@ slots:
 
 forms:
   - product_form
-actions:
-  - validate_product_form
 
+actions:
+  - action_reset_all_slots
 
 responses:
   utter_greet:

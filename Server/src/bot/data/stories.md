@@ -17,6 +17,7 @@
 * greet
     - utter_greet
 * ask_product
+    - action_reset_all_slots
     - product_form
     - form{"name": "product_form"}
     - form{"name": null}
@@ -26,6 +27,7 @@
 ## Search product 2
 
 * ask_product
+    - action_reset_all_slots
     - product_form
     - form{"name": "product_form"}
     - form{"name": null}
@@ -39,6 +41,7 @@
 * give_name
     - utter_greet_with_name
 * ask_product
+    - action_reset_all_slots
     - product_form
     - form{"name": "product_form"}
     - form{"name": null}
@@ -48,6 +51,7 @@
 ## Search product 4
 
 * ask_product
+    - action_reset_all_slots
     - product_form
     - form{"name": "product_form"}
     - form{"name": null}

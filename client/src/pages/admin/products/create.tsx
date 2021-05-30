@@ -283,7 +283,7 @@ const AdminCreateProduct = () => {
             className: 'custom-notification-antd',
             description: "Successfully"
         });
-        router.push('/products')
+        router.push('/admin/products')
     }
 
     return (
