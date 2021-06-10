@@ -67,7 +67,7 @@ class UserManager:
         session = db.session
 
         session.query(UserModel).filter(UserModel.id == user_id).update({
-            RoleModel.activate: data['activate']
+            UserModel.activate: data['activate']
         })
 
         session.query(UserRoleModel). \
@@ -82,5 +82,14 @@ class UserManager:
                 user_role = UserRoleModel(user_id=user_id, role_id=role)
                 user_roles.append(user_role)
             session.add_all(user_roles)
+
+        session.commit()
+
+    def update_password(self, data, user_id):
+        session = db.session
+
+        session.query(UserModel).filter(UserModel.id == user_id).update({
+            UserModel.password: data['password']
+        })
 
         session.commit()

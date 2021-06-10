@@ -1,7 +1,5 @@
 import {useContext, useEffect, useState} from "react";
 import {initEvent} from "../../utils/script/main";
-import {SET_LOADING} from "../../utils/store/reducers/loading";
-import {Action} from "../../utils/models/reducer.model";
 import {getRouteQuery, handleUpdateRouteQuery} from "../../core/utils/url";
 import {api} from "../admin/products/api";
 import {notification} from "antd";

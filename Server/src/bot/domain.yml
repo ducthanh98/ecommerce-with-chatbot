@@ -53,7 +53,7 @@ responses:
     - text: "Em họ Bank, tên Bot! Người ta hay gọi em là Bank Bot thông minh xinh đẹp giỏi giang nhất vũ trụ ạ! Quý khách cần trợ giúp gì ạ?"
     - text: "Dạ thưa. Tên Tiếng Việt của em là Trợ lý ảo nhưng em thích gọi bằng tên Tiếng Anh là Bot cho nó Tây!"
   utter_ask_product_name:
-    - text: " muốn mua loại sản phẩm nào ạ ?"
+    - text: "Anh/chị muốn mua loại sản phẩm nào ạ ?"
   utter_ask_attribute_value:
     - text: "Anh/chị còn tiêu chí nào không ạ ?"
   utter_ask_price_from:

@@ -113,9 +113,15 @@
 - cửa hàng bán quần áo ko 
 - cửa hàng còn gì không
 - tôi muốn mua một số mặt hàng
-
+- anh muốn sắm vài món đồ
+- cửa hàng cưng bán gì 
+- anh muốn mua vài món quần áo 
+- có mặt hàng nào hay ho không
+- mặt hàng nào hot nhất 
+- sắm đồ 
+- ngoài mua hàng thì còn làm gì nữa 
+- mua quần áo hỏi thừa
 ## intent:ask_func_list
-
 - bạn có thể làm được những gì
 - bạn giúp được gì nào
 - chức năng của bạn là gì
@@ -204,6 +210,11 @@
 - [quần âu](product_name)
 - [ko biết]{"entity":"product_name","value":""}
 - [không biết]{"entity":"product_name","value":""}
+- [chả biết]{"entity":"product_name","value":""}
+- [chả biết]{"entity":"product_name","value":""} nữa
+- [chịu]{"entity":"product_name","value":""} nữa
+- [biết sao được]{"entity":"product_name","value":""} má
+- [không biết]{"entity":"product_name","value":""}
 - [chưa biết tên]{"entity":"product_name","value":""}
 - [tôi mới vào đây]{"entity":"product_name","value":""}
 - [giới thiệu cho tôi đi]{"entity":"product_name","value":""}
@@ -212,26 +223,43 @@
 - [ko rõ]{"entity":"product_name","value":""}
 - [chả biết nữa]{"entity":"product_name","value":""}
 - [biết sao được]{"entity":"product_name","value":""}
-
 ## intent:attribute_value_entry
-
 - màu [hường](attribute_value) nam tính
+- màu [hường](attribute_value)
 - màu [xanh](attribute_value) nam tính
 - màu [đỏ](attribute_value)
+- màu [đỏ](attribute_value) điệu đà
+- màu [đỏ](attribute_value) đi
+- a thích màu [đỏ](attribute_value) đi
+- [đỏ](attribute_value) e ạ
 - e muốn màu [đỏ](attribute_value)
 - màu [đen](attribute_value)
 - có màu [đen](attribute_value) không
 - chắc là [đen](attribute_value)
 - màu [tím](attribute_value)
-- màu [cam](attribute_value)
+- màu [tím](attribute_value) nhé
+- màu [tím](attribute_value) e ơi
+- màu [cam](attribute_value) e ơi
+- màu [cam](attribute_value) e ạ
+- màu [cam](attribute_value) này
+- màu [cam](attribute_value) đó
 - màu [nâu](attribute_value)
 - màu [vàng](attribute_value)
 - màu [lục](attribute_value)
 - màu [lam](attribute_value)
 - màu [tràm](attribute_value)
-- màu [tím](attribute_value)
+- màu [tím](attribute_value) nhé
+- màu [tím](attribute_value) b ơi
+- màu [tím](attribute_value) hả
 - cỡ  [s](attribute_value)
-- cỡ [xl](attribute_value)
+- a mặc cỡ [s](attribute_value)
+- a mặc size [s](attribute_value)
+- size [s](attribute_value)
+- Size  [s](attribute_value)
+- Size [m](attribute_value)
+- Size [m](attribute_value)
+- tớ mặc size [m](attribute_value)
+- minh mặc size [xl](attribute_value)
 - cỡ [2xl](attribute_value)
 - cỡ [6xl](attribute_value)
 - cỡ [m](attribute_value)
@@ -239,11 +267,17 @@
 - cỡ [S](attribute_value)
 - cỡ [L](attribute_value)
 - cỡ [M](attribute_value)
+- size [M](attribute_value)
 - cỡ [XL](attribute_value)
+- size [XL](attribute_value)
 - cỡ [2XL](attribute_value)
+- size [2XL](attribute_value)
 - cỡ [3XL](attribute_value)
+- size [3XL](attribute_value)
 - cỡ [4XL](attribute_value)
 - cỡ [5XL](attribute_value)
+- size [5XL](attribute_value)
+- size [5XL](attribute_value)
 - Anh thích màu [hường](attribute_value) nam tính
 - Anh mặc cỡ [S](attribute_value)
 - màu [đỏ](attribute_value) cỡ [M](attribute_value)
