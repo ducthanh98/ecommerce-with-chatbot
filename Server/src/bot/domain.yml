@@ -40,7 +40,7 @@ responses:
   utter_greet:
     - text: "Kính chào Quý khách! Quý khách vui lòng cho biết tên để tiện xưng hô được không ah?"
   utter_greet_with_name:
-    - text: "Chào {cust_name}. Shop có thể giúp gì được {cust_name} ạ?"
+    - text: "Chào {cust_name}. Shop có thể giúp gì được cho bạn ạ?"
   utter_bye:
     - text: "Kính chào tạm biệt và mong sớm gặp lại quý khách!"
     - text: "Kính chào tạm biệt và chúc quý khách một ngày tốt lành!"
@@ -55,15 +55,21 @@ responses:
   utter_ask_product_name:
     - text: "Anh/chị muốn mua loại sản phẩm nào ạ ?"
   utter_ask_attribute_value:
-    - text: "Anh/chị còn tiêu chí nào không ạ ?"
+    - text: "Anh/chị thích cỡ/màu nào ạ  ?"
   utter_ask_price_from:
     - text: "Anh/chị muốn sản phẩm giá thấp nhất là bao nhiêu ạ ?"
   utter_ask_price_to:
     - text: "Thế còn giá cao nhất ạ ?"
-  utter_unclear:
-    - text: "Thưa quý khách, hiện tại tôi chưa hiểu được yêu cầu của Quý khách. "
   utter_ask_action:
     - text: "Bạn còn yêu cầu nào nữa không ạ ?"
+  utter_product_warranty:
+    - text: "Với chính sách trả hàng thì bạn có thể trả hàng trong vòng 7 ngày, bạn vui lòng để nguyên tem mác trên sản phẩm giúp mình nhé"
+  utter_product_quality:
+    - text: "Cam kết chất lượng hàng đảm bảo b nhé"
+  utter_product_payment:
+    - text: "Tất cả sản phẩm đều ship COD nhận tiền khi giao hàng."
+  utter_unclear:
+    - text: "Thưa quý khách, hiện tại tôi chưa hiểu được yêu cầu của Quý khách. "
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

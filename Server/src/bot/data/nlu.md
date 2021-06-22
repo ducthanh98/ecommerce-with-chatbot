@@ -33,7 +33,6 @@
 - [Bảo](cust_name)
 
 ## intent:greet
-
 - xin chào
 - chào bạn
 - hello
@@ -49,9 +48,7 @@
 - chào
 - hi
 - có ai ở đây không?
-
 ## intent:bye
-
 - tạm biệt
 - chào tạm biệt
 - chào tạm biệt em
@@ -71,9 +68,7 @@
 - cảm ơn em
 - cảm ơn em nhiều nhé
 - cảm ơn
-
 ## intent:ask_product
-
 - tôi muốn mua hàng
 - bạn có thể gợi ý cho tôi vài sản phẩm
 - tôi đang muốn mua vài sản phẩm
@@ -158,9 +153,7 @@
 - giúp được gì
 - mày làm được gì
 - có biết gì
-
 ## intent:product_name_entry
-
 - tôi muốn mua [bikini](product_name)
 - [mũ lưỡi trai](product_name)
 - [quần bò](product_name)
@@ -184,6 +177,12 @@
 - bán [áo jumpsuit](product_name) không
 - [hoodie](product_name)
 - [áo t-shirt](product_name)
+- tôi muốn mua [váy](product_name)
+- có mẫu [váy](product_name) nào đẹp ko 
+- tôi cần chọn vài mẫu [váy](product_name)
+- có [váy](product_name) không em
+- bán [váy](product_name) không em
+- a đang tim cái [váy](product_name)    
 - [váy](product_name) dự tiệc
 - bán [váy princess](product_name) không
 - bán [Princess Dress](product_name) không
@@ -301,7 +300,6 @@
 - [lần đầu vào]{"entity":"attribute_value","value":""} biết shop bán gì mà nói.
 
 ## intent:price_from_entry
-
 - từ [200]{"entity": "price_entities", "role": "price_from"}$
 - từ [10]{"entity": "price_entities", "role": "price_from"}$
 - từ [13]{"entity": "price_entities", "role": "price_from"}$
@@ -310,41 +308,6 @@
 - từ [89]{"entity": "price_entities", "role": "price_from"}$
 - từ [57]{"entity": "price_entities", "role": "price_from"}$
 - từ [65]{"entity": "price_entities", "role": "price_from"}$
-- từ [200]{"entity": "price_entities", "role": "price_from"} - [300]{"entity": "price_entities", "role": "price_to"} $
-- từ [30]{"entity": "price_entities", "role": "price_from"} - [90]{"entity": "price_entities", "role": "price_to"} $
-- từ [25]{"entity": "price_entities", "role": "price_from"} - [97]{"entity": "price_entities", "role": "price_to"} $
-- từ [10]{"entity": "price_entities", "role": "price_from"} - [69]{"entity": "price_entities", "role": "price_to"} $
-- từ [290]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"} $
-- từ [180]{"entity": "price_entities", "role": "price_from"} - [259]{"entity": "price_entities", "role": "price_to"} $
-- từ [111]{"entity": "price_entities", "role": "price_from"} - [690]{"entity": "price_entities", "role": "price_to"} $
-- từ [149]{"entity": "price_entities", "role": "price_from"} tới [177]{"entity": "price_entities", "role": "price_to"} $
-- từ [21]{"entity": "price_entities", "role": "price_from"} tới [50]{"entity": "price_entities", "role": "price_to"} $
-- từ [39]{"entity": "price_entities", "role": "price_from"} tới [62]{"entity": "price_entities", "role": "price_to"} $
-- từ [49]{"entity": "price_entities", "role": "price_from"} tới [99]{"entity": "price_entities", "role": "price_to"} $
-- [50]{"entity": "price_entities", "role": "price_from"} tới [101]{"entity": "price_entities", "role": "price_to"} $
-- [64]{"entity": "price_entities", "role": "price_from"} tới [246]{"entity": "price_entities", "role": "price_to"} $
-- [11]{"entity": "price_entities", "role": "price_from"} tới [22]{"entity": "price_entities", "role": "price_to"} $
-- à chắc [100]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"}
-  $ à
-- à chắc [111]{"entity": "price_entities", "role": "price_from"} - [218]{"entity": "price_entities", "role": "price_to"}
-  $ nhé
-- à chắc [169]{"entity": "price_entities", "role": "price_from"} - [370]{"entity": "price_entities", "role": "price_to"}
-  $
-- à khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "price_to"}
-  $ bot ơi
-- chắc khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "
-  price_to"} $ bot ơi
-- chắc khoảng [20]{"entity": "price_entities", "role": "price_from"} - [800]{"entity": "price_entities", "role": "
-  price_to"} $ bot ơi
-- chắc khoảng [506]{"entity": "price_entities", "role": "price_from"} - [810]{"entity": "price_entities", "role": "
-  price_to"} $ bot ơi
-- khả năng từ [69]{"entity": "price_entities", "role": "price_from"} - [150]{"entity": "price_entities", "role": "
-  price_to"} $ bạn ơi
-- mình muốn trong [180]{"entity": "price_entities", "role": "price_from"} - [350]{"entity": "price_entities", "role": "
-  price_to"}
-- từ  [69]{"entity": "price_entities", "role": "price_from"} đến [6969]{"entity": "price_entities", "role": "price_to"}
-- muốn  [310]{"entity": "price_entities", "role": "price_from"} đến [800]{"entity": "price_entities", "role": "price_to"
-  }
 - [300]{"entity": "price_entities", "role": "price_from"} $
 - [600]{"entity": "price_entities", "role": "price_from"}$
 - [100]{"entity": "price_entities", "role": "price_from"}$
@@ -374,25 +337,41 @@
 - [6]{"entity": "price_entities", "role": "price_from"}$
 - [7]{"entity": "price_entities", "role": "price_from"}$
 - [8]{"entity": "price_entities", "role": "price_from"}$
+- [408]{"entity": "price_entities", "role": "price_from"}$
+- [409]{"entity": "price_entities", "role": "price_from"}$
+- [439]{"entity": "price_entities", "role": "price_from"}$
+- [429]{"entity": "price_entities", "role": "price_from"}$
 - [9]{"entity": "price_entities", "role": "price_from"}$
 - [9]{"entity": "price_entities", "role": "price_from"}$
+- [1000]{"entity": "price_entities", "role": "price_from"}$
+- [1001]{"entity": "price_entities", "role": "price_from"}$
+- [1069]{"entity": "price_entities", "role": "price_from"}$
+- [1068]{"entity": "price_entities", "role": "price_from"}$
 - em muốn sản phẩm nào đắt hơn [1609]{"entity": "price_entities", "role": "price_from"}$ ý
 - ta cần sản phẩm giá cao hơn [500]{"entity": "price_entities", "role": "price_from"}
 - chắc phải cao hơn [500]{"entity": "price_entities", "role": "price_from"}
 - anh không muốn mua sản phẩm nào rẻ hơn [900]{"entity": "price_entities", "role": "price_from"}
-- không dưới [800]$ nhé
-
+- không dưới [800]{"entity": "price_entities", "role": "price_from"}$ nhé
+- không dưới [110]{"entity": "price_entities", "role": "price_from"}$ nhé
+- không dưới [1101]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [1101]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [200]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [300]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [350]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [380]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [310]{"entity": "price_entities", "role": "price_from"}$ nhé
+- khoảng [318]{"entity": "price_entities", "role": "price_from"}$ nhé
+- tôi có [318]{"entity": "price_entities", "role": "price_from"}$
+- [318]{"entity": "price_entities", "role": "price_from"}$ thôi
+- [118]{"entity": "price_entities", "role": "price_from"}$ nhé
+- [0]{"entity": "price_entities", "role": "price_from"}$ nhé
+- có [0]{"entity": "price_entities", "role": "price_from"}$ nhé
+- anh có [10]{"entity": "price_entities", "role": "price_from"}$ nhé
+- anh chi [10]{"entity": "price_entities", "role": "price_from"}$ nhé
+- [118]{"entity": "price_entities", "role": "price_from"}$ ạ 
 ## intent:price_to_entry
-
 - anh chỉ có [500]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
-- em chỉ còn [5000]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
-- em chỉ còn [5k]{"entity": "price_entities", "role": "price_to","value":5000}. mua gì giờ ?
-- em chỉ còn [2k]{"entity": "price_entities", "role": "price_to","value":3000}. mua gì giờ ?
-- em chỉ còn [1k]{"entity": "price_entities", "role": "price_to","value":1000}. mua gì giờ ?
-- em chỉ còn [1k5]{"entity": "price_entities", "role": "price_to","value":1500}. mua gì giờ ?
-- em chỉ còn [1k2]{"entity": "price_entities", "role": "price_to","value":1200}. mua gì giờ ?
-- em chỉ còn [1k1]{"entity": "price_entities", "role": "price_to","value":1100}. mua gì giờ ?
-- em chỉ còn [2k1]{"entity": "price_entities", "role": "price_to","value":2100}. mua gì giờ ?
+- em chỉ còn [5000]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?vs
 - chắc [500]{"entity": "price_entities", "role": "price_to"} thôi ?
 - dư [500]{"entity": "price_entities", "role": "price_to"} đang không biết mua gì ?
 - tư vấn gì khoảng [500]{"entity": "price_entities", "role": "price_to"}. mua gì giờ ?
@@ -451,9 +430,73 @@
 - [54]{"entity": "price_entities", "role": "price_to"}$
 - [67]{"entity": "price_entities", "role": "price_to"}$
 - [89]{"entity": "price_entities", "role": "price_to"}$
-
+- [300]{"entity": "price_entities", "role": "price_to"} $
+- [600]{"entity": "price_entities", "role": "price_to"}$
+- [100]{"entity": "price_entities", "role": "price_to"}$
+- [137]{"entity": "price_entities", "role": "price_to"}$
+- [179]{"entity": "price_entities", "role": "price_to"}$
+- [800]{"entity": "price_entities", "role": "price_to"}$
+- [249]{"entity": "price_entities", "role": "price_to"}$
+- [1609]{"entity": "price_entities", "role": "price_to"}$
+- [20]{"entity": "price_entities", "role": "price_to"}$
+- [24]{"entity": "price_entities", "role": "price_to"}$
+- [27]{"entity": "price_entities", "role": "price_to"}$
+- [28]"entity": "price_entities", "role": "price_to"}$
+- [35]{"entity": "price_entities", "role": "price_to"}$
+- [46]{"entity": "price_entities", "role": "price_to"}$
+- [69]{"entity": "price_entities", "role": "price_to"}$
+- [87]{"entity": "price_entities", "role": "price_to"}$
+- [78]{"entity": "price_entities", "role": "price_to"}$
+- [97]{"entity": "price_entities", "role": "price_to"}$
+- [79]{"entity": "price_entities", "role": "price_to"}$
+- [12]{"entity": "price_entities", "role": "price_to"}$
+- [7]{"entity": "price_entities", "role": "price_to"}$
+- [1]{"entity": "price_entities", "role": "price_to"}$
+- [2]{"entity": "price_entities", "role": "price_to"}$
+- [3]{"entity": "price_entities", "role": "price_to"}$
+- [4]{"entity": "price_entities", "role": "price_to"}$
+- [5]{"entity": "price_entities", "role": "price_to"}$
+- [6]{"entity": "price_entities", "role": "price_to"}$
+- [7]{"entity": "price_entities", "role": "price_to"}$
+- [8]{"entity": "price_entities", "role": "price_to"}$
+- [9]{"entity": "price_entities", "role": "price_to"}$
+- [503]{"entity": "price_entities", "role": "price_to"}$
+- [504]{"entity": "price_entities", "role": "price_to"}$
+- [508]{"entity": "price_entities", "role": "price_to"}$
+- [510]{"entity": "price_entities", "role": "price_to"}$
+- [700]{"entity": "price_entities", "role": "price_to"}$
+## intent:price_range_entry
+- từ [200]{"entity": "price_entities", "role": "price_from"} - [300]{"entity": "price_entities", "role": "price_to"} $
+- từ [30]{"entity": "price_entities", "role": "price_from"} - [90]{"entity": "price_entities", "role": "price_to"} $
+- từ [25]{"entity": "price_entities", "role": "price_from"} - [97]{"entity": "price_entities", "role": "price_to"} $
+- từ [10]{"entity": "price_entities", "role": "price_from"} - [69]{"entity": "price_entities", "role": "price_to"} $
+- từ [290]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"} $
+- từ [180]{"entity": "price_entities", "role": "price_from"} - [259]{"entity": "price_entities", "role": "price_to"} $
+- từ [111]{"entity": "price_entities", "role": "price_from"} - [690]{"entity": "price_entities", "role": "price_to"} $
+- từ [149]{"entity": "price_entities", "role": "price_from"} tới [177]{"entity": "price_entities", "role": "price_to"} $
+- từ [21]{"entity": "price_entities", "role": "price_from"} tới [50]{"entity": "price_entities", "role": "price_to"} $
+- từ [39]{"entity": "price_entities", "role": "price_from"} tới [62]{"entity": "price_entities", "role": "price_to"} $
+- từ [49]{"entity": "price_entities", "role": "price_from"} tới [99]{"entity": "price_entities", "role": "price_to"} $
+- [50]{"entity": "price_entities", "role": "price_from"} tới [101]{"entity": "price_entities", "role": "price_to"} $
+- [64]{"entity": "price_entities", "role": "price_from"} tới [246]{"entity": "price_entities", "role": "price_to"} $
+- [11]{"entity": "price_entities", "role": "price_from"} tới [22]{"entity": "price_entities", "role": "price_to"} $
+- à chắc [100]{"entity": "price_entities", "role": "price_from"} - [200]{"entity": "price_entities", "role": "price_to"} $ à
+- à chắc [111]{"entity": "price_entities", "role": "price_from"} - [218]{"entity": "price_entities", "role": "price_to"} $ nhé
+- à chắc [169]{"entity": "price_entities", "role": "price_from"} - [370]{"entity": "price_entities", "role": "price_to"} $
+- à khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "price_to"} $ bot ơi
+- chắc khoảng [56]{"entity": "price_entities", "role": "price_from"} - [80]{"entity": "price_entities", "role": "price_to"} $ bot ơi
+- chắc khoảng [20]{"entity": "price_entities", "role": "price_from"} - [800]{"entity": "price_entities", "role": "price_to"} $ bot ơi
+- chắc khoảng [506]{"entity": "price_entities", "role": "price_from"} - [810]{"entity": "price_entities", "role": "price_to"} $ bot ơi
+- khả năng từ [69]{"entity": "price_entities", "role": "price_from"} - [150]{"entity": "price_entities", "role": "price_to"} $ bạn ơi
+- mình muốn trong [180]{"entity": "price_entities", "role": "price_from"} - [350]{"entity": "price_entities", "role": "price_to"}
+- từ  [69]{"entity": "price_entities", "role": "price_from"} đến [6969]{"entity": "price_entities", "role": "price_to"}
+- muốn  [310]{"entity": "price_entities", "role": "price_from"} đến [800]{"entity": "price_entities", "role": "price_to"}
+- [900]{"entity": "price_entities", "role": "price_from"} - [1000]{"entity": "price_entities", "role": "price_to"} $
+- [30]{"entity": "price_entities", "role": "price_from"} - [500]{"entity": "price_entities", "role": "price_to"} $
+- hơn [20]{"entity": "price_entities", "role": "price_from"} và nhỏ hơn [400]{"entity": "price_entities", "role": "price_to"} $
+- chắc hơn [20]{"entity": "price_entities", "role": "price_from"} và nhỏ hơn [400]{"entity": "price_entities", "role": "price_to"} $
+- khoảng 40$ tới 80$
 ## intent:out_of_scope
-
 - that's not what I want to do
 - wait stop
 - you're no help
@@ -471,3 +514,21 @@
 - nevermind
 - I want to do something else
 - I changed my mind
+
+## intent:product_warranty
+- Được đổi trả hàng trong bao lâu vậy shop 
+- Có được đổi trả hàng không shop
+- Được đổi trả hàng khi nào 
+
+## intent:product_ship
+- Có ship về Phú Thọ không 
+- Có ship không 
+- Mình phải đến lấy hàng à
+
+## intent:product_payment
+- Mình thanh toán COD được không 
+- Thanh toán bằng hình thức nào 
+- Anh thanh toán tiền mặt được không 
+- Shop hỗ trợ phương thức trả tiền nào 
+- Thanh toán kiểu gì 
+- Trả tiền như nào 

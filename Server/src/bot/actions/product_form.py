@@ -78,11 +78,12 @@ class ProductForm(FormAction):
                 self.from_entity(entity="attribute_value", intent=["attribute_value_entry"]),
             ],
             "price_from": [
-                self.from_entity(entity="price_entities", role="price_from", intent=["price_from_entry"]),
+                self.from_entity(entity="price_entities", role="price_from",
+                                 intent=["price_from_entry", "price_range_entry"]),
             ],
             "price_to": [
                 self.from_entity(entity="price_entities", role="price_to",
-                                 intent=["price_to_entry", "price_from_entry"]),
+                                 intent=["price_to_entry", "price_range_entry"]),
             ]
 
         }
