@@ -11,6 +11,10 @@ intents:
   - ask_price
   - ask_category
   - ask_product
+  - product_payment
+  - product_ship
+  - product_warranty
+  - product_quality
 
 slots:
   cust_name:

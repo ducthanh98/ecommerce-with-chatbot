@@ -80,4 +80,19 @@
 
 * thank
     - utter_thank
+  
+## Hỏi phương thức thanh toán 
+*product_payment
+  - utter_product_payment
  
+## Hỏi chất lượng sản phẩm 
+*product_quality
+  - utter_product_quality
+
+## Hỏi chính sách đổi trả 
+*product_warranty
+  - utter_product_warranty
+
+## Hỏi chính sách đổi trả 
+*product_warranty
+  - utter_product_warranty

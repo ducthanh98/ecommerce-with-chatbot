@@ -78,6 +78,7 @@
 - cần lắm một vài món đồ để xả tiền
 - mua hàng
 - tao muốn mua hàng
+- tao muốn chọn ít đồ 
 - tao muốn đốt tiền
 - bên bạn có những sản phẩm nào
 - bạn có thể gợi ý cho tôi vài sản phẩm
@@ -93,9 +94,6 @@
 - tớ muốn mua quần áo
 - tao cần mua giày
 - mình muốn mua đồ
-- nói gì đi
-- nói gì đi mày
-- nói gì đi bạn
 - cần tiêu tiền
 - nói xem có đồ gì ngon
 - có hàng gì tốt không
@@ -532,3 +530,8 @@
 - Shop hỗ trợ phương thức trả tiền nào 
 - Thanh toán kiểu gì 
 - Trả tiền như nào 
+
+## intent:product_quality
+- Chất lượng sản phẩm thế nào
+- Hàng đảm bảo không bạn 
+- Hàng xuất sứ thế nào bạn 
